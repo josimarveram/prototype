@@ -1,0 +1,880 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SEAP - Login Contextual</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #2563eb;
+            --secondary-color: #1e40af;
+            --tertiary-color: #3b82f6;
+            --accent-color: #06b6d4;
+            --text-primary: #1f2937;
+            --text-secondary: #6b7280;
+            --text-muted: #9ca3af;
+            --bg-primary: #ffffff;
+            --bg-secondary: #f8fafc;
+            --border-color: #e5e7eb;
+            --error-color: #ef4444;
+            --success-color: #10b981;
+            --warning-color: #f59e0b;
+            --shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 20px 40px -10px rgba(0, 0, 0, 0.15);
+            --radius: 12px;
+            --radius-lg: 16px;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--tertiary-color) 100%);
+            background-attachment: fixed;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-primary);
+            padding: 1rem;
+            position: relative;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 20% 80%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(255, 255, 255, 0.1) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .login-container {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: var(--radius-lg);
+            padding: 3rem;
+            width: 100%;
+            max-width: 480px;
+            box-shadow: var(--shadow-lg);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            position: relative;
+            z-index: 10;
+        }
+
+        .company-header {
+            text-align: center;
+            margin-bottom: 2.5rem;
+        }
+
+        .company-logo {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, var(--primary-color), var(--tertiary-color));
+            border-radius: var(--radius-lg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1rem;
+            font-size: 32px;
+            font-weight: bold;
+            color: white;
+            transition: all 0.3s ease;
+            box-shadow: var(--shadow);
+        }
+
+        .company-name {
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .company-subtitle {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            font-weight: 500;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            font-size: 0.95rem;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 1rem;
+            border: 2px solid var(--border-color);
+            border-radius: var(--radius);
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background: var(--bg-primary);
+            font-family: inherit;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+
+        .form-input.error {
+            border-color: var(--error-color);
+        }
+
+        .form-input.success {
+            border-color: var(--success-color);
+        }
+
+        .password-input-container {
+            position: relative;
+        }
+
+        .password-toggle {
+            position: absolute;
+            right: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: var(--text-muted);
+            font-size: 1.2rem;
+            transition: color 0.3s ease;
+        }
+
+        .password-toggle:hover {
+            color: var(--primary-color);
+        }
+
+        .form-options {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .remember-me {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .remember-me input[type="checkbox"] {
+            width: 16px;
+            height: 16px;
+            accent-color: var(--primary-color);
+        }
+
+        .remember-me label {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            cursor: pointer;
+        }
+
+        .forgot-password {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .forgot-password:hover {
+            color: var(--secondary-color);
+            text-decoration: underline;
+        }
+
+        .login-button {
+            width: 100%;
+            background: linear-gradient(135deg, var(--primary-color), var(--tertiary-color));
+            color: white;
+            border: none;
+            padding: 1rem;
+            border-radius: var(--radius);
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            margin-bottom: 1.5rem;
+        }
+
+        .login-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .login-button:hover::before {
+            left: 100%;
+        }
+
+        .login-button:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .login-button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .login-button.loading {
+            pointer-events: none;
+        }
+
+        .loading-spinner {
+            display: none;
+            width: 20px;
+            height: 20px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-top: 2px solid white;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-right: 0.5rem;
+        }
+
+        .login-button.loading .loading-spinner {
+            display: inline-block;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .divider {
+            text-align: center;
+            margin: 2rem 0;
+            position: relative;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        .divider::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: var(--border-color);
+            z-index: 1;
+        }
+
+        .divider span {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 0 1rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .sso-options {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .sso-button {
+            flex: 1;
+            padding: 0.75rem;
+            border: 2px solid var(--border-color);
+            border-radius: var(--radius);
+            background: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            font-weight: 500;
+        }
+
+        .sso-button:hover {
+            border-color: var(--primary-color);
+            background: var(--bg-secondary);
+        }
+
+        .error-message {
+            background: rgba(239, 68, 68, 0.1);
+            border: 1px solid var(--error-color);
+            color: var(--error-color);
+            padding: 0.75rem 1rem;
+            border-radius: var(--radius);
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+            display: none;
+        }
+
+        .error-message.show {
+            display: block;
+            animation: slideDown 0.3s ease;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .success-message {
+            background: rgba(16, 185, 129, 0.1);
+            border: 1px solid var(--success-color);
+            color: var(--success-color);
+            padding: 0.75rem 1rem;
+            border-radius: var(--radius);
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+            display: none;
+        }
+
+        .success-message.show {
+            display: block;
+            animation: slideDown 0.3s ease;
+        }
+
+        .domain-indicator {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 8px 16px;
+            border-radius: var(--radius);
+            font-size: 12px;
+            font-family: monospace;
+            z-index: 1000;
+        }
+
+        .validation-status {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: var(--primary-color);
+            color: white;
+            padding: 8px 16px;
+            border-radius: var(--radius);
+            font-size: 12px;
+            z-index: 1000;
+        }
+
+        @media (max-width: 640px) {
+            .login-container {
+                padding: 2rem;
+                margin: 1rem;
+            }
+
+            .company-name {
+                font-size: 1.5rem;
+            }
+
+            .sso-options {
+                flex-direction: column;
+            }
+
+            .form-options {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+
+        /* Mejoras para ventanas altas */
+        @media (min-height: 900px) {
+            body {
+                align-items: flex-start;
+                padding-top: 3rem;
+            }
+            
+            .login-container {
+                margin-top: 2rem;
+                margin-bottom: 2rem;
+            }
+        }
+
+        @media (max-height: 700px) {
+            body {
+                align-items: flex-start;
+                padding-top: 1rem;
+            }
+            
+            .login-container {
+                margin-top: 1rem;
+                margin-bottom: 1rem;
+            }
+            
+            .company-header {
+                margin-bottom: 1.5rem;
+            }
+            
+            .company-logo {
+                width: 60px;
+                height: 60px;
+                font-size: 24px;
+                margin-bottom: 0.5rem;
+            }
+            
+            .form-group {
+                margin-bottom: 1rem;
+            }
+        }
+
+        /* Animaciones de entrada */
+        .fade-in {
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Estados de validación visual */
+        .form-input.validating {
+            border-color: var(--warning-color);
+        }
+
+        .form-input.validating::after {
+            content: '⏳';
+            position: absolute;
+            right: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Login Container -->
+    <div class="login-container fade-in">
+        <!-- Company Header -->
+        <div class="company-header">
+            <div class="company-logo" id="companyLogo">TC</div>
+            <h1 class="company-name" id="companyName">TecnoCorp</h1>
+            <p class="company-subtitle" id="companySubtitle">Análisis Inteligente de Datos</p>
+        </div>
+
+        <!-- Messages -->
+        <div class="error-message" id="errorMessage">
+            <strong>Error:</strong> <span id="errorText"></span>
+        </div>
+        
+        <div class="success-message" id="successMessage">
+            <strong>Éxito:</strong> <span id="successText"></span>
+        </div>
+
+        <!-- Login Form -->
+        <form id="loginForm" onsubmit="handleLogin(event)">
+            <div class="form-group">
+                <label for="email" class="form-label">Correo Electrónico</label>
+                <input 
+                    type="email" 
+                    id="email" 
+                    class="form-input" 
+                    placeholder="tu@empresa.com"
+                    required
+                    onblur="validateEmail(this)"
+                    oninput="clearValidation(this)"
+                >
+            </div>
+
+            <div class="form-group">
+                <label for="password" class="form-label">Contraseña</label>
+                <div class="password-input-container">
+                    <input 
+                        type="password" 
+                        id="password" 
+                        class="form-input" 
+                        placeholder="••••••••"
+                        required
+                        onblur="validatePassword(this)"
+                        oninput="clearValidation(this)"
+                    >
+                    <button type="button" class="password-toggle" onclick="togglePassword()">
+                        👁️
+                    </button>
+                </div>
+            </div>
+
+            <div class="form-options">
+                <div class="remember-me">
+                    <input type="checkbox" id="remember" name="remember">
+                    <label for="remember">Recordarme</label>
+                </div>
+                <a href="#" class="forgot-password" onclick="forgotPassword()">¿Olvidaste tu contraseña?</a>
+            </div>
+
+            <button type="submit" class="login-button" id="loginButton">
+                <div class="loading-spinner"></div>
+                <span id="loginButtonText">Iniciar Sesión</span>
+            </button>
+        </form>
+
+        <!-- Divider -->
+        <div class="divider">
+            <span>O continúa con</span>
+        </div>
+
+        <!-- SSO Options -->
+        <div class="sso-options">
+            <button class="sso-button" onclick="ssoLogin('google')">
+                📧 Google
+            </button>
+            <button class="sso-button" onclick="ssoLogin('microsoft')">
+                🏢 Microsoft
+            </button>
+        </div>
+
+    </div>
+
+    <!-- Indicators -->
+    <div class="domain-indicator" id="domainIndicator">
+        📍 tecnocorp.seap.com
+    </div>
+    
+    <div class="validation-status" id="validationStatus">
+        🔒 Validación: Activa
+    </div>
+
+    <script>
+        // Configuraciones por empresa
+        const companyConfigs = {
+            tecnocorp: {
+        name: 'TecnoCorp',
+        subtitle: 'Análisis Inteligente de Datos',
+        logo: 'TC',
+        domain: 'tecnocorp.seap.com',
+        primary: '#2563eb',
+        secondary: '#1e40af',
+        tertiary: '#3b82f6',
+        allowedDomains: ['@tecnocorp.com', '@tc-group.com'],
+        users: {
+            'admin@tecnocorp.com': 'tecno2024',
+            'admin@tc-group.com': 'tecno2024',
+            'user@tecnocorp.com': 'usertech123',
+            'analista@tecnocorp.com': 'analyst456'
+        },
+        ssoEnabled: true,
+        features: ['Advanced Analytics', 'Predictive Models']
+    },
+    innovaai: {
+        name: 'InnovaAI',
+        subtitle: 'Innovación con Inteligencia Artificial',
+        logo: 'IA',
+        domain: 'innovaai.seap.com',
+        primary: '#059669',
+        secondary: '#047857',
+        tertiary: '#10b981',
+        allowedDomains: ['@innovaai.com', '@innova-tech.com'],
+        users: {
+            'admin@innovaai.com': 'innova2024',
+            'admin@innova-tech.com': 'innova2024',
+            'user@innovaai.com': 'userai123',
+            'scientist@innovaai.com': 'science789'
+        },
+        ssoEnabled: true,
+        features: ['ML Models', 'AI Insights']
+    },
+    datastream: {
+        name: 'DataStream',
+        subtitle: 'Flujo de Datos en Tiempo Real',
+        logo: 'DS',
+        domain: 'datastream.seap.com',
+        primary: '#7c3aed',
+        secondary: '#6d28d9',
+        tertiary: '#8b5cf6',
+        allowedDomains: ['@datastream.com', '@ds-analytics.com'],
+        users: {
+            'admin@datastream.com': 'stream2024',
+            'admin@ds-analytics.com': 'stream2024',
+            'user@datastream.com': 'userdata123',
+            'engineer@datastream.com': 'engineer999'
+        },
+        ssoEnabled: false,
+        features: ['Real-time Analytics', 'Data Pipeline']
+    }
+        };
+
+        let currentCompany = 'tecnocorp';
+
+        function changeCompany(companyKey) {
+            currentCompany = companyKey;
+            const config = companyConfigs[companyKey];
+            
+            // Actualizar variables CSS con animación
+            document.body.style.transition = 'background 0.5s ease';
+            document.documentElement.style.setProperty('--primary-color', config.primary);
+            document.documentElement.style.setProperty('--secondary-color', config.secondary);
+            document.documentElement.style.setProperty('--tertiary-color', config.tertiary);
+            
+            // Actualizar elementos del DOM
+            document.getElementById('companyLogo').textContent = config.logo;
+            document.getElementById('companyName').textContent = config.name;
+            document.getElementById('companySubtitle').textContent = config.subtitle;
+            document.getElementById('domainIndicator').textContent = `📍 ${config.domain}`;
+            
+            // Actualizar background gradient
+            document.body.style.background = `linear-gradient(135deg, ${config.primary} 0%, ${config.tertiary} 100%)`;
+            
+            // Limpiar formulario y mensajes
+            clearMessages();
+            document.getElementById('loginForm').reset();
+            
+            // Mostrar/ocultar opciones SSO
+            const ssoOptions = document.querySelector('.sso-options');
+            if (config.ssoEnabled) {
+                ssoOptions.style.display = 'flex';
+            } else {
+                ssoOptions.style.display = 'none';
+            }
+        }
+
+        function validateEmail(input) {
+            const email = input.value;
+            const config = companyConfigs[currentCompany];
+            
+            input.classList.add('validating');
+            
+            setTimeout(() => {
+                input.classList.remove('validating');
+                
+                if (!email) return;
+                
+                // Validar formato de email
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                if (!emailRegex.test(email)) {
+                    input.classList.add('error');
+                    showError('Formato de correo electrónico inválido');
+                    return;
+                }
+                
+                // Validar dominio empresarial
+                const domain = '@' + email.split('@')[1];
+                if (!config.allowedDomains.includes(domain)) {
+                    input.classList.add('error');
+                    showError(`Este email no pertenece a ${config.name}. Dominios permitidos: ${config.allowedDomains.join(', ')}`);
+                    return;
+                }
+                
+                input.classList.remove('error');
+                input.classList.add('success');
+                clearMessages();
+            }, 1000);
+        }
+
+        function validatePassword(input) {
+            const password = input.value;
+            
+            if (!password) return;
+            
+            if (password.length < 8) {
+                input.classList.add('error');
+                showError('La contraseña debe tener al menos 8 caracteres');
+                return;
+            }
+            
+            input.classList.remove('error');
+            input.classList.add('success');
+            clearMessages();
+        }
+
+        function clearValidation(input) {
+            input.classList.remove('error', 'success', 'validating');
+        }
+
+        function togglePassword() {
+            const passwordInput = document.getElementById('password');
+            const toggleButton = document.querySelector('.password-toggle');
+            
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                toggleButton.textContent = '🙈';
+            } else {
+                passwordInput.type = 'password';
+                toggleButton.textContent = '👁️';
+            }
+        }
+
+        function handleLogin(event) {
+            event.preventDefault();
+    
+    const email = document.getElementById('email').value;
+    const password = document.getElementById('password').value;
+    const loginButton = document.getElementById('loginButton');
+    const loginButtonText = document.getElementById('loginButtonText');
+    
+    // Validación básica
+    if (!email || !password) {
+        showError('Por favor completa todos los campos');
+        return;
+    }
+    
+    // Estado de carga
+    loginButton.classList.add('loading');
+    loginButton.disabled = true;
+    loginButtonText.textContent = 'Iniciando sesión...';
+    
+    // Simular proceso de autenticación
+setTimeout(() => {
+    const config = companyConfigs[currentCompany];
+    const domain = '@' + email.split('@')[1];
+    
+    // Verificar si el dominio pertenece a la empresa actual
+    if (!config.allowedDomains.includes(domain)) {
+        showError(`Este email no pertenece a ${config.name}. Dominios permitidos: ${config.allowedDomains.join(', ')}`);
+        resetLoginButton();
+        return;
+    }
+    
+    // Verificar credenciales específicas
+    if (config.users[email] && config.users[email] === password) {
+        showSuccess('Credenciales válidas. Redirigiendo a actualización de su perfil...');
+        
+        setTimeout(() => {
+            // Guardar datos de sesión
+            localStorage.setItem('isLoggedIn', 'true');
+            localStorage.setItem('currentUser', email);
+            localStorage.setItem('currentCompany', currentCompany);
+            localStorage.setItem('userRole', getUserRole(email));
+            
+            // Redireccionar al dashboard
+            window.location.href = 'profile-setup.html';
+        }, 1500);
+    } else {
+        // Verificar si el usuario existe pero la contraseña es incorrecta
+        if (config.users[email]) {
+            showError('Contraseña incorrecta. Verifica tu clave de acceso.');
+        } else {
+            showError(`Usuario no encontrado en ${config.name}. Verifica tu email o contacta al administrador.`);
+        }
+        resetLoginButton();
+    }
+}, 2000);
+        }
+
+        function resetLoginButton() {
+            const loginButton = document.getElementById('loginButton');
+            const loginButtonText = document.getElementById('loginButtonText');
+            loginButton.classList.remove('loading');
+            loginButton.disabled = false;
+            loginButtonText.textContent = 'Iniciar Sesión';
+        }
+
+        function getUserRole(email) {
+            if (email.includes('admin')) return 'Admin Total';
+            if (email.includes('analista') || email.includes('scientist')) return 'Analista IA';
+            if (email.includes('engineer')) return 'Data Manager';
+            return 'Usuario';
+        }
+
+        function ssoLogin(provider) {
+            const config = companyConfigs[currentCompany];
+            alert(`🔐 Iniciando SSO con ${provider} para ${config.name}...\n\n` +
+                  `Redirigiendo a ${provider} con contexto empresarial...`);
+        }
+
+        function forgotPassword() {
+            const config = companyConfigs[currentCompany];
+            alert(`🔑 Recuperación de contraseña para ${config.name}\n\n` +
+                  `Se enviará un enlace personalizado con el branding de ${config.name} ` +
+                  `al correo corporativo registrado.`);
+        }
+
+        function showError(message) {
+            const errorMessage = document.getElementById('errorMessage');
+            const errorText = document.getElementById('errorText');
+            const successMessage = document.getElementById('successMessage');
+            
+            successMessage.classList.remove('show');
+            errorText.textContent = message;
+            errorMessage.classList.add('show');
+            
+            setTimeout(() => {
+                errorMessage.classList.remove('show');
+            }, 5000);
+        }
+
+        function showSuccess(message) {
+            const successMessage = document.getElementById('successMessage');
+            const successText = document.getElementById('successText');
+            const errorMessage = document.getElementById('errorMessage');
+            
+            errorMessage.classList.remove('show');
+            successText.textContent = message;
+            successMessage.classList.add('show');
+        }
+
+        function clearMessages() {
+            document.getElementById('errorMessage').classList.remove('show');
+            document.getElementById('successMessage').classList.remove('show');
+        }
+
+        function goToSignup() {
+            alert('🆕 Redirigiendo al registro con branding de ' + companyConfigs[currentCompany].name);
+        }
+
+        function goToSupport() {
+            alert('🆘 Abriendo soporte contextual para ' + companyConfigs[currentCompany].name);
+        }
+
+        function goToPrivacy() {
+            alert('📋 Mostrando política de privacidad personalizada');
+        }
+
+        // Inicialización
+        document.addEventListener('DOMContentLoaded', function() {
+            // Simular detección de dominio
+            const detectedCompany = 'tecnocorp'; // En producción: window.location.hostname.split('.')[0]
+            changeCompany(detectedCompany);
+            
+            // Enfocar primer campo
+            document.getElementById('email').focus();
+        });
+
+        // Manejo de teclas
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Enter' && event.target.tagName !== 'BUTTON') {
+                event.preventDefault();
+                document.getElementById('loginButton').click();
+            }
+        });
+    </script>
+</body>
+</html>

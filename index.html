@@ -1,0 +1,739 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SEAP - Dashboard Multi-tenant</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+        <!-- Modal Cargar Datos - COMENTADO: No se usa, se maneja por vistas dinámicas -->
+    <!--
+    <div class="modal-overlay" id="modalCargarDatos">
+        <div class="modal-container">
+            <div class="modal-header">
+                <h3 class="modal-title">📤 Cargar Datos</h3>
+                <button class="modal-close" onclick="closeModal('modalCargarDatos')">×</button>
+            </div>
+            
+            <div class="modal-body">
+                <div class="upload-zone" id="uploadZone">
+                    <div class="upload-icon">📁</div>
+                    <h4>Arrastra archivos aquí o haz clic para seleccionar</h4>
+                    <p>Formatos soportados: CSV, XLSX, JSON (Máx. 10MB)</p>
+                    <input type="file" id="fileInput" accept=".csv,.xlsx,.json" multiple hidden>
+                    <button class="upload-btn" onclick="document.getElementById('fileInput').click()">
+                        Seleccionar Archivos
+                    </button>
+                </div>
+                
+                <div class="upload-progress" id="uploadProgress" style="display: none;">
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="progressFill"></div>
+                    </div>
+                    <div class="progress-text" id="progressText">Cargando...</div>
+                </div>
+                
+                <div class="file-list" id="fileList"></div>
+            </div>
+            
+            <div class="modal-footer">
+                <button class="btn-secondary" onclick="closeModal('modalCargarDatos')">Cancelar</button>
+                <button class="btn-primary" id="uploadBtn" onclick="uploadFiles()" disabled>
+                    Cargar Archivos
+                </button>
+            </div>
+        </div>
+    </div>
+    -->
+
+    <!-- Modal Nuevo Análisis - COMENTADO: No se usa, se maneja por vistas dinámicas -->
+    <!--
+    <div class="modal-overlay" id="modalNuevoAnalisis">
+        <div class="modal-container">
+            <div class="modal-header">
+                <h3 class="modal-title">📊 Nuevo Análisis</h3>
+                <button class="modal-close" onclick="closeModal('modalNuevoAnalisis')">×</button>
+            </div>
+            
+            <div class="modal-body">
+                <div class="form-group">
+                    <label class="form-label">Nombre del Análisis</label>
+                    <input type="text" class="form-input" id="analysisName" placeholder="Ej: Análisis de Ventas Q1">
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Tipo de Análisis</label>
+                    <select class="form-select" id="analysisType">
+                        <option value="">Seleccionar tipo</option>
+                        <option value="descriptivo">Análisis Descriptivo</option>
+                        <option value="predictivo">Análisis Predictivo</option>
+                        <option value="comparativo">Análisis Comparativo</option>
+                        <option value="tendencias">Análisis de Tendencias</option>
+                        <option value="correlacion">Análisis de Correlación</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Fuente de Datos</label>
+                    <select class="form-select" id="dataSource">
+                        <option value="">Seleccionar fuente</option>
+                        <option value="ventas_q1_2024">ventas_q1_2024.xlsx</option>
+                        <option value="marketing_data">marketing_data.csv</option>
+                        <option value="inventario_q4">inventario_q4.json</option>
+                        <option value="nueva">Cargar nueva fuente</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Configuración Avanzada</label>
+                    <div class="checkbox-group">
+                        <label class="checkbox-item">
+                            <input type="checkbox" id="autoML" checked>
+                            <span>Usar Machine Learning automático</span>
+                        </label>
+                        <label class="checkbox-item">
+                            <input type="checkbox" id="realTime">
+                            <span>Análisis en tiempo real</span>
+                        </label>
+                        <label class="checkbox-item">
+                            <input type="checkbox" id="notifications">
+                            <span>Notificar cuando termine</span>
+                        </label>
+                    </div>
+                </div>
+                
+                <div class="analysis-preview">
+                    <h4>Vista Previa del Análisis</h4>
+                    <div class="preview-content" id="analysisPreview">
+                        <p>Selecciona un tipo de análisis para ver la configuración</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="modal-footer">
+                <button class="btn-secondary" onclick="closeModal('modalNuevoAnalisis')">Cancelar</button>
+                <button class="btn-primary" onclick="createAnalysis()">Crear Análisis</button>
+            </div>
+        </div>
+    </div>
+    -->
+
+    <!-- Modal Plantillas de Análisis - COMENTADO: No se usa, se maneja por vistas dinámicas -->
+    <!--
+<div class="modal-overlay" id="modalPlantillas">
+    <div class="modal-container">
+        <div class="modal-header">
+            <h3 class="modal-title">📋 Plantillas de Análisis</h3>
+            <button class="modal-close" onclick="closeModal('modalPlantillas')">×</button>
+        </div>
+        
+        <div class="modal-body">
+            <div class="search-templates">
+                <input type="text" class="form-input" id="templateSearch" placeholder="Buscar plantillas..." onkeyup="filterTemplates()">
+            </div>
+            
+            <div class="template-categories">
+                <button class="category-btn active" onclick="filterByCategory('all')">Todas</button>
+                <button class="category-btn" onclick="filterByCategory('ventas')">Ventas</button>
+                <button class="category-btn" onclick="filterByCategory('marketing')">Marketing</button>
+                <button class="category-btn" onclick="filterByCategory('finanzas')">Finanzas</button>
+                <button class="category-btn" onclick="filterByCategory('operaciones')">Operaciones</button>
+            </div>
+            
+            <div class="templates-grid" id="templatesGrid">
+
+            </div>
+        </div>
+        
+        <div class="modal-footer">
+            <button class="btn-secondary" onclick="closeModal('modalPlantillas')">Cerrar</button>
+            <button class="btn-primary" id="useTemplateBtn" onclick="useSelectedTemplate()" disabled>
+                Usar Plantilla
+            </button>
+        </div>
+    </div>
+</div>
+    -->
+
+<!-- Modal Análisis Avanzado - COMENTADO: No se usa, se maneja por vistas dinámicas -->
+<!--
+<div class="modal-overlay" id="modalAnalisisAvanzado">
+    <div class="modal-container" style="max-width: 800px;">
+        <div class="modal-header">
+            <h3 class="modal-title">📊 Nuevo Análisis Avanzado</h3>
+            <button class="modal-close" onclick="closeModal('modalAnalisisAvanzado')">×</button>
+        </div>
+        
+        <div class="modal-body">
+            <div class="analysis-wizard">
+
+                <div class="wizard-step active" id="step1">
+                    <h4>Paso 1: Información Básica</h4>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Nombre del Análisis</label>
+                        <input type="text" class="form-input" id="advancedAnalysisName" placeholder="Ej: Análisis de Ventas Q1 2024">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Descripción</label>
+                        <textarea class="form-input" id="analysisDescription" rows="3" placeholder="Describe el objetivo de este análisis..."></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Categoría</label>
+                        <select class="form-select" id="analysisCategory">
+                            <option value="">Seleccionar categoría</option>
+                            <option value="ventas">Ventas</option>
+                            <option value="marketing">Marketing</option>
+                            <option value="finanzas">Finanzas</option>
+                            <option value="operaciones">Operaciones</option>
+                            <option value="rrhh">Recursos Humanos</option>
+                            <option value="inventario">Inventario</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Prioridad</label>
+                        <div class="priority-options">
+                            <label class="priority-item">
+                                <input type="radio" name="priority" value="baja">
+                                <span class="priority-badge low">Baja</span>
+                            </label>
+                            <label class="priority-item">
+                                <input type="radio" name="priority" value="media" checked>
+                                <span class="priority-badge medium">Media</span>
+                            </label>
+                            <label class="priority-item">
+                                <input type="radio" name="priority" value="alta">
+                                <span class="priority-badge high">Alta</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="wizard-step" id="step2">
+                    <h4>Paso 2: Fuentes de Datos</h4>
+                    
+                    <div class="data-sources">
+                        <div class="source-type">
+                            <h5>Archivos Disponibles</h5>
+                            <div class="source-list">
+                                <div class="source-item" onclick="toggleDataSource(this)">
+                                    <div class="source-info">
+                                        <span class="source-icon">📊</span>
+                                        <div>
+                                            <div class="source-name">ventas_q1_2024.xlsx</div>
+                                            <div class="source-meta">1,250 registros • Actualizado hace 2 días</div>
+                                        </div>
+                                    </div>
+                                    <input type="checkbox" class="source-checkbox">
+                                </div>
+                                
+                                <div class="source-item" onclick="toggleDataSource(this)">
+                                    <div class="source-info">
+                                        <span class="source-icon">📈</span>
+                                        <div>
+                                            <div class="source-name">marketing_campaigns.csv</div>
+                                            <div class="source-meta">850 registros • Actualizado ayer</div>
+                                        </div>
+                                    </div>
+                                    <input type="checkbox" class="source-checkbox">
+                                </div>
+                                
+                                <div class="source-item" onclick="toggleDataSource(this)">
+                                    <div class="source-info">
+                                        <span class="source-icon">💰</span>
+                                        <div>
+                                            <div class="source-name">financial_data.json</div>
+                                            <div class="source-meta">2,100 registros • Actualizado hoy</div>
+                                        </div>
+                                    </div>
+                                    <input type="checkbox" class="source-checkbox">
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="source-type">
+                            <h5>Conexiones API</h5>
+                            <div class="source-list">
+                                <div class="source-item" onclick="toggleDataSource(this)">
+                                    <div class="source-info">
+                                        <span class="source-icon">🔗</span>
+                                        <div>
+                                            <div class="source-name">Google Analytics</div>
+                                            <div class="source-meta">Tiempo real • Activa</div>
+                                        </div>
+                                    </div>
+                                    <input type="checkbox" class="source-checkbox">
+                                </div>
+                                
+                                <div class="source-item" onclick="toggleDataSource(this)">
+                                    <div class="source-info">
+                                        <span class="source-icon">💳</span>
+                                        <div>
+                                            <div class="source-name">Stripe Payments</div>
+                                            <div class="source-meta">Tiempo real • Activa</div>
+                                        </div>
+                                    </div>
+                                    <input type="checkbox" class="source-checkbox">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="wizard-step" id="step3">
+                    <h4>Paso 3: Configuración del Análisis</h4>
+                    
+                    <div class="analysis-types">
+                        <h5>Tipos de Análisis</h5>
+                        <div class="analysis-type-grid">
+                            <div class="analysis-type-card" onclick="toggleAnalysisType(this, 'descriptivo')">
+                                <div class="type-icon">📊</div>
+                                <div class="type-name">Descriptivo</div>
+                                <div class="type-description">Estadísticas básicas y distribuciones</div>
+                                <input type="checkbox" class="type-checkbox">
+                            </div>
+                            
+                            <div class="analysis-type-card" onclick="toggleAnalysisType(this, 'predictivo')">
+                                <div class="type-icon">🔮</div>
+                                <div class="type-name">Predictivo</div>
+                                <div class="type-description">Modelos ML y pronósticos</div>
+                                <input type="checkbox" class="type-checkbox">
+                            </div>
+                            
+                            <div class="analysis-type-card" onclick="toggleAnalysisType(this, 'correlacion')">
+                                <div class="type-icon">🔗</div>
+                                <div class="type-name">Correlación</div>
+                                <div class="type-description">Relaciones entre variables</div>
+                                <input type="checkbox" class="type-checkbox">
+                            </div>
+                            
+                            <div class="analysis-type-card" onclick="toggleAnalysisType(this, 'clustering')">
+                                <div class="type-icon">🎯</div>
+                                <div class="type-name">Clustering</div>
+                                <div class="type-description">Segmentación automática</div>
+                                <input type="checkbox" class="type-checkbox">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="analysis-settings">
+                        <h5>Configuraciones Avanzadas</h5>
+                        <div class="settings-grid">
+                            <label class="setting-item">
+                                <input type="checkbox" id="autoInsights" checked>
+                                <span>🧠 Generar insights automáticos</span>
+                            </label>
+                            
+                            <label class="setting-item">
+                                <input type="checkbox" id="realTimeUpdate">
+                                <span>🔄 Actualización en tiempo real</span>
+                            </label>
+                            
+                            <label class="setting-item">
+                                <input type="checkbox" id="emailNotifications">
+                                <span>📧 Notificaciones por email</span>
+                            </label>
+                            
+                            <label class="setting-item">
+                                <input type="checkbox" id="shareResults">
+                                <span>🔗 Permitir compartir resultados</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="wizard-step" id="step4">
+                    <h4>Paso 4: Programación y Finalización</h4>
+                    
+                    <div class="scheduling-options">
+                        <h5>Frecuencia de Ejecución</h5>
+                        <div class="frequency-options">
+                            <label class="frequency-item">
+                                <input type="radio" name="frequency" value="manual" checked>
+                                <span>Manual</span>
+                                <small>Ejecutar solo cuando sea necesario</small>
+                            </label>
+                            
+                            <label class="frequency-item">
+                                <input type="radio" name="frequency" value="daily">
+                                <span>Diario</span>
+                                <small>Ejecutar todos los días a las 6:00 AM</small>
+                            </label>
+                            
+                            <label class="frequency-item">
+                                <input type="radio" name="frequency" value="weekly">
+                                <span>Semanal</span>
+                                <small>Ejecutar los lunes a las 8:00 AM</small>
+                            </label>
+                            
+                            <label class="frequency-item">
+                                <input type="radio" name="frequency" value="monthly">
+                                <span>Mensual</span>
+                                <small>Ejecutar el primer día de cada mes</small>
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <div class="analysis-summary">
+                        <h5>Resumen del Análisis</h5>
+                        <div class="summary-content" id="analysisSummary">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="wizard-navigation">
+                <button class="btn-secondary" id="prevBtn" onclick="previousStep()" disabled>Anterior</button>
+                <div class="step-indicators">
+                    <span class="step-dot active"></span>
+                    <span class="step-dot"></span>
+                    <span class="step-dot"></span>
+                    <span class="step-dot"></span>
+                </div>
+                <button class="btn-primary" id="nextBtn" onclick="nextStep()">Siguiente</button>
+            </div>
+        </div>
+    </div>
+</div>
+-->
+
+    <div class="dashboard-container">
+        <!-- Sidebar -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <div class="company-logo-container">
+                    <div class="company-logo" id="companyLogo">TC</div>
+                    <div class="company-info">
+                        <h2 id="companyName">TecnoCorp</h2>
+                        <div class="company-subtitle" id="companySubtitle">Admin Total</div>
+                    </div>
+                </div>
+                
+                <!-- Botón Personalizar Empresa -->
+                <div class="change-company-container">
+                    <button class="change-company-btn" onclick="toggleCustomizePanel()">
+                        <span class="change-company-icon">🎨</span>
+                        <span>Personalizar Empresa</span>
+                    </button>
+                </div>
+            </div>
+
+            <nav class="sidebar-nav">
+                <div class="menu-section">
+                    <div class="menu-section-title">PRINCIPAL</div>
+                    <ul class="sidebar-menu">
+                        <li><a href="#" class="sidebar-item active" data-content="dashboard">
+                            <span class="sidebar-item-icon">📊</span>
+                            Dashboard
+                        </a></li>
+                        <li><a href="#" class="sidebar-item" data-content="analisis">
+                            <span class="sidebar-item-icon">📝</span>
+                            Análisis
+                            <span class="badge primary">3</span>
+                        </a></li>
+                        <li><a href="#" class="sidebar-item" data-content="ia-predictiva">
+                            <span class="sidebar-item-icon">🤖</span>
+                            IA Predictiva
+                            <span class="badge new">NEW</span>
+                        </a></li>
+                    </ul>
+                </div>
+
+                <div class="menu-section">
+                    <div class="menu-section-title">DATOS</div>
+                    <ul class="sidebar-menu">
+                        <li><a href="#" class="sidebar-item" data-content="gestion-datos">
+                            <span class="sidebar-item-icon">📁</span>
+                            Gestión de Datos
+                        </a></li>
+                        <li><a href="#" class="sidebar-item" data-content="conexiones-api">
+                            <span class="sidebar-item-icon">🔗</span>
+                            Conexiones API
+                        </a></li>
+                        <li><a href="#" class="sidebar-item" data-content="etl-procesos">
+                            <span class="sidebar-item-icon">⚡</span>
+                            ETL Procesos
+                        </a></li>
+                    </ul>
+                </div>
+
+                <div class="menu-section">
+                    <div class="menu-section-title">REPORTES</div>
+                    <ul class="sidebar-menu">
+                        <li><a href="#" class="sidebar-item" data-content="informes">
+                            <span class="sidebar-item-icon">📋</span>
+                            Informes
+                        </a></li>
+                        <li><a href="#" class="sidebar-item" data-content="dashboards">
+                            <span class="sidebar-item-icon">📊</span>
+                            Dashboards
+                        </a></li>
+                        <li><a href="#" class="sidebar-item" data-content="exportar">
+                            <span class="sidebar-item-icon">👤</span>
+                            Exportar
+                        </a></li>
+                    </ul>
+                </div>
+
+                <div class="menu-section">
+                    <div class="menu-section-title">ADMINISTRACIÓN</div>
+                    <ul class="sidebar-menu">
+                        <li><a href="#" class="sidebar-item" data-content="usuarios">
+                            <span class="sidebar-item-icon">👥</span>
+                            Usuarios
+                        </a></li>
+                        <li><a href="#" class="sidebar-item" data-content="roles-permisos">
+                            <span class="sidebar-item-icon">🔐</span>
+                            Roles y Permisos
+                        </a></li>
+                        <li><a href="#" class="sidebar-item" data-content="configuracion">
+                            <span class="sidebar-item-icon">⚙️</span>
+                            Configuración
+                        </a></li>
+                    </ul>
+                </div>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Header -->
+            <header class="header">
+                <div class="header-left">
+                    <button class="mobile-menu-toggle" onclick="toggleSidebar()">☰</button>
+                    
+                    <!-- Breadcrumb Navigation -->
+                    <nav class="breadcrumb-nav">
+                        <span class="breadcrumb-item">SEAP</span>
+                        <span class="breadcrumb-separator">></span>
+                        <span class="breadcrumb-item" id="companyBreadcrumb">TecnoCorp</span>
+                        <span class="breadcrumb-separator">></span>
+                        <span class="breadcrumb-item active" id="pageBreadcrumb">Dashboard</span>
+                    </nav>
+                </div>
+                
+                <div class="header-right">
+                    <div class="search-container">
+                        <input type="text" class="search-input" placeholder="Buscar en datos, reportes, usuarios...">
+                        <span class="search-icon">🔍</span>
+                    </div>
+                    
+                    <div class="notifications" onclick="showNotifications()">
+                        <span>🔔</span>
+                        <div class="notification-badge">1</div>
+                    </div>
+
+                    <div class="user-menu" onclick="toggleUserMenu()">
+                        <div class="user-avatar-header">JP</div>
+                        <div class="user-info-header">
+                            <div class="user-name-header">Juan Pérez</div>
+                            <div class="user-role-header" id="userRoleHeader">Admin Total</div>
+                        </div>
+                        <span class="dropdown-arrow">▼</span>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Page Title -->
+            <div class="page-header">
+                <h1 class="page-title" id="pageTitle">Dashboard TecnoCorp</h1>
+            </div>
+
+            <!-- Content Area -->
+            <div class="content-area">
+                <!-- Aquí se cargarán las pantallas dinámicamente -->
+            </div>
+        </main>
+    </div>
+
+    <!-- User Dropdown Menu -->
+    <div class="user-dropdown" id="userDropdown">
+        <div class="dropdown-item" onclick="editProfile()">
+            <span class="dropdown-icon">👤</span>
+            Editar Perfil
+        </div>
+        <div class="dropdown-item" onclick="accountSettings()">
+            <span class="dropdown-icon">⚙️</span>
+            Configuración de Cuenta
+        </div>
+        <div class="dropdown-item" onclick="helpSupport()">
+            <span class="dropdown-icon">❓</span>
+            Ayuda y Soporte
+        </div>
+        <div class="dropdown-divider"></div>
+        <div class="dropdown-item logout" onclick="logout()">
+            <span class="dropdown-icon">🚪</span>
+            Cerrar Sesión
+        </div>
+    </div>
+
+    <!-- Panel de Personalización de Empresa -->
+    <div class="customize-panel" id="customizePanel">
+        <div class="customize-panel-header">
+            <h3 class="customize-panel-title">🎨 Personalizar Empresa</h3>
+            <button class="customize-panel-close" onclick="toggleCustomizePanel()">×</button>
+        </div>
+        
+        <div class="customize-panel-content">
+            <form id="customizeForm" class="customize-form">
+                <!-- Información Básica -->
+                <div class="customize-section">
+                    <h4 class="customize-section-title">📋 Información Básica</h4>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Nombre de la Empresa</label>
+                        <input type="text" id="companyNameInput" class="form-input" placeholder="Nombre de la empresa" value="TecnoCorp">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Subtítulo</label>
+                        <input type="text" id="companySubtitleInput" class="form-input" placeholder="Subtítulo o eslogan" value="Admin Total">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Logo (Iniciales)</label>
+                        <input type="text" id="companyLogoInput" class="form-input" placeholder="Ej: TC" value="TC" maxlength="3">
+                    </div>
+                </div>
+
+                <!-- Paleta de Colores -->
+                <div class="customize-section">
+                    <h4 class="customize-section-title">🎨 Paleta de Colores</h4>
+                    
+                    <div class="color-presets">
+                        <div class="preset-label">Paletas Predefinidas:</div>
+                        <div class="color-preset-grid">
+                            <button type="button" class="color-preset active" data-preset="azul" onclick="applyColorPreset('azul')">
+                                <div class="preset-colors">
+                                    <span style="background: #4f7cff;"></span>
+                                    <span style="background: #3b5bdb;"></span>
+                                    <span style="background: #6c8eff;"></span>
+                                </div>
+                                <span>Azul</span>
+                            </button>
+                            
+                            <button type="button" class="color-preset" data-preset="verde" onclick="applyColorPreset('verde')">
+                                <div class="preset-colors">
+                                    <span style="background: #059669;"></span>
+                                    <span style="background: #047857;"></span>
+                                    <span style="background: #10b981;"></span>
+                                </div>
+                                <span>Verde</span>
+                            </button>
+                            
+                            <button type="button" class="color-preset" data-preset="morado" onclick="applyColorPreset('morado')">
+                                <div class="preset-colors">
+                                    <span style="background: #7c3aed;"></span>
+                                    <span style="background: #6d28d9;"></span>
+                                    <span style="background: #8b5cf6;"></span>
+                                </div>
+                                <span>Morado</span>
+                            </button>
+                            
+                            <button type="button" class="color-preset" data-preset="naranja" onclick="applyColorPreset('naranja')">
+                                <div class="preset-colors">
+                                    <span style="background: #ea580c;"></span>
+                                    <span style="background: #c2410c;"></span>
+                                    <span style="background: #fb923c;"></span>
+                                </div>
+                                <span>Naranja</span>
+                            </button>
+                            
+                            <button type="button" class="color-preset" data-preset="rojo" onclick="applyColorPreset('rojo')">
+                                <div class="preset-colors">
+                                    <span style="background: #dc2626;"></span>
+                                    <span style="background: #b91c1c;"></span>
+                                    <span style="background: #f87171;"></span>
+                                </div>
+                                <span>Rojo</span>
+                            </button>
+                            
+                            <button type="button" class="color-preset" data-preset="personalizado" onclick="applyColorPreset('personalizado')">
+                                <div class="preset-colors">
+                                    <span style="background: #6b7280;"></span>
+                                    <span style="background: #4b5563;"></span>
+                                    <span style="background: #9ca3af;"></span>
+                                </div>
+                                <span>Personalizado</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="custom-colors" id="customColors" style="display: none;">
+                        <div class="form-group">
+                            <label class="form-label">Color Primario</label>
+                            <div class="color-input-group">
+                                <input type="color" id="primaryColor" class="color-picker" value="#4f7cff">
+                                <input type="text" id="primaryColorText" class="color-text" value="#4f7cff">
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">Color Secundario</label>
+                            <div class="color-input-group">
+                                <input type="color" id="secondaryColor" class="color-picker" value="#3b5bdb">
+                                <input type="text" id="secondaryColorText" class="color-text" value="#3b5bdb">
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">Color de Acento</label>
+                            <div class="color-input-group">
+                                <input type="color" id="accentColor" class="color-picker" value="#6c8eff">
+                                <input type="text" id="accentColorText" class="color-text" value="#6c8eff">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Vista Previa -->
+                <div class="customize-section">
+                    <h4 class="customize-section-title">👁️ Vista Previa</h4>
+                    <div class="preview-container">
+                        <div class="preview-company-header">
+                            <div class="preview-logo" id="previewLogo">TC</div>
+                            <div class="preview-info">
+                                <div class="preview-name" id="previewName">TecnoCorp</div>
+                                <div class="preview-subtitle" id="previewSubtitle">Admin Total</div>
+                            </div>
+                        </div>
+                        
+                        <div class="preview-elements">
+                            <button class="preview-btn">Botón de Ejemplo</button>
+                            <div class="preview-card">
+                                <div class="preview-card-header">Tarjeta de Ejemplo</div>
+                                <div class="preview-card-content">
+                                    Este es un ejemplo de cómo se verían los elementos con la nueva paleta de colores.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Botones de Acción -->
+                <div class="customize-actions">
+                    <button type="button" class="btn-secondary" onclick="resetCustomization()">
+                        <span>🔄</span>
+                        Restablecer
+                    </button>
+                    <button type="button" class="btn-primary" onclick="saveCustomization()">
+                        <span>💾</span>
+                        Guardar Cambios
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Overlay para el panel -->
+    <div class="customize-overlay" id="customizeOverlay" onclick="toggleCustomizePanel()"></div>
+
+<script src="script.js"></script>
+
+</body>
+</html>

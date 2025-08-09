@@ -1,0 +1,3797 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SEAP - Landing Adaptativo</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #2563eb;
+            --secondary-color: #1e40af;
+            --tertiary-color: #3b82f6;
+            --accent-color: #06b6d4;
+            --text-primary: #1f2937;
+            --text-secondary: #6b7280;
+            --bg-primary: #ffffff;
+            --bg-secondary: #f8fafc;
+            --shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 20px 40px -10px rgba(0, 0, 0, 0.15);
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-primary) 100%);
+            color: var(--text-primary);
+            line-height: 1.6;
+        }
+
+ 
+
+
+
+        .navbar {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            padding: 1rem 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 999;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .company-logo {
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            background: var(--primary-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 18px;
+            transition: all 0.3s ease;
+        }
+
+        .company-name {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--primary-color);
+            transition: all 0.3s ease;
+        }
+
+
+
+
+        .login-btn {
+            background: var(--primary-color);
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .login-btn:hover {
+            background: var(--secondary-color);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow);
+        }
+
+        .hero {
+    padding: 100px 2rem 40px; /* Reducir padding inferior aún más */
+    text-align: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    min-height: 60vh; /* Reducir altura mínima significativamente */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+        .hero-badge {
+    display: inline-block;
+    background: linear-gradient(135deg, var(--tertiary-color), var(--accent-color));
+    color: white;
+    padding: 8px 20px;
+    border-radius: 50px;
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 1rem; /* Reducir margen aún más */
+    animation: pulse 2s infinite;
+}
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .hero h1 {
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    font-weight: 800;
+    margin-bottom: 0.8rem; /* Reducir margen aún más */
+    background: linear-gradient(135deg, var(--primary-color), var(--tertiary-color));
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    line-height: 1.2;
+}
+
+        .hero-subtitle {
+    font-size: 1.25rem;
+    color: var(--text-secondary);
+    margin-bottom: 1.5rem; /* Reducir margen inferior significativamente */
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+    font-weight: 400;
+}
+
+        .cta-container {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 2rem; /* Reducir significativamente */
+        }
+
+        .cta-primary {
+            background: linear-gradient(135deg, var(--primary-color), var(--tertiary-color));
+            color: white;
+            padding: 16px 32px;
+            border: none;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-primary::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .cta-primary:hover::before {
+            left: 100%;
+        }
+
+        .cta-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .cta-secondary {
+            background: transparent;
+            color: var(--primary-color);
+            padding: 16px 32px;
+            border: 2px solid var(--primary-color);
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .cta-secondary:hover {
+            background: var(--primary-color);
+            color: white;
+            transform: translateY(-3px);
+        }
+
+        .feature-card {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(10px);
+            padding: 2rem;
+            border-radius: 16px;
+            box-shadow: var(--shadow);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+            text-align: left;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .feature-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--primary-color), var(--tertiary-color));
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1rem;
+            font-size: 24px;
+            color: white;
+        }
+
+        .feature-card h3 {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 0.75rem;
+            color: var(--text-primary);
+        }
+
+        .feature-card p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+
+        .domain-indicator {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-size: 12px;
+            font-family: monospace;
+            z-index: 1000;
+        }
+
+        .theme-indicator {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: var(--primary-color);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-size: 12px;
+            z-index: 1000;
+        }
+
+        /* Navegación mejorada */
+.nav-right {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.nav-tools {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.language-selector {
+    border: 1px solid #e5e7eb;
+    background: white;
+    padding: 8px 12px;
+    border-radius: 8px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.language-selector:hover {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.1);
+}
+
+
+.help-btn {
+    background: white;
+    border: 1px solid #e5e7eb;
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-weight: 500;
+}
+
+.help-btn:hover {
+    background: var(--primary-color);
+    color: white;
+    border-color: var(--primary-color);
+}
+
+/* Mobile Menu Styles */
+.mobile-menu-btn {
+    display: none;
+    background: none;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 8px;
+    color: #64748b;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.mobile-menu-btn:hover {
+    background: var(--primary-color);
+    color: white;
+    border-color: var(--primary-color);
+}
+
+.mobile-menu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background: white;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+    padding: 1rem;
+    min-width: 200px;
+    z-index: 1000;
+}
+
+.mobile-menu.active {
+    display: block;
+    animation: slideDown 0.3s ease;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.mobile-menu-item {
+    margin-bottom: 1rem;
+}
+
+.mobile-menu-item:last-child {
+    margin-bottom: 0;
+}
+
+.mobile-menu-item label {
+    display: block;
+    font-size: 12px;
+    font-weight: 600;
+    color: #64748b;
+    margin-bottom: 0.5rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.mobile-language-selector {
+    width: 100%;
+    padding: 8px 12px;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    background: #f8fafc;
+    font-size: 14px;
+    color: #334155;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.mobile-language-selector:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    background: white;
+}
+
+.mobile-help-btn {
+    width: 100%;
+    background: none;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 10px 12px;
+    color: #64748b;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 500;
+}
+
+.mobile-help-btn:hover {
+    background: var(--primary-color);
+    color: white;
+    border-color: var(--primary-color);
+}
+
+/* Virtual Assistant Styles */
+.virtual-assistant {
+    position: fixed;
+    top: 80px;
+    right: -450px;
+    width: 420px;
+    height: calc(100vh - 100px);
+    min-height: 600px;
+    max-height: calc(100vh - 100px);
+    background: white;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px 0 0 12px;
+    box-shadow: -5px 0 25px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    transition: right 0.3s ease;
+    overflow: hidden;
+    resize: vertical;
+}
+
+.virtual-assistant.active {
+    right: 0;
+}
+
+.assistant-header {
+    display: flex;
+    align-items: center;
+    padding: 1rem;
+    border-bottom: 1px solid #e2e8f0;
+    background: linear-gradient(135deg, var(--primary-color), var(--tertiary-color));
+    color: white;
+    border-radius: 12px 0 0 0;
+}
+
+.assistant-avatar {
+    width: 40px;
+    height: 40px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 12px;
+}
+
+.assistant-info h3 {
+    margin: 0;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.assistant-info p {
+    margin: 0;
+    font-size: 12px;
+    opacity: 0.8;
+}
+
+.assistant-toggle {
+    margin-left: auto;
+    background: none;
+    border: none;
+    color: white;
+    cursor: pointer;
+    padding: 8px;
+    border-radius: 8px;
+    transition: background 0.3s ease;
+}
+
+.assistant-toggle:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.assistant-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.assistant-greeting {
+    padding: 0.5rem 1rem;
+    background: #f8fafc;
+    border-bottom: 1px solid #e2e8f0;
+    transition: all 0.3s ease;
+    min-height: 40px;
+    height: 40px;
+}
+
+.assistant-greeting.hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.assistant-greeting p {
+    margin: 0;
+    color: #64748b;
+    font-size: 13px;
+    line-height: 1.4;
+}
+
+.quick-options {
+    padding: 0.5rem 1rem;
+    display: grid;
+    gap: 6px;
+    transition: all 0.3s ease;
+    max-height: none;
+    overflow: visible;
+    opacity: 1;
+    transform: translateY(0);
+    min-height: 160px;
+    height: 160px;
+}
+
+.quick-options.hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.quick-option {
+    display: flex;
+    align-items: center;
+    padding: 8px 10px;
+    background: white;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-align: left;
+}
+
+.quick-option:hover {
+    background: #f1f5f9;
+    border-color: var(--primary-color);
+    transform: translateX(4px);
+}
+
+.quick-option svg {
+    margin-right: 8px;
+    color: var(--primary-color);
+}
+
+.quick-option span {
+    font-size: 13px;
+    color: #334155;
+    font-weight: 500;
+}
+
+.chat-section {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    border-top: 1px solid #e2e8f0;
+    min-height: 0;
+    overflow: hidden;
+}
+
+.chat-messages {
+    flex: 1;
+    padding: 0.75rem 0.75rem 0 0.75rem;
+    overflow-y: auto;
+    min-height: 200px;
+}
+
+.chat-message {
+    margin-bottom: 0.75rem;
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    /* Mensajes del asistente alineados a la izquierda por defecto */
+}
+
+.chat-message:last-child {
+    margin-bottom: 0;
+}
+
+.chat-messages > *:last-child {
+    margin-bottom: 0 !important;
+}
+
+.chat-message.user {
+    /* Mensajes del usuario alineados a la derecha */
+    flex-direction: row-reverse;
+    justify-content: flex-start;
+    text-align: right;
+}
+
+.message-bubble {
+    padding: 0.75rem 1rem 1.25rem 0.75rem;
+    border-radius: 12px;
+    max-width: 80%;
+    font-size: 13px;
+    line-height: 1.4;
+    font-family: inherit;
+    word-wrap: break-word;
+    margin: 0.25rem 0 0.25rem 0;
+    /* Estilo del asistente (respuestas IA) - mismo que mensaje de bienvenida */
+    background: linear-gradient(135deg, #ffffff, #f8fafc);
+    color: #64748b;
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    white-space: pre-wrap;
+}
+
+/* Formateo para contenido de IA */
+.message-bubble ul {
+    margin: 0.4rem 0;
+    padding-left: 1rem;
+    list-style-type: disc;
+}
+
+.message-bubble ol {
+    margin: 0.4rem 0;
+    padding-left: 1rem;
+    list-style-type: decimal;
+}
+
+.message-bubble li {
+    margin-bottom: 0.2rem;
+    line-height: 1.4;
+    font-size: 13px;
+}
+
+.message-bubble p {
+    margin-bottom: 0.6rem;
+    line-height: 1.4;
+    font-size: 13px;
+}
+
+.message-bubble p:last-child {
+    margin-bottom: 0.2rem;
+}
+
+.message-bubble br {
+    line-height: 1.4;
+}
+
+.message-bubble h3 {
+    font-size: 14px;
+    font-weight: 600;
+    margin: 0.6rem 0 0.4rem 0;
+    color: #374151;
+}
+
+.message-bubble h4 {
+    font-size: 13px;
+    font-weight: 600;
+    margin: 0.4rem 0 0.2rem 0;
+    color: #374151;
+}
+
+.message-bubble strong {
+    font-weight: 600;
+    color: #374151;
+    font-size: 13px;
+}
+
+.message-bubble em {
+    font-style: italic;
+    color: #64748b;
+    font-size: 13px;
+}
+
+.message-bubble code {
+    background: #f1f5f9;
+    padding: 0.1rem 0.2rem;
+    border-radius: 3px;
+    font-family: 'Monaco', 'Courier New', monospace;
+    font-size: 12px;
+    color: #1e293b;
+}
+
+.message-bubble pre {
+    background: #f8fafc;
+    padding: 0.6rem;
+    border-radius: 6px;
+    border: 1px solid #e2e8f0;
+    overflow-x: auto;
+    margin: 0.4rem 0;
+    font-family: 'Monaco', 'Courier New', monospace;
+    font-size: 12px;
+    line-height: 1.3;
+}
+
+.chat-message.user .message-bubble {
+    /* Estilo del usuario (consultas) - mismo color que el chat */
+    background: linear-gradient(135deg, var(--primary-color), #4f46e5);
+    color: #ffffff;
+    font-size: 13px;
+    line-height: 1.4;
+    font-family: inherit;
+    padding: 0.75rem 1rem 1.5rem 0.75rem;
+    border-radius: 12px;
+    margin: 0.25rem 0 0.25rem 0;
+    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    white-space: pre-wrap;
+}
+
+.chat-input-container {
+    display: flex;
+    flex-direction: column;
+    padding: 0.5rem 1rem;
+    gap: 6px;
+    border-top: 1px solid #e2e8f0;
+    flex-shrink: 0;
+    background: white;
+    position: sticky;
+    bottom: 0;
+    z-index: 10;
+    height: 80px;
+}
+
+.chat-input-wrapper {
+    display: flex;
+    flex: 1;
+    gap: 8px;
+    align-items: center;
+}
+
+.chat-input {
+    flex: 1;
+    padding: 10px 12px;
+    border: 1px solid #e2e8f0;
+    border-radius: 20px;
+    outline: none;
+    font-size: 14px;
+    transition: border-color 0.3s ease;
+}
+
+.voice-btn {
+    width: 40px;
+    height: 40px;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 50%;
+    color: #64748b;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.voice-btn:hover {
+    background: #f1f5f9;
+    border-color: var(--primary-color);
+    color: var(--primary-color);
+}
+
+.voice-btn.recording {
+    background: #ef4444;
+    border-color: #ef4444;
+    color: white;
+    animation: pulse 1.5s infinite;
+}
+
+.voice-btn.processing {
+    background: #f59e0b;
+    border-color: #f59e0b;
+    color: white;
+}
+
+@keyframes pulse {
+    0% {
+        box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7);
+    }
+    70% {
+        box-shadow: 0 0 0 10px rgba(239, 68, 68, 0);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(239, 68, 68, 0);
+    }
+}
+
+.voice-controls-compact {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    padding: 6px 10px;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 20px;
+    font-size: 12px;
+    color: #64748b;
+    flex-shrink: 0;
+    transition: all 0.3s ease;
+}
+
+.voice-controls-compact:hover {
+    background: #f1f5f9;
+    border-color: var(--primary-color);
+}
+
+.voice-controls-compact .voice-toggle {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    cursor: pointer;
+    transition: color 0.3s ease;
+    font-weight: 500;
+}
+
+.voice-controls-compact .voice-toggle:hover {
+    color: var(--primary-color);
+}
+
+.voice-controls-compact .voice-toggle input[type="checkbox"] {
+    margin: 0;
+    width: 14px;
+    height: 14px;
+    accent-color: var(--primary-color);
+    cursor: pointer;
+}
+
+.voice-controls-compact .voice-status {
+    font-size: 10px;
+    color: #64748b;
+    font-style: italic;
+    white-space: nowrap;
+}
+
+.voice-controls {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 16px;
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    margin: 8px 16px;
+    font-size: 13px;
+    color: #374151;
+    flex-shrink: 0;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.voice-toggle {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    transition: color 0.3s ease;
+    font-weight: 500;
+}
+
+.voice-toggle:hover {
+    color: var(--primary-color);
+}
+
+.voice-toggle input[type="checkbox"] {
+    margin: 0;
+    width: 16px;
+    height: 16px;
+    accent-color: var(--primary-color);
+    cursor: pointer;
+}
+
+.voice-status {
+    font-size: 12px;
+    color: #64748b;
+    font-style: italic;
+}
+
+/* ===== ESTILOS DE MENSAJES MODERNOS ===== */
+
+.message {
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: flex-end;
+    gap: 8px;
+    animation: messageSlideIn 0.3s ease-out;
+}
+
+.message.user {
+    flex-direction: row-reverse;
+    justify-content: flex-start;
+}
+
+.message.assistant {
+    justify-content: flex-start;
+}
+
+.message-avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    flex-shrink: 0;
+    margin-bottom: 4px;
+}
+
+.message.user .message-avatar {
+    background: linear-gradient(135deg, var(--primary-color), #4f46e5);
+    color: white;
+    box-shadow: 0 2px 8px rgba(59, 130, 246, 0.3);
+}
+
+.message.assistant .message-avatar {
+    background: linear-gradient(135deg, #f1f5f9, #e2e8f0);
+    color: #64748b;
+    border: 2px solid #e2e8f0;
+}
+
+.message-content {
+    max-width: 70%;
+    position: relative;
+}
+
+.message.user .message-content {
+    background: linear-gradient(135deg, var(--primary-color), #4f46e5);
+    color: white;
+    padding: 12px 16px;
+    border-radius: 18px 18px 4px 18px;
+    box-shadow: 0 2px 12px rgba(59, 130, 246, 0.2);
+    font-weight: 500;
+}
+
+.message.assistant .message-content {
+    background: #ffffff;
+    color: #1e293b;
+    padding: 12px 16px;
+    border-radius: 18px 18px 18px 4px;
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.message-time {
+    font-size: 11px;
+    margin-top: 6px;
+    opacity: 0.7;
+    text-align: right;
+}
+
+.message.user .message-time {
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.message.assistant .message-time {
+    color: #64748b;
+}
+
+/* Animación de entrada de mensajes */
+@keyframes messageSlideIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Indicador de escritura mejorado */
+.typing-indicator {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    padding: 8px;
+}
+
+.typing-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #64748b;
+    animation: typingDots 1.4s infinite ease-in-out;
+}
+
+.typing-dot:nth-child(1) { animation-delay: 0s; }
+.typing-dot:nth-child(2) { animation-delay: 0.2s; }
+.typing-dot:nth-child(3) { animation-delay: 0.4s; }
+
+@keyframes typingDots {
+    0%, 60%, 100% {
+        transform: scale(0.8);
+        opacity: 0.5;
+    }
+    30% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+/* Área de mensajes del chat */
+.chat-messages {
+    flex: 1;
+    padding: 0.75rem 0.75rem 0 0.75rem;
+    overflow-y: auto;
+    overflow-x: hidden;
+    min-height: 200px;
+    background: #fafbfc;
+    border-radius: 8px;
+    position: relative;
+    scrollbar-width: thin;
+    scrollbar-color: #94a3b8 #f1f5f9;
+}
+
+/* Barra de desplazamiento personalizada para WebKit */
+.chat-messages::-webkit-scrollbar {
+    width: 8px;
+    background-color: transparent;
+}
+
+.chat-messages::-webkit-scrollbar-track {
+    background: #f1f5f9;
+    border-radius: 4px;
+    margin: 4px 0;
+    border: 1px solid #e2e8f0;
+}
+
+.chat-messages::-webkit-scrollbar-thumb {
+    background: linear-gradient(to bottom, #94a3b8, #64748b);
+    border-radius: 4px;
+    border: 1px solid #64748b;
+    min-height: 30px;
+    transition: all 0.2s ease;
+}
+
+.chat-messages::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(to bottom, #64748b, #475569);
+    border-color: #475569;
+    cursor: pointer;
+}
+
+.chat-messages::-webkit-scrollbar-thumb:active {
+    background: linear-gradient(to bottom, #475569, #334155);
+    border-color: #334155;
+}
+
+.chat-messages::-webkit-scrollbar-corner {
+    background: #f1f5f9;
+}
+
+/* Botón para ir al final de la conversación */
+.scroll-to-bottom {
+    position: absolute;
+    bottom: 20px;
+    right: 15px;
+    width: 36px;
+    height: 36px;
+    background: linear-gradient(135deg, var(--primary-color), var(--tertiary-color));
+    border: none;
+    border-radius: 50%;
+    color: white;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+    transition: all 0.3s ease;
+    opacity: 0;
+    transform: translateY(10px);
+    pointer-events: none;
+    z-index: 15;
+}
+
+.scroll-to-bottom.visible {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: all;
+}
+
+.scroll-to-bottom:hover {
+    background: linear-gradient(135deg, var(--secondary-color), var(--primary-color));
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(37, 99, 235, 0.4);
+}
+
+.scroll-to-bottom svg {
+    width: 18px;
+    height: 18px;
+    fill: currentColor;
+}
+
+/* Mensaje de bienvenida */
+.welcome-message {
+    text-align: center;
+    padding: 0.5rem;
+    color: #64748b;
+    font-style: italic;
+    border-bottom: 1px solid #e2e8f0;
+    margin-bottom: 0.5rem;
+    background: linear-gradient(135deg, #ffffff, #f8fafc);
+    border-radius: 12px;
+    margin: 0.25rem 0;
+    font-size: 13px;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.welcome-message.hidden {
+    display: none !important;
+}
+
+/* Mejoras responsivas para mensajes */
+@media (max-width: 768px) {
+    .message-content {
+        max-width: 85%;
+    }
+    
+    .message.user .message-content,
+    .message.assistant .message-content {
+        padding: 10px 14px;
+        font-size: 14px;
+    }
+    
+    .message-avatar {
+        width: 28px;
+        height: 28px;
+        font-size: 14px;
+    }
+    
+    .chat-messages {
+        max-height: 300px;
+        padding: 0.75rem;
+    }
+    
+    .welcome-message {
+        padding: 1rem 0.75rem;
+        font-size: 13px;
+    }
+}
+
+.chat-input:focus {
+    border-color: var(--primary-color);
+}
+
+.send-btn {
+    width: 40px;
+    height: 40px;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 50%;
+    color: #64748b;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+}
+
+.send-btn:hover {
+    background: #f1f5f9;
+    border-color: var(--primary-color);
+    color: var(--primary-color);
+}
+
+.send-btn.active {
+    background: var(--primary-color);
+    border-color: var(--primary-color);
+    color: white;
+}
+
+.send-btn.active:hover {
+    background: var(--secondary-color);
+    border-color: var(--secondary-color);
+}
+
+.assistant-fab {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    width: 60px;
+    height: 60px;
+    background: var(--primary-color);
+    border: none;
+    border-radius: 50%;
+    color: white;
+    cursor: pointer;
+    box-shadow: 0 8px 25px rgba(37, 99, 235, 0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    z-index: 999;
+}
+
+.assistant-fab:hover {
+    background: var(--secondary-color);
+    transform: scale(1.1);
+    box-shadow: 0 12px 35px rgba(37, 99, 235, 0.4);
+}
+
+.assistant-fab.hidden {
+    display: none;
+}
+
+/* Removed old chat modal styles - now using virtual assistant */
+
+@keyframes messageSlideIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes typingBounce {
+    0%, 20%, 50%, 80%, 100% {
+        transform: translateY(0);
+    }
+    40% {
+        transform: translateY(-4px);
+    }
+    60% {
+        transform: translateY(-2px);
+    }
+}
+
+/* Estilos para pantallas grandes (maximizadas) */
+@media (min-width: 1400px) {
+    .virtual-assistant {
+        width: 480px;
+        top: 80px;
+        height: calc(100vh - 100px);
+        min-height: 650px;
+        max-height: calc(100vh - 100px);
+        right: -480px;
+    }
+    
+    .chat-messages {
+        flex: 1;
+        min-height: calc(100vh - 350px);
+        max-height: calc(100vh - 350px);
+    }
+    
+    .assistant-fab {
+        width: 60px;
+        height: 60px;
+        bottom: 30px;
+        right: 30px;
+    }
+}
+
+/* Estilos para pantallas extra grandes */
+@media (min-width: 1920px) {
+    .virtual-assistant {
+        width: 520px;
+        top: 90px;
+        height: calc(100vh - 110px);
+        min-height: 700px;
+        max-height: calc(100vh - 110px);
+        right: -520px;
+    }
+    
+    .chat-messages {
+        flex: 1;
+        min-height: calc(100vh - 350px);
+        max-height: calc(100vh - 350px);
+    }
+    
+    .assistant-fab {
+        width: 65px;
+        height: 65px;
+        bottom: 40px;
+        right: 40px;
+    }
+}
+
+@media (max-width: 768px) {
+    .virtual-assistant {
+        width: 100vw;
+        height: 100vh;
+        top: 0;
+        right: -100vw;
+        border-radius: 0;
+        min-height: 100vh;
+        max-height: 100vh;
+    }
+    
+    .virtual-assistant.active {
+        right: 0;
+    }
+    
+    .chat-messages {
+        flex: 1;
+        min-height: calc(100vh - 250px);
+        max-height: calc(100vh - 250px);
+        padding: 0.5rem;
+        scrollbar-width: thin;
+        scrollbar-color: #94a3b8 #f1f5f9;
+    }
+    
+    /* Barra de desplazamiento móvil más prominente */
+    .chat-messages::-webkit-scrollbar {
+        width: 10px;
+    }
+    
+    .chat-messages::-webkit-scrollbar-track {
+        background: #e2e8f0;
+        border-radius: 5px;
+        margin: 2px 0;
+        border: 1px solid #cbd5e1;
+    }
+    
+    .chat-messages::-webkit-scrollbar-thumb {
+        background: linear-gradient(to bottom, #64748b, #475569);
+        border-radius: 5px;
+        border: 1px solid #475569;
+        min-height: 40px;
+    }
+    
+    .chat-messages::-webkit-scrollbar-thumb:active {
+        background: linear-gradient(to bottom, #334155, #1e293b);
+    }
+    
+    /* Botón scroll to bottom en móvil */
+    .scroll-to-bottom {
+        width: 40px;
+        height: 40px;
+        bottom: 15px;
+        right: 12px;
+    }
+    
+    .scroll-to-bottom svg {
+        width: 20px;
+        height: 20px;
+    }
+    
+    .chat-input-container {
+        padding: 0.75rem;
+        position: sticky;
+        bottom: 0;
+        background: white;
+        border-top: 2px solid #e2e8f0;
+        gap: 6px;
+    }
+    
+    .voice-controls-compact {
+        padding: 4px 8px;
+        font-size: 11px;
+    }
+    
+    .voice-controls-compact .voice-toggle input[type="checkbox"] {
+        width: 12px;
+        height: 12px;
+    }
+    
+    .voice-btn, .send-btn {
+        width: 36px;
+        height: 36px;
+    }
+    
+    .voice-btn svg, .send-btn svg {
+        width: 14px;
+        height: 14px;
+    }
+    
+    .assistant-header {
+        padding: 1rem;
+        border-radius: 0;
+    }
+    
+    .quick-options {
+        padding: 0.75rem;
+        gap: 6px;
+        transition: opacity 0.4s ease, transform 0.4s ease, max-height 0.4s ease;
+        max-height: 300px;
+        min-height: 160px;
+        height: 160px;
+    }
+    
+    .quick-options.hidden {
+        opacity: 0;
+        pointer-events: none;
+    }
+    
+    .assistant-greeting {
+        padding: 0.75rem;
+    }
+    
+    .chat-container {
+        width: 95%;
+        height: 90vh;
+        margin: 20px;
+    }
+    
+    .message-content {
+        max-width: 85%;
+    }
+}
+
+/* Tablets */
+@media (min-width: 769px) and (max-width: 1023px) {
+    .virtual-assistant {
+        width: 350px;
+        height: calc(100vh - 80px);
+        top: 60px;
+        right: -350px;
+        min-height: 500px;
+        max-height: calc(100vh - 80px);
+    }
+    
+    .chat-messages {
+        flex: 1;
+        min-height: calc(100vh - 400px);
+        max-height: calc(100vh - 400px);
+    }
+}
+
+/* Pantallas medianas */
+@media (min-width: 1024px) and (max-width: 1399px) {
+    .virtual-assistant {
+        width: 380px;
+        height: calc(100vh - 100px);
+        top: 80px;
+        right: -380px;
+        min-height: 500px;
+        max-height: calc(100vh - 100px);
+    }
+    
+    .chat-messages {
+        flex: 1;
+        min-height: calc(100vh - 450px);
+        max-height: calc(100vh - 450px);
+    }
+}
+
+/* Sección de contenido */
+
+.content-image-container {
+    height: 80px;
+    background: linear-gradient(135deg, #ffffff, #f8fafc);
+    border-bottom: 2px solid #e2e8f0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #64748b;
+    position: relative;
+    overflow: hidden;
+}
+
+.content-image-container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, transparent 0%, rgba(37, 99, 235, 0.03) 100%);
+    transition: all 0.3s ease;
+}
+
+.content-image-container.ai {
+    border-bottom-color: #3b82f6;
+}
+
+.content-image-container.ai::before {
+    background: linear-gradient(135deg, transparent 0%, rgba(59, 130, 246, 0.05) 100%);
+}
+
+.content-image-container.dashboard {
+    border-bottom-color: #10b981;
+}
+
+.content-image-container.dashboard::before {
+    background: linear-gradient(135deg, transparent 0%, rgba(16, 185, 129, 0.05) 100%);
+}
+
+.content-image-container.security {
+    border-bottom-color: #8b5cf6;
+}
+
+.content-image-container.security::before {
+    background: linear-gradient(135deg, transparent 0%, rgba(139, 92, 246, 0.05) 100%);
+}
+
+.content-image-container.realtime {
+    border-bottom-color: #f59e0b;
+}
+
+.content-image-container.realtime::before {
+    background: linear-gradient(135deg, transparent 0%, rgba(245, 158, 11, 0.05) 100%);
+}
+
+.content-image-container.reports {
+    border-bottom-color: #ef4444;
+}
+
+.content-image-container.reports::before {
+    background: linear-gradient(135deg, transparent 0%, rgba(239, 68, 68, 0.05) 100%);
+}
+
+.content-image-container.collaboration {
+    border-bottom-color: #06b6d4;
+}
+
+.content-image-container.collaboration::before {
+    background: linear-gradient(135deg, transparent 0%, rgba(6, 182, 212, 0.05) 100%);
+}
+
+.content-icon-large {
+    opacity: 0.8;
+    transition: all 0.3s ease;
+    width: 32px;
+    height: 32px;
+    position: relative;
+    z-index: 2;
+    color: #475569;
+}
+
+.content-card:hover .content-icon-large {
+    opacity: 1;
+    transform: scale(1.15);
+}
+
+.content-card:hover .content-image-container {
+    border-bottom-width: 3px;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.content-card:hover .content-image-container::before {
+    background: linear-gradient(135deg, rgba(37, 99, 235, 0.08) 0%, rgba(37, 99, 235, 0.12) 100%);
+}
+
+.content-card:hover .content-image-container.ai::before {
+    background: linear-gradient(135deg, rgba(59, 130, 246, 0.08) 0%, rgba(59, 130, 246, 0.12) 100%);
+}
+
+.content-card:hover .content-image-container.ai .content-icon-large {
+    color: #3b82f6;
+}
+
+.content-card:hover .content-image-container.dashboard::before {
+    background: linear-gradient(135deg, rgba(16, 185, 129, 0.08) 0%, rgba(16, 185, 129, 0.12) 100%);
+}
+
+.content-card:hover .content-image-container.dashboard .content-icon-large {
+    color: #10b981;
+}
+
+.content-card:hover .content-image-container.security::before {
+    background: linear-gradient(135deg, rgba(139, 92, 246, 0.08) 0%, rgba(139, 92, 246, 0.12) 100%);
+}
+
+.content-card:hover .content-image-container.security .content-icon-large {
+    color: #8b5cf6;
+}
+
+.content-card:hover .content-image-container.realtime::before {
+    background: linear-gradient(135deg, rgba(245, 158, 11, 0.08) 0%, rgba(245, 158, 11, 0.12) 100%);
+}
+
+.content-card:hover .content-image-container.realtime .content-icon-large {
+    color: #f59e0b;
+}
+
+.content-card:hover .content-image-container.reports::before {
+    background: linear-gradient(135deg, rgba(239, 68, 68, 0.08) 0%, rgba(239, 68, 68, 0.12) 100%);
+}
+
+.content-card:hover .content-image-container.reports .content-icon-large {
+    color: #ef4444;
+}
+
+.content-card:hover .content-image-container.collaboration::before {
+    background: linear-gradient(135deg, rgba(6, 182, 212, 0.08) 0%, rgba(6, 182, 212, 0.12) 100%);
+}
+
+.content-card:hover .content-image-container.collaboration .content-icon-large {
+    color: #06b6d4;
+}
+
+        /* Sección de contenido */  
+
+.content-section {
+    position: relative;
+    padding: 2rem 0; /* Agregar padding para reducir espacios */
+}
+
+.content-section::before {
+    content: '';
+    position: absolute;
+    top: -20px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 4px;
+    background: linear-gradient(90deg, var(--primary-color), var(--tertiary-color));
+    border-radius: 2px;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.content-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 2rem;
+}
+
+.content-card {
+    background: white;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    border: 1px solid #f1f5f9;
+    position: relative;
+}
+
+.content-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, transparent 0%, rgba(37, 99, 235, 0.01) 100%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+}
+
+.content-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.08), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    border-color: #e2e8f0;
+}
+
+.content-card:hover::before {
+    opacity: 1;
+}
+
+.content-info {
+    padding: 1.75rem;
+    position: relative;
+}
+
+.content-info h3 {
+    font-size: 1.3rem;
+    font-weight: 600;
+    margin-bottom: 0.875rem;
+    color: #1e293b;
+    letter-spacing: -0.025em;
+    line-height: 1.3;
+}
+
+.content-info p {
+    color: #64748b;
+    margin-bottom: 1.25rem;
+    line-height: 1.65;
+    font-size: 0.95rem;
+}
+
+.content-date {
+    font-size: 0.8rem;
+    color: #6366f1;
+    font-weight: 600;
+    letter-spacing: 0.025em;
+    background: rgba(99, 102, 241, 0.1);
+    padding: 0.375rem 0.75rem;
+    border-radius: 6px;
+    display: inline-block;
+    border: 1px solid rgba(99, 102, 241, 0.2);
+}
+
+/* Footer */
+.footer {
+    background: #f8fafc;
+    border-top: 1px solid #e5e7eb;
+    padding: 30px 0 15px; /* Reducir padding aún más */
+    margin-top: 30px; /* Reducir margen superior */
+}
+
+.footer-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+}
+
+.footer-description {
+    color: var(--text-secondary);
+    margin-bottom: 1.5rem;
+    line-height: 1.6;
+}
+
+.footer-links {
+    list-style: none;
+}
+
+.footer-links li {
+    margin-bottom: 0.5rem;
+}
+
+.footer-links a {
+    color: var(--text-secondary);
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.footer-links a:hover {
+    color: var(--primary-color);
+}
+
+.footer-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 2rem;
+    border-top: 1px solid #e5e7eb;
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+}
+
+.footer-bottom-links {
+    display: flex;
+    gap: 2rem;
+}
+
+.footer-bottom-links a {
+    color: var(--text-secondary);
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.footer-bottom-links a:hover {
+    color: var(--primary-color);
+}
+
+/* Responsive */
+        @media (max-width: 768px) {
+
+            .nav-tools {
+        display: none;
+    }
+    
+    .mobile-menu-btn {
+        display: block;
+    }
+    
+    .nav-right {
+        position: relative;
+    }
+
+    .nav-right {
+        justify-content: flex-end;
+    }
+    
+    .content-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem; /* Reducir gap */
+    }
+    
+    .footer-content {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+    
+    .footer-bottom {
+        flex-direction: column;
+        gap: 1rem;
+        text-align: center;
+    }
+
+            .nav-container {
+                padding: 0 1rem;
+            }
+
+            .hero {
+        padding: 80px 1rem 20px; /* Reducir drásticamente en móvil */
+        min-height: 50vh; /* Altura mínima muy reducida */
+    }
+
+            .content-section {
+        padding: 1.5rem 1rem; /* Reducir padding en móvil */
+    }
+
+            .cta-container {
+                flex-direction: column;
+                align-items: center;
+                margin-bottom: 1rem; /* Reducir margen en móvil */
+            }
+
+            .cta-primary, .cta-secondary {
+                width: 100%;
+                max-width: 300px;
+            }
+            
+            /* Virtual Assistant Responsive */
+            .virtual-assistant {
+                width: 100%;
+                right: -100%;
+                top: 60px;
+                height: calc(100vh - 60px);
+                border-radius: 0;
+                border: none;
+                border-top: 1px solid #e2e8f0;
+            }
+            
+            .virtual-assistant.active {
+                right: 0;
+            }
+            
+            .assistant-fab {
+                bottom: 20px;
+                right: 20px;
+                width: 56px;
+                height: 56px;
+            }
+
+            /* Reducir espacios en elementos específicos */
+            .hero-badge {
+                margin-bottom: 0.8rem;
+            }
+
+            .hero h1 {
+                margin-bottom: 0.6rem;
+            }
+
+            .hero-subtitle {
+                margin-bottom: 1rem;
+                font-size: 1.1rem;
+            }
+
+            .content-card {
+                margin-bottom: 0;
+            }
+
+            .content-info {
+                padding: 1.2rem;
+            }
+        }
+
+        /* Optimización para pantallas muy pequeñas */
+        @media (max-width: 480px) {
+            .hero {
+                padding: 70px 1rem 15px;
+                min-height: 45vh;
+            }
+
+            .hero-badge {
+                font-size: 12px;
+                padding: 6px 16px;
+                margin-bottom: 0.6rem;
+            }
+
+            .hero h1 {
+                font-size: clamp(2rem, 6vw, 2.5rem);
+                margin-bottom: 0.5rem;
+            }
+
+            .hero-subtitle {
+                font-size: 1rem;
+                margin-bottom: 0.8rem;
+            }
+
+            .content-section {
+                padding: 1rem;
+            }
+
+            .content-grid {
+                gap: 0.8rem;
+            }
+
+            .content-info {
+                padding: 1rem;
+            }
+
+            .content-info h3 {
+                font-size: 1.1rem;
+                margin-bottom: 0.5rem;
+            }
+
+            .content-info p {
+                font-size: 0.9rem;
+                margin-bottom: 0.8rem;
+            }
+
+            .footer {
+                padding: 20px 0 10px;
+                margin-top: 20px;
+            }
+        }
+
+        /* Animaciones de entrada */
+        .fade-in {
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        .fade-in-delay {
+            animation: fadeInUp 0.8s ease-out 0.2s both;
+        }
+
+        .fade-in-delay-2 {
+            animation: fadeInUp 0.8s ease-out 0.4s both;
+        }
+
+        .hero, .content-section, .footer {
+    transition: all 0.3s ease;
+}
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navbar Adaptativo -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo-container">
+                <div class="company-logo" id="companyLogo">TC</div>
+                <div class="company-name" id="companyName">TecnoCorp</div>
+            </div>
+            
+            <div class="nav-right">
+                <div class="nav-tools">
+                <select class="language-selector" id="languageSelector" onchange="changeLanguage(this.value)">
+                    <option value="es">🇪🇸 Español</option>
+                    <option value="en">🇺🇸 English</option>
+                </select>
+                <button class="help-btn" onclick="showHelp()">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm0 18c-.553 0-1-.448-1-1s.447-1 1 1-.447 1-1 1zm1-3h-2v-2c0-1.654 1.346-3 3-3s3 1.346 3 3c0 1.302-.839 2.402-2 2.816V15z"/>
+        </svg>
+        <span id="helpText">Ayuda</span>
+    </button>
+</div>
+                
+                <!-- Menú hamburguesa para móviles -->
+                <button class="mobile-menu-btn" id="mobileMenuBtn" onclick="toggleMobileMenu()">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/>
+                    </svg>
+                </button>
+                
+                <!-- Menú desplegable móvil -->
+                <div class="mobile-menu" id="mobileMenu">
+                    <div class="mobile-menu-item">
+                        <label for="mobileLangSelector" id="mobileLanguageLabel">Idioma:</label>
+                        <select class="mobile-language-selector" id="mobileLangSelector" onchange="changeLanguage(this.value)">
+                            <option value="es">🇪🇸 Español</option>
+                            <option value="en">🇺🇸 English</option>
+                        </select>
+                    </div>
+                    <div class="mobile-menu-item">
+                        <button class="mobile-help-btn" onclick="showHelp(); closeMobileMenu();">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm0 18c-.553 0-1-.448-1-1s.447-1 1-1 1 .448 1 1-.447 1-1 1zm1-3h-2v-2c0-1.654 1.346-3 3-3s3 1.346 3 3c0 1.302-.839 2.402-2 2.816V15z"/>
+                            </svg>
+                            <span id="mobileHelpText">Ayuda</span>
+                        </button>
+                    </div>
+                </div>
+                
+                <a href="login.html" class="login-btn" id="loginBtn">Iniciar Sesión</a>
+            </div>
+    </nav>
+
+    <!-- Hero Section Personalizado -->
+    <section class="hero">
+        <div class="hero-badge fade-in" id="heroBadge">🚀 Potenciado por IA Avanzada</div>
+        
+        <h1 class="fade-in-delay" id="heroTitle">
+            Análisis Inteligente para TecnoCorp
+        </h1>
+        
+        <p class="hero-subtitle fade-in-delay" id="heroSubtitle">
+            Transforma tus datos en decisiones estratégicas con nuestra plataforma de IA analítica y predictiva, diseñada específicamente para las necesidades de tu empresa.
+        </p>
+
+    </section>
+
+    <section class="content-section">
+    <div class="container">
+        <div class="content-grid">
+            <div class="content-card">
+    <div class="content-image-container dashboard">
+        <div class="content-icon-large">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="currentColor">
+                <defs>
+                    <linearGradient id="dashboardGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" style="stop-color:currentColor;stop-opacity:1" />
+                        <stop offset="100%" style="stop-color:currentColor;stop-opacity:0.7" />
+                    </linearGradient>
+                </defs>
+                <rect x="2" y="2" width="9" height="9" rx="1.5" fill="url(#dashboardGrad)" opacity="0.9"/>
+                <rect x="13" y="2" width="9" height="5" rx="1.5" fill="currentColor" opacity="0.8"/>
+                <rect x="2" y="13" width="9" height="9" rx="1.5" fill="currentColor" opacity="0.7"/>
+                <rect x="13" y="9" width="9" height="13" rx="1.5" fill="currentColor" opacity="0.9"/>
+                <!-- Decorative elements -->
+                <circle cx="6.5" cy="6.5" r="1" fill="white" opacity="0.3"/>
+                <circle cx="17.5" cy="4.5" r="0.8" fill="white" opacity="0.3"/>
+                <circle cx="6.5" cy="17.5" r="1" fill="white" opacity="0.3"/>
+                <rect x="15" y="12" width="5" height="1" rx="0.5" fill="white" opacity="0.4"/>
+                <rect x="15" y="14" width="3" height="1" rx="0.5" fill="white" opacity="0.3"/>
+                <rect x="15" y="16" width="4" height="1" rx="0.5" fill="white" opacity="0.3"/>
+            </svg>
+        </div>
+    </div>
+    <div class="content-info">
+        <h3 id="dashboardTitle">Dashboards Interactivos</h3>
+        <p id="dashboardDesc">Visualiza tus KPIs más importantes con gráficos dinámicos y actualizaciones en tiempo real.</p>
+        <span class="content-date" id="dashboardDate">📅 Actualizado recientemente</span>
+    </div>
+</div>
+
+<div class="content-card">
+    <div class="content-image-container ai">
+        <div class="content-icon-large">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="currentColor">
+                <defs>
+                    <linearGradient id="aiGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" style="stop-color:currentColor;stop-opacity:1" />
+                        <stop offset="100%" style="stop-color:currentColor;stop-opacity:0.6" />
+                    </linearGradient>
+                </defs>
+                <!-- Brain outline -->
+                <path d="M12 2C8.7 2 6 4.7 6 8c0 1.2.3 2.3.8 3.3C5.2 12.4 4 14.5 4 17c0 2.2 1.8 4 4 4h8c2.2 0 4-1.8 4-4 0-2.5-1.2-4.6-2.8-5.7.5-1 .8-2.1.8-3.3 0-3.3-2.7-6-6-6z" fill="url(#aiGrad)" opacity="0.8"/>
+                <!-- Neural network nodes -->
+                <circle cx="9" cy="7" r="1.2" fill="white" opacity="0.9"/>
+                <circle cx="15" cy="7" r="1.2" fill="white" opacity="0.9"/>
+                <circle cx="12" cy="10" r="1" fill="white" opacity="0.8"/>
+                <circle cx="8" cy="13" r="0.8" fill="white" opacity="0.7"/>
+                <circle cx="16" cy="13" r="0.8" fill="white" opacity="0.7"/>
+                <circle cx="12" cy="16" r="1" fill="white" opacity="0.8"/>
+                <!-- Neural connections -->
+                <path d="M9.8 7.8L11.2 9.2" stroke="white" stroke-width="0.8" opacity="0.5" stroke-linecap="round"/>
+                <path d="M14.2 7.8L12.8 9.2" stroke="white" stroke-width="0.8" opacity="0.5" stroke-linecap="round"/>
+                <path d="M11.2 10.8L8.8 12.2" stroke="white" stroke-width="0.8" opacity="0.4" stroke-linecap="round"/>
+                <path d="M12.8 10.8L15.2 12.2" stroke="white" stroke-width="0.8" opacity="0.4" stroke-linecap="round"/>
+                <path d="M8.5 13.8L11.5 15.2" stroke="white" stroke-width="0.8" opacity="0.4" stroke-linecap="round"/>
+                <path d="M15.5 13.8L12.5 15.2" stroke="white" stroke-width="0.8" opacity="0.4" stroke-linecap="round"/>
+            </svg>
+        </div>
+    </div>
+    <div class="content-info">
+        <h3 id="aiTitle">Inteligencia Artificial Predictiva</h3>
+        <p id="aiDesc">Modelos avanzados de ML que predicen tendencias y optimizan tus procesos de negocio.</p>
+        <span class="content-date" id="aiDate">🤖 IA Avanzada</span>
+    </div>
+</div>
+
+<div class="content-card">
+    <div class="content-image-container security">
+        <div class="content-icon-large">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="currentColor">
+                <defs>
+                    <linearGradient id="securityGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" style="stop-color:currentColor;stop-opacity:1" />
+                        <stop offset="100%" style="stop-color:currentColor;stop-opacity:0.7" />
+                    </linearGradient>
+                </defs>
+                <!-- Main shield -->
+                <path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z" fill="url(#securityGrad)" opacity="0.9"/>
+                <!-- Multi-tenant layers -->
+                <rect x="6" y="8" width="12" height="2" rx="1" fill="white" opacity="0.8"/>
+                <rect x="6" y="11" width="12" height="2" rx="1" fill="white" opacity="0.6"/>
+                <rect x="6" y="14" width="12" height="2" rx="1" fill="white" opacity="0.4"/>
+                <!-- Lock icon in center -->
+                <circle cx="12" cy="9.5" r="1.5" fill="white" opacity="0"/>
+                <rect x="10.5" y="10.5" width="3" height="3" rx="0.5" fill="white" opacity="0.9"/>
+                <path d="M11 9.5V8.5C11 8.22 11.22 8 11.5 8H12.5C12.78 8 13 8.22 13 8.5V9.5" stroke="white" stroke-width="0.8" fill="none" opacity="0.9"/>
+                <!-- Security indicators -->
+                <circle cx="8" cy="6" r="0.8" fill="white" opacity="0.7"/>
+                <circle cx="16" cy="6" r="0.8" fill="white" opacity="0.7"/>
+            </svg>
+        </div>
+    </div>
+    <div class="content-info">
+        <h3 id="securityTitle">Multi-tenant Seguro</h3>
+        <p id="securityDesc">Arquitectura empresarial con segregación completa de datos, roles granulares y cumplimiento normativo.</p>
+        <span class="content-date" id="securityDate">🔒 Certificado</span>
+    </div>
+</div>
+
+<div class="content-card">
+    <div class="content-image-container realtime">
+        <div class="content-icon-large">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="currentColor">
+                <defs>
+                    <linearGradient id="realtimeGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" style="stop-color:currentColor;stop-opacity:1" />
+                        <stop offset="100%" style="stop-color:currentColor;stop-opacity:0.6" />
+                    </linearGradient>
+                    <filter id="glow">
+                        <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+                        <feMerge> 
+                            <feMergeNode in="coloredBlur"/>
+                            <feMergeNode in="SourceGraphic"/>
+                        </feMerge>
+                    </filter>
+                </defs>
+                <!-- Central pulse circle -->
+                <circle cx="12" cy="12" r="3" fill="url(#realtimeGrad)" opacity="0.9"/>
+                <!-- Pulse waves -->
+                <circle cx="12" cy="12" r="6" fill="none" stroke="currentColor" stroke-width="1.5" opacity="0.6"/>
+                <circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1" opacity="0.4"/>
+                <circle cx="12" cy="12" r="12" fill="none" stroke="currentColor" stroke-width="0.8" opacity="0.2"/>
+                <!-- Data nodes -->
+                <circle cx="5" cy="8" r="1.5" fill="white" opacity="0.8"/>
+                <circle cx="19" cy="8" r="1.5" fill="white" opacity="0.8"/>
+                <circle cx="5" cy="16" r="1.5" fill="white" opacity="0.8"/>
+                <circle cx="19" cy="16" r="1.5" fill="white" opacity="0.8"/>
+                <!-- Connection lines -->
+                <path d="M6.3 8.8L9.5 10.5" stroke="white" stroke-width="1" opacity="0.6" stroke-linecap="round"/>
+                <path d="M17.7 8.8L14.5 10.5" stroke="white" stroke-width="1" opacity="0.6" stroke-linecap="round"/>
+                <path d="M6.3 15.2L9.5 13.5" stroke="white" stroke-width="1" opacity="0.6" stroke-linecap="round"/>
+                <path d="M17.7 15.2L14.5 13.5" stroke="white" stroke-width="1" opacity="0.6" stroke-linecap="round"/>
+                <!-- Real-time indicator -->
+                <circle cx="12" cy="12" r="1" fill="white" opacity="1" filter="url(#glow)"/>
+            </svg>
+        </div>
+    </div>
+    <div class="content-info">
+        <h3 id="realtimeTitle">Datos en Tiempo Real</h3>
+        <p id="realtimeDesc">Conecta múltiples fuentes de datos y obtén insights instantáneos para decisiones rápidas.</p>
+        <span class="content-date" id="realtimeDate">⚡ Tiempo Real</span>
+    </div>
+</div>
+
+<div class="content-card">
+    <div class="content-image-container reports">
+        <div class="content-icon-large">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="currentColor">
+                <defs>
+                    <linearGradient id="reportsGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" style="stop-color:currentColor;stop-opacity:1" />
+                        <stop offset="100%" style="stop-color:currentColor;stop-opacity:0.7" />
+                    </linearGradient>
+                </defs>
+                <!-- Main document -->
+                <path d="M6 2h8l4 4v14a2 2 0 01-2 2H6a2 2 0 01-2-2V4a2 2 0 012-2z" fill="url(#reportsGrad)" opacity="0.9"/>
+                <!-- Folded corner -->
+                <path d="M14 2v4h4" fill="none" stroke="white" stroke-width="1.5" opacity="0.6"/>
+                <!-- Chart elements -->
+                <rect x="8" y="8" width="2" height="6" rx="1" fill="white" opacity="0.8"/>
+                <rect x="11" y="10" width="2" height="4" rx="1" fill="white" opacity="0.7"/>
+                <rect x="14" y="9" width="2" height="5" rx="1" fill="white" opacity="0.6"/>
+                <!-- Data lines -->
+                <rect x="8" y="16" width="8" height="0.8" rx="0.4" fill="white" opacity="0.5"/>
+                <rect x="8" y="17.5" width="6" height="0.8" rx="0.4" fill="white" opacity="0.4"/>
+                <rect x="8" y="19" width="7" height="0.8" rx="0.4" fill="white" opacity="0.4"/>
+                <!-- Analytics icon -->
+                <circle cx="17" cy="17" r="2" fill="currentColor" opacity="0.8"/>
+                <path d="M16 17L17 16L18 17" stroke="white" stroke-width="0.8" fill="none" opacity="0.9"/>
+                <!-- Page indicator -->
+                <circle cx="7" cy="5" r="0.8" fill="white" opacity="0.6"/>
+            </svg>
+        </div>
+    </div>
+    <div class="content-info">
+        <h3 id="reportsTitle">Reportes Personalizados</h3>
+        <p id="reportsDesc">Genera reportes automatizados y personalizados según las necesidades específicas de tu empresa.</p>
+        <span class="content-date" id="reportsDate">📊 Personalizable</span>
+    </div>
+</div>
+
+<div class="content-card">
+    <div class="content-image-container collaboration">
+        <div class="content-icon-large">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="currentColor">
+                <defs>
+                    <linearGradient id="collaborationGrad1" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" style="stop-color:#4F46E5;stop-opacity:0.9"/>
+                        <stop offset="100%" style="stop-color:#7C3AED;stop-opacity:0.8"/>
+                    </linearGradient>
+                    <linearGradient id="collaborationGrad2" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" style="stop-color:#06B6D4;stop-opacity:0.8"/>
+                        <stop offset="100%" style="stop-color:#3B82F6;stop-opacity:0.7"/>
+                    </linearGradient>
+                    <linearGradient id="collaborationGrad3" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" style="stop-color:#10B981;stop-opacity:0.8"/>
+                        <stop offset="100%" style="stop-color:#059669;stop-opacity:0.7"/>
+                    </linearGradient>
+                </defs>
+                <!-- Team member 1 -->
+                <circle cx="7" cy="8" r="3.2" fill="url(#collaborationGrad1)"/>
+                <circle cx="7" cy="7.5" r="1.8" fill="white" opacity="0.9"/>
+                <rect x="5" y="9" width="4" height="2.5" rx="1.2" fill="white" opacity="0.7"/>
+                <!-- Team member 2 -->
+                <circle cx="17" cy="8" r="3.2" fill="url(#collaborationGrad2)"/>
+                <circle cx="17" cy="7.5" r="1.8" fill="white" opacity="0.9"/>
+                <rect x="15" y="9" width="4" height="2.5" rx="1.2" fill="white" opacity="0.7"/>
+                <!-- Team member 3 -->
+                <circle cx="12" cy="15" r="3.2" fill="url(#collaborationGrad3)"/>
+                <circle cx="12" cy="14.5" r="1.8" fill="white" opacity="0.9"/>
+                <rect x="10" y="16" width="4" height="2.5" rx="1.2" fill="white" opacity="0.7"/>
+                <!-- Connection lines -->
+                <line x1="9.5" y1="9.5" x2="14.5" y2="9.5" stroke="white" stroke-width="1.5" opacity="0.6" stroke-dasharray="2,2"/>
+                <line x1="8.5" y1="11" x2="10.5" y2="13" stroke="white" stroke-width="1.5" opacity="0.6" stroke-dasharray="2,2"/>
+                <line x1="15.5" y1="11" x2="13.5" y2="13" stroke="white" stroke-width="1.5" opacity="0.6" stroke-dasharray="2,2"/>
+                <!-- Communication bubbles -->
+                <circle cx="5" cy="5" r="1.2" fill="white" opacity="0.8"/>
+                <circle cx="5" cy="5" r="0.6" fill="currentColor" opacity="0.6"/>
+                <circle cx="19" cy="5" r="1.2" fill="white" opacity="0.8"/>
+                <circle cx="19" cy="5" r="0.6" fill="currentColor" opacity="0.6"/>
+                <!-- Collaboration indicator -->
+                <circle cx="12" cy="3" r="1.5" fill="white" opacity="0.9"/>
+                <path d="M11.2 3L12 2.3L12.8 3L12 3.7Z" fill="currentColor" opacity="0.8"/>
+            </svg>
+        </div>
+    </div>
+    <div class="content-info">
+        <h3 id="teamTitle">Colaboración en Equipo</h3>
+        <p id="teamDesc">Comparte insights, colabora en análisis y toma decisiones en equipo con herramientas integradas.</p>
+        <span class="content-date" id="teamDate">👥 Colaborativo</span>
+    </div>
+</div>
+        </div>
+    </div>
+</section>
+
+    <!-- Indicadores de Demo -->
+
+    <script>
+        // Configuraciones por empresa
+        const companyConfigs = {
+    tecnocorp: {
+        name: 'TecnoCorp',
+        logo: 'TC',
+        domain: 'tecnocorp.seap.com',
+        primary: '#2563eb',
+        secondary: '#1e40af',
+        tertiary: '#3b82f6',
+        heroTitle: 'Análisis Inteligente para TecnoCorp',
+        heroSubtitle: 'Transforma tus datos en decisiones estratégicas con nuestra plataforma de IA analítica y predictiva, diseñada específicamente para las necesidades de tu empresa.'
+    }
+};
+
+        // Traducciones
+        const translations = {
+            es: {
+                helpText: 'Ayuda',
+                mobileLanguageLabel: 'Idioma:',
+                mobileHelpText: 'Ayuda',
+                loginBtn: 'Iniciar Sesión',
+                heroBadge: '🚀 Potenciado por IA Avanzada',
+                heroTitle: 'Análisis Inteligente para TecnoCorp',
+                heroSubtitle: 'Transforma tus datos en decisiones estratégicas con nuestra plataforma de IA analítica y predictiva, diseñada específicamente para las necesidades de tu empresa.',
+                dashboardTitle: 'Dashboards Interactivos',
+                dashboardDesc: 'Visualiza tus KPIs más importantes con gráficos dinámicos y actualizaciones en tiempo real.',
+                dashboardDate: '📅 Actualizado recientemente',
+                aiTitle: 'Inteligencia Artificial Predictiva',
+                aiDesc: 'Modelos avanzados de ML que predicen tendencias y optimizan tus procesos de negocio.',
+                aiDate: '🤖 IA Avanzada',
+                securityTitle: 'Multi-tenant Seguro',
+                securityDesc: 'Arquitectura empresarial con segregación completa de datos, roles granulares y cumplimiento normativo.',
+                securityDate: '🔒 Certificado',
+                realtimeTitle: 'Datos en Tiempo Real',
+                realtimeDesc: 'Conecta múltiples fuentes de datos y obtén insights instantáneos para decisiones rápidas.',
+                realtimeDate: '⚡ Tiempo Real',
+                reportsTitle: 'Reportes Personalizados',
+                reportsDesc: 'Genera reportes automatizados y personalizados según las necesidades específicas de tu empresa.',
+                reportsDate: '📊 Personalizable',
+                teamTitle: 'Colaboración en Equipo',
+                teamDesc: 'Comparte insights, colabora en análisis y toma decisiones en equipo con herramientas integradas.',
+                teamDate: '👥 Colaborativo',
+                assistantTitle: 'Asistente Virtual',
+                assistantStatus: 'En línea',
+                assistantGreeting: 'Hola, ¿en qué puedo ayudarte?',
+                quickOption1: '¿Cómo funciona la IA predictiva?',
+                quickOption2: '¿Qué es multi-tenant?', 
+                quickOption3: 'Precio de la plataforma',
+                quickOption4: 'Contactar con ventas',
+                chatPlaceholder: 'Escribe tu mensaje...',
+            },
+            en: {
+                helpText: 'Help',
+                mobileLanguageLabel: 'Language:',
+                mobileHelpText: 'Help',
+                loginBtn: 'Sign In',
+                heroBadge: '🚀 Powered by Advanced AI',
+                heroTitle: 'Intelligent Analytics for TecnoCorp',
+                heroSubtitle: 'Transform your data into strategic decisions with our analytical and predictive AI platform, specifically designed for your company\'s needs.',
+                dashboardTitle: 'Interactive Dashboards',
+                dashboardDesc: 'Visualize your most important KPIs with dynamic charts and real-time updates.',
+                dashboardDate: '📅 Recently Updated',
+                aiTitle: 'Predictive Artificial Intelligence',
+                aiDesc: 'Advanced ML models that predict trends and optimize your business processes.',
+                aiDate: '🤖 Advanced AI',
+                securityTitle: 'Secure Multi-tenant',
+                securityDesc: 'Enterprise architecture with complete data segregation, granular roles and regulatory compliance.',
+                securityDate: '🔒 Certified',
+                realtimeTitle: 'Real-time Data',
+                realtimeDesc: 'Connect multiple data sources and get instant insights for quick decisions.',
+                realtimeDate: '⚡ Real-time',
+                reportsTitle: 'Custom Reports',
+                reportsDesc: 'Generate automated and customized reports according to your company\'s specific needs.',
+                reportsDate: '📊 Customizable',
+                teamTitle: 'Team Collaboration',
+                teamDesc: 'Share insights, collaborate on analysis and make team decisions with integrated tools.',
+                teamDate: '👥 Collaborative',
+                assistantTitle: 'Virtual Assistant',
+                assistantStatus: 'Online',
+                assistantGreeting: 'Hello, how can I help you?',
+                quickOption1: 'How does predictive AI work?',
+                quickOption2: 'What is multi-tenant?',
+                quickOption3: 'Platform pricing',
+                quickOption4: 'Contact sales',
+                chatPlaceholder: 'Type your message...'
+            }
+        };
+
+        // Función para cambiar idioma
+        function changeLanguage(lang) {
+            const texts = translations[lang];
+            if (!texts) return;
+
+            // Actualizar todos los elementos con texto
+            document.getElementById('helpText').textContent = texts.helpText;
+            document.getElementById('loginBtn').textContent = texts.loginBtn;
+            document.getElementById('heroBadge').textContent = texts.heroBadge;
+            document.getElementById('heroTitle').textContent = texts.heroTitle;
+            document.getElementById('heroSubtitle').textContent = texts.heroSubtitle;
+            
+            // Características
+            document.getElementById('dashboardTitle').textContent = texts.dashboardTitle;
+            document.getElementById('dashboardDesc').textContent = texts.dashboardDesc;
+            document.getElementById('dashboardDate').textContent = texts.dashboardDate;
+            
+            document.getElementById('aiTitle').textContent = texts.aiTitle;
+            document.getElementById('aiDesc').textContent = texts.aiDesc;
+            document.getElementById('aiDate').textContent = texts.aiDate;
+            
+            document.getElementById('securityTitle').textContent = texts.securityTitle;
+            document.getElementById('securityDesc').textContent = texts.securityDesc;
+            document.getElementById('securityDate').textContent = texts.securityDate;
+            
+            document.getElementById('realtimeTitle').textContent = texts.realtimeTitle;
+            document.getElementById('realtimeDesc').textContent = texts.realtimeDesc;
+            document.getElementById('realtimeDate').textContent = texts.realtimeDate;
+            
+            document.getElementById('reportsTitle').textContent = texts.reportsTitle;
+            document.getElementById('reportsDesc').textContent = texts.reportsDesc;
+            document.getElementById('reportsDate').textContent = texts.reportsDate;
+            
+            document.getElementById('teamTitle').textContent = texts.teamTitle;
+            document.getElementById('teamDesc').textContent = texts.teamDesc;
+            document.getElementById('teamDate').textContent = texts.teamDate;
+            
+            // Actualizar textos del menú móvil
+            const mobileLanguageLabel = document.getElementById('mobileLanguageLabel');
+            const mobileHelpText = document.getElementById('mobileHelpText');
+            
+            if (mobileLanguageLabel) mobileLanguageLabel.textContent = texts.mobileLanguageLabel;
+            if (mobileHelpText) mobileHelpText.textContent = texts.mobileHelpText;
+            
+            // Actualizar textos del asistente virtual
+            const assistantTitle = document.getElementById('assistantTitle');
+            const assistantStatus = document.getElementById('assistantStatus');
+            const assistantGreeting = document.getElementById('assistantGreeting');
+            const quickOption1 = document.getElementById('quickOption1');
+            const quickOption2 = document.getElementById('quickOption2');
+            const quickOption3 = document.getElementById('quickOption3');
+            const quickOption4 = document.getElementById('quickOption4');
+            const chatInput = document.getElementById('chatInput');
+            
+            if (assistantTitle) assistantTitle.textContent = texts.assistantTitle;
+            if (assistantStatus) assistantStatus.textContent = texts.assistantStatus;
+            if (assistantGreeting) assistantGreeting.textContent = texts.assistantGreeting;
+            if (quickOption1) quickOption1.textContent = texts.quickOption1;
+            if (quickOption2) quickOption2.textContent = texts.quickOption2;
+            if (quickOption3) quickOption3.textContent = texts.quickOption3;
+            if (quickOption4) quickOption4.textContent = texts.quickOption4;
+            if (chatInput) chatInput.placeholder = texts.chatPlaceholder;
+
+            // Guardar idioma seleccionado
+            localStorage.setItem('selectedLanguage', lang);
+        }
+
+        // Cargar idioma guardado al iniciar
+        document.addEventListener('DOMContentLoaded', function() {
+            const savedLanguage = localStorage.getItem('selectedLanguage') || 'es';
+            document.getElementById('languageSelector').value = savedLanguage;
+            changeLanguage(savedLanguage);
+            
+            // Configurar event listener para scroll indicators
+            const assistantMessages = document.getElementById('assistantMessages');
+            if (assistantMessages) {
+                assistantMessages.addEventListener('scroll', updateScrollIndicators);
+                // Verificar indicadores iniciales
+                setTimeout(updateScrollIndicators, 100);
+            }
+        });
+
+        function showHelp() {
+            openAssistant();
+        }
+
+        // Funciones del Asistente Virtual
+        function openAssistant() {
+            const assistant = document.getElementById('virtualAssistant');
+            const fab = document.getElementById('assistantFab');
+            
+            assistant.classList.add('active');
+            fab.classList.add('hidden');
+            
+            // Agregar mensaje de bienvenida si no hay mensajes
+            const messages = document.getElementById('assistantMessages');
+            if (messages.children.length === 0) {
+                addAssistantMessage(getWelcomeMessage(), false);
+            }
+            
+            // Asegurar que las opciones rápidas estén visibles al abrir
+            setTimeout(() => {
+                const quickOptions = document.querySelector('.quick-options');
+                if (quickOptions) {
+                    quickOptions.style.display = 'block';
+                    quickOptions.classList.remove('hidden');
+                }
+                showQuickOptions();
+                // Scroll al inicio para asegurar que las opciones sean visibles
+                messages.scrollTop = 0;
+            }, 100);
+        }
+
+        function toggleAssistant() {
+            const assistant = document.getElementById('virtualAssistant');
+            const fab = document.getElementById('assistantFab');
+            
+            if (assistant.classList.contains('active')) {
+                assistant.classList.remove('active');
+                fab.classList.remove('hidden');
+            } else {
+                openAssistant();
+            }
+        }
+
+        function selectQuickOption(option) {
+            // Las opciones rápidas se ocultarán automáticamente por el scroll
+            
+            const currentLang = localStorage.getItem('selectedLanguage') || 'es';
+            let message = '';
+            
+            switch(option) {
+                case 'dashboard':
+                    message = currentLang === 'es' ? 
+                        '¿Cómo funciona la IA predictiva?' : 
+                        'How does predictive AI work?';
+                    break;
+                case 'ai':
+                    message = currentLang === 'es' ? 
+                        '¿Qué es multi-tenant?' : 
+                        'What is multi-tenant?';
+                    break;
+                case 'security':
+                    message = currentLang === 'es' ? 
+                        'Precio de la plataforma' : 
+                        'Platform pricing';
+                    break;
+                case 'reports':
+                    message = currentLang === 'es' ? 
+                        'Contactar con ventas' : 
+                        'Contact sales';
+                    break;
+            }
+            
+            addAssistantMessage(message, true);
+            setTimeout(() => {
+                const response = getAssistantResponse(message);
+                addAssistantMessage(response, false);
+            }, 1000);
+        }
+
+        function handleChatInput(event) {
+            if (event.key === 'Enter' && !event.shiftKey) {
+                event.preventDefault();
+                sendMessage();
+            }
+            // Actualizar estado del botón de envío
+            updateSendButtonState();
+        }
+
+        function updateSendButtonState() {
+            const input = document.getElementById('chatInput');
+            const sendBtn = document.querySelector('.send-btn');
+            
+            if (input && sendBtn) {
+                if (input.value.trim().length > 0) {
+                    sendBtn.classList.add('active');
+                } else {
+                    sendBtn.classList.remove('active');
+                }
+            }
+        }
+
+        function sendMessage() {
+            const input = document.getElementById('chatInput');
+            const message = input.value.trim();
+            
+            if (!message) return;
+            
+            addAssistantMessage(message, true);
+            input.value = '';
+            
+            // Actualizar estado del botón después de limpiar el input
+            updateSendButtonState();
+            
+            setTimeout(() => {
+                const response = getAssistantResponse(message);
+                addAssistantMessage(response, false);
+            }, 1000);
+        }
+
+        function addAssistantMessage(content, isUser) {
+            const messages = document.getElementById('assistantMessages');
+            const messageDiv = document.createElement('div');
+            
+            // Verificar si es el primer mensaje (mensaje de bienvenida)
+            const isWelcomeMessage = messages.children.length === 0 && !isUser;
+            
+            if (isWelcomeMessage) {
+                messageDiv.className = 'welcome-message';
+            } else {
+                messageDiv.className = `chat-message ${isUser ? 'user' : 'assistant'}`;
+            }
+            
+            let processedContent = content;
+            
+            // Solo procesar formato para respuestas de la IA (no para mensajes del usuario)
+            if (!isUser) {
+                // Procesar respuesta con formato markdown básico
+                processedContent = content
+                    .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+                    .replace(/\*(.*?)\*/g, '<em>$1</em>')
+                    .replace(/`(.*?)`/g, '<code>$1</code>')
+                    .replace(/### (.*?)$/gm, '<h4>$1</h4>')
+                    .replace(/## (.*?)$/gm, '<h3>$1</h3>')
+                    // Procesar numeraciones
+                    .replace(/^\d+\.\s+(.*)$/gm, '<li>$1</li>')
+                    // Procesar viñetas
+                    .replace(/^[-•]\s+(.*)$/gm, '<li>$1</li>')
+                    // Procesar saltos de línea dobles como párrafos
+                    .replace(/\n\n/g, '</p><p>')
+                    // Procesar saltos de línea simples
+                    .replace(/\n/g, '<br>');
+
+                // Envolver listas numeradas consecutivas
+                processedContent = processedContent.replace(/(<li>.*?<\/li>(?:\s*<br>\s*<li>.*?<\/li>)*)/gs, function(match) {
+                    if (match.includes('<br>')) {
+                        return '<ol>' + match.replace(/<br>/g, '') + '</ol>';
+                    }
+                    return '<ol>' + match + '</ol>';
+                });
+
+                // Envolver listas con viñetas que no están ya en ol
+                processedContent = processedContent.replace(/(<li>.*?<\/li>(?:\s*(?!<\/ol>)<li>.*?<\/li>)*)/gs, function(match) {
+                    if (!match.includes('<ol>') && !match.includes('<ul>')) {
+                        return '<ul>' + match + '</ul>';
+                    }
+                    return match;
+                });
+
+                // Envolver en párrafos si contiene </p><p>
+                if (processedContent.includes('</p><p>')) {
+                    processedContent = '<p>' + processedContent + '</p>';
+                }
+                // Si no hay elementos de bloque, envolver en párrafo
+                else if (!processedContent.includes('<p>') && !processedContent.includes('<h3>') && 
+                         !processedContent.includes('<h4>') && !processedContent.includes('<ul>') && 
+                         !processedContent.includes('<ol>')) {
+                    processedContent = '<p>' + processedContent + '</p>';
+                }
+            }
+            
+            if (isWelcomeMessage) {
+                messageDiv.innerHTML = processedContent;
+            } else {
+                messageDiv.innerHTML = `
+                    <div class="message-bubble">${processedContent}</div>
+                `;
+            }
+            
+            messages.appendChild(messageDiv);
+            
+            // Auto-scroll simple al final sin animación suave
+            requestAnimationFrame(() => {
+                messages.scrollTop = messages.scrollHeight;
+                // Actualizar indicadores después del scroll en el siguiente frame
+                requestAnimationFrame(() => {
+                    updateScrollIndicators();
+                });
+            });
+            
+            // Ocultar mensaje de bienvenida cuando hay mensajes reales (no el primer mensaje)
+            if (!isWelcomeMessage) {
+                hideWelcomeMessage();
+                // Las opciones rápidas se controlarán por scroll, no las ocultamos aquí
+            }
+        }
+
+        function updateScrollIndicators() {
+            const messages = document.getElementById('assistantMessages');
+            const scrollToBottomBtn = document.querySelector('.scroll-to-bottom');
+            const quickOptions = document.querySelector('.quick-options');
+            if (!messages) return;
+            
+            // Asegurar que el scrollHeight se calcule correctamente
+            requestAnimationFrame(() => {
+                const hasScrollTop = messages.scrollTop > 10;
+                const hasScrollBottom = messages.scrollTop < (messages.scrollHeight - messages.clientHeight - 10);
+                const isNearTop = messages.scrollTop < 100; // Aumentar el umbral a 100px
+                
+                if (hasScrollTop) {
+                    messages.classList.add('has-scroll-top');
+                } else {
+                    messages.classList.remove('has-scroll-top');
+                }
+                
+                if (hasScrollBottom) {
+                    messages.classList.add('has-scroll-bottom');
+                    // Mostrar botón para ir al final si hay scroll hacia abajo
+                    if (scrollToBottomBtn) {
+                        scrollToBottomBtn.classList.add('visible');
+                    }
+                } else {
+                    messages.classList.remove('has-scroll-bottom');
+                    // Ocultar botón si ya está al final
+                    if (scrollToBottomBtn) {
+                        scrollToBottomBtn.classList.remove('visible');
+                    }
+                }
+                
+                // Controlar visibilidad de opciones rápidas basándose en el scroll
+                if (quickOptions) {
+                    // Mostrar opciones rápidas si está cerca del inicio (menos de 100px del top)
+                    if (isNearTop) {
+                        if (quickOptions.classList.contains('hidden')) {
+                            showQuickOptions();
+                        }
+                    } else {
+                        // Ocultar opciones rápidas si está lejos del inicio (más de 100px)
+                        if (!quickOptions.classList.contains('hidden')) {
+                            hideQuickOptions();
+                        }
+                    }
+                }
+            });
+        }
+
+        function scrollToBottom() {
+            const messages = document.getElementById('assistantMessages');
+            if (messages) {
+                messages.scrollTo({
+                    top: messages.scrollHeight,
+                    behavior: 'instant'
+                });
+            }
+        }
+
+        function getWelcomeMessage() {
+            const currentLang = localStorage.getItem('selectedLanguage') || 'es';
+            return currentLang === 'es' ? 
+                '¡Hola! Soy Gemini, tu asistente de inteligencia artificial. Estoy aquí para ayudarte con cualquier pregunta sobre nuestra plataforma de análisis inteligente. ¿En qué puedo asistirte hoy?' :
+                'Hello! I\'m Gemini, your artificial intelligence assistant. I\'m here to help you with any questions about our intelligent analytics platform. How can I assist you today?';
+        }
+
+        function hideWelcomeMessage() {
+            const welcomeMsg = document.querySelector('.welcome-message');
+            if (welcomeMsg && !welcomeMsg.classList.contains('hidden')) {
+                welcomeMsg.classList.add('hidden');
+            }
+            
+            // También ocultar el assistant greeting para eliminar padding adicional
+            const assistantGreeting = document.querySelector('.assistant-greeting');
+            if (assistantGreeting && !assistantGreeting.classList.contains('hidden')) {
+                assistantGreeting.classList.add('hidden');
+            }
+        }
+
+        function hideQuickOptions() {
+            const quickOptions = document.querySelector('.quick-options');
+            if (quickOptions && !quickOptions.classList.contains('hidden')) {
+                quickOptions.classList.add('hidden');
+                // Usar display: none para eliminar completamente el espacio ocupado
+                quickOptions.style.display = 'none';
+            }
+        }
+
+        function showQuickOptions() {
+            const quickOptions = document.querySelector('.quick-options');
+            if (quickOptions) {
+                // Mostrar elemento con display: block primero
+                quickOptions.style.display = 'block';
+                // Remover clase hidden
+                quickOptions.classList.remove('hidden');
+            }
+            
+            // También mostrar el assistant greeting cuando se vuelve al inicio
+            const assistantGreeting = document.querySelector('.assistant-greeting');
+            if (assistantGreeting && assistantGreeting.classList.contains('hidden')) {
+                assistantGreeting.classList.remove('hidden');
+            }
+        }
+
+        function createChatAssistant() {
+            // Obtener idioma actual
+            const currentLang = localStorage.getItem('selectedLanguage') || 'es';
+            const texts = translations[currentLang];
+            
+            // Crear overlay del chat
+            const chatOverlay = document.createElement('div');
+            chatOverlay.className = 'chat-overlay';
+            chatOverlay.innerHTML = `
+                <div class="chat-container">
+                    <div class="chat-header">
+                        <div class="chat-avatar">🤖</div>
+                        <div class="chat-info">
+                            <h3>${texts.chatAssistantTitle}</h3>
+                            <p>${texts.chatAssistantStatus}</p>
+                        </div>
+                        <button class="chat-close" onclick="closeChatAssistant()">&times;</button>
+                    </div>
+                    
+                    <div class="chat-messages" id="chatMessages">
+                        <div class="message assistant">
+                            <div class="message-avatar">🤖</div>
+                            <div class="message-content">
+                                ${texts.chatWelcome}
+                                <div class="message-time">${getCurrentTime()}</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="chat-input-container">
+                        <div class="chat-input-wrapper">
+                            <textarea class="chat-input" id="chatInput" placeholder="${texts.chatPlaceholder}" rows="1"></textarea>
+                            <button class="chat-send" id="chatSend" onclick="sendMessage()">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M2,21L23,12L2,3V10L17,12L2,14V21Z"/>
+                                </svg>
+                            </button>
+                        </div>
+                        <div class="quick-actions">
+                            <button class="quick-action" onclick="sendQuickMessage('${currentLang === 'es' ? '¿Cómo funciona la IA predictiva?' : 'How does predictive AI work?'}')">${texts.quickAction1}</button>
+                            <button class="quick-action" onclick="sendQuickMessage('${currentLang === 'es' ? '¿Qué es multi-tenant?' : 'What is multi-tenant?'}')">${texts.quickAction2}</button>
+                            <button class="quick-action" onclick="sendQuickMessage('${currentLang === 'es' ? 'Precio de la plataforma' : 'Platform pricing'}')">${texts.quickAction3}</button>
+                            <button class="quick-action" onclick="sendQuickMessage('${currentLang === 'es' ? 'Contactar con ventas' : 'Contact sales'}')">${texts.quickAction4}</button>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            document.body.appendChild(chatOverlay);
+            
+            // Mostrar el chat con animación
+            setTimeout(() => {
+                chatOverlay.classList.add('active');
+            }, 10);
+            
+            // Auto-resize del textarea
+            const chatInput = document.getElementById('chatInput');
+            chatInput.addEventListener('input', function() {
+                this.style.height = 'auto';
+                this.style.height = Math.min(this.scrollHeight, 100) + 'px';
+            });
+            
+            // Enviar mensaje con Enter
+            chatInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter' && !e.shiftKey) {
+                    e.preventDefault();
+                    sendMessage();
+                }
+            });
+            
+            // Cerrar con clic en overlay
+            chatOverlay.addEventListener('click', function(e) {
+                if (e.target === chatOverlay) {
+                    closeChatAssistant();
+                }
+            });
+            
+            // Cerrar con ESC
+            document.addEventListener('keydown', function escHandler(e) {
+                if (e.key === 'Escape') {
+                    closeChatAssistant();
+                    document.removeEventListener('keydown', escHandler);
+                }
+            });
+            
+            // Enfocar input
+            setTimeout(() => {
+                chatInput.focus();
+            }, 400);
+        }
+
+        function closeChatAssistant() {
+            const chatOverlay = document.querySelector('.chat-overlay');
+            if (chatOverlay) {
+                chatOverlay.classList.remove('active');
+                setTimeout(() => {
+                    if (chatOverlay.parentNode) {
+                        chatOverlay.parentNode.removeChild(chatOverlay);
+                    }
+                }, 300);
+            }
+        }
+
+        function getCurrentTime() {
+            return new Date().toLocaleTimeString('es-ES', { 
+                hour: '2-digit', 
+                minute: '2-digit' 
+            });
+        }
+
+        function sendMessage() {
+            const chatInput = document.getElementById('chatInput');
+            const message = chatInput.value.trim();
+            
+            if (!message) return;
+            
+            // Agregar mensaje del usuario
+            addMessage(message, 'user');
+            chatInput.value = '';
+            chatInput.style.height = 'auto';
+            
+            // Mostrar indicador de escritura
+            showTypingIndicator();
+            
+            // Simular respuesta del asistente
+            setTimeout(() => {
+                hideTypingIndicator();
+                const response = getAssistantResponse(message);
+                addMessage(response, 'assistant');
+            }, 1500 + Math.random() * 1000);
+        }
+
+        function sendQuickMessage(message) {
+            document.getElementById('chatInput').value = message;
+            sendMessage();
+        }
+
+        function addMessage(content, sender) {
+            const chatMessages = document.getElementById('assistantMessages');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `chat-message ${sender}`;
+            
+            const avatar = sender === 'assistant' ? '🤖' : '�';
+            
+            messageDiv.innerHTML = `
+                <div class="message-bubble">${content}</div>
+            `;
+            
+            chatMessages.appendChild(messageDiv);
+            // Scroll simple sin smooth behavior
+            setTimeout(() => {
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+                updateScrollIndicators();
+            }, 10);
+        }
+
+        function showTypingIndicator() {
+            const chatMessages = document.getElementById('assistantMessages');
+            const typingDiv = document.createElement('div');
+            typingDiv.className = 'chat-message assistant';
+            typingDiv.id = 'typingIndicator';
+            
+            typingDiv.innerHTML = `
+                <div class="message-bubble">
+                    <div class="typing-indicator">
+                        <div class="typing-dot"></div>
+                        <div class="typing-dot"></div>
+                        <div class="typing-dot"></div>
+                    </div>
+                </div>
+            `;
+            
+            chatMessages.appendChild(typingDiv);
+            // Scroll simple sin smooth behavior
+            setTimeout(() => {
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+                updateScrollIndicators();
+            }, 10);
+        }
+
+        function hideTypingIndicator() {
+            const typingIndicator = document.getElementById('typingIndicator');
+            if (typingIndicator) {
+                typingIndicator.remove();
+            }
+        }
+
+        function getAssistantResponse(message) {
+            const lowerMessage = message.toLowerCase();
+            const currentLang = localStorage.getItem('selectedLanguage') || 'es';
+            
+            // Respuestas en español
+            if (currentLang === 'es') {
+                if (lowerMessage.includes('ia') || lowerMessage.includes('inteligencia artificial') || lowerMessage.includes('predictiva')) {
+                    return '🧠 Nuestra IA Predictiva utiliza algoritmos avanzados de Machine Learning para analizar patrones en tus datos históricos y predecir tendencias futuras. Esto te permite tomar decisiones proactivas y optimizar tus procesos de negocio. ¿Te gustaría saber más sobre algún modelo específico?';
+                }
+                
+                if (lowerMessage.includes('multi-tenant') || lowerMessage.includes('seguridad') || lowerMessage.includes('segregación')) {
+                    return '🔒 Nuestro sistema Multi-tenant garantiza la segregación completa de datos entre organizaciones. Cada empresa tiene su propio espacio aislado con roles granulares, cumplimiento normativo y certificaciones de seguridad. Los datos nunca se cruzan entre clientes. ¿Necesitas información sobre certificaciones específicas?';
+                }
+                
+                if (lowerMessage.includes('precio') || lowerMessage.includes('costo') || lowerMessage.includes('plan')) {
+                    return '💰 Ofrecemos planes flexibles adaptados a diferentes necesidades empresariales: Plan Starter (hasta 5 usuarios), Plan Professional (hasta 50 usuarios) y Plan Enterprise (usuarios ilimitados). Todos incluyen IA, dashboards y soporte 24/7. ¿Te gustaría que un especialista te contacte para una cotización personalizada?';
+                }
+                
+                if (lowerMessage.includes('dashboard') || lowerMessage.includes('gráfico') || lowerMessage.includes('visualización')) {
+                    return '📊 Nuestros Dashboards Interactivos te permiten visualizar KPIs en tiempo real con gráficos dinámicos personalizables. Puedes crear widgets específicos para tu industria y compartirlos con tu equipo. ¿Qué tipo de métricas te interesa más visualizar?';
+                }
+                
+                if (lowerMessage.includes('tiempo real') || lowerMessage.includes('datos') || lowerMessage.includes('conectar')) {
+                    return '⚡ Conectamos con múltiples fuentes de datos (APIs, bases de datos, archivos, servicios web) para obtener información actualizada al instante. Los insights se procesan en tiempo real para decisiones inmediatas. ¿Qué fuentes de datos necesitas integrar?';
+                }
+                
+                if (lowerMessage.includes('colaboración') || lowerMessage.includes('equipo') || lowerMessage.includes('compartir')) {
+                    return '👥 Las herramientas de colaboración permiten compartir análisis, comentar en dashboards, asignar tareas y tomar decisiones en equipo. Cada miembro tiene roles específicos y puede contribuir según sus permisos. ¿Tu equipo necesita capacitación en colaboración?';
+                }
+                
+                if (lowerMessage.includes('reporte') || lowerMessage.includes('personalizado') || lowerMessage.includes('automatizado')) {
+                    return '📄 Los reportes se generan automáticamente según tu programación (diario, semanal, mensual) y se pueden personalizar completamente. Incluyen gráficos, tablas, insights de IA y se envían por email o se descargan en PDF/Excel. ¿Qué tipo de reportes necesitas?';
+                }
+                
+                if (lowerMessage.includes('contacto') || lowerMessage.includes('ventas') || lowerMessage.includes('demostración') || lowerMessage.includes('demo')) {
+                    return '📞 ¡Perfecto! Nuestro equipo de especialistas está listo para atenderte. Puedes agendar una demostración gratuita contactando a nuestro equipo de ventas o solicitar una prueba gratuita de 14 días. ¿Prefieres que te contactemos nosotros?';
+                }
+                
+                if (lowerMessage.includes('soporte') || lowerMessage.includes('ayuda') || lowerMessage.includes('problema') || lowerMessage.includes('error')) {
+                    return '🛠️ Nuestro soporte técnico está disponible 24/7 para resolver cualquier inconveniente. Ofrecemos chat en vivo, email y llamadas telefónicas. También tenemos documentación completa y tutoriales en video. ¿Necesitas ayuda con algo específico?';
+                }
+                
+                return `Entiendo tu consulta sobre "${message}". Como Gemini, tu asistente de IA, puedo ayudarte con información sobre:\n\n• IA Predictiva y Machine Learning\n• Dashboards y visualización de datos\n• Seguridad Multi-tenant\n• Datos en tiempo real\n• Reportes personalizados\n• Colaboración en equipo\n• Precios y planes\n• Soporte técnico\n\n¿Sobre cuál de estos temas te gustaría saber más?`;
+            }
+            
+            // Respuestas en inglés
+            else {
+                if (lowerMessage.includes('ai') || lowerMessage.includes('artificial intelligence') || lowerMessage.includes('predictive') || lowerMessage.includes('machine learning')) {
+                    return '🧠 Our Predictive AI uses advanced Machine Learning algorithms to analyze patterns in your historical data and predict future trends. This allows you to make proactive decisions and optimize your business processes. Would you like to know more about any specific model?';
+                }
+                
+                if (lowerMessage.includes('multi-tenant') || lowerMessage.includes('security') || lowerMessage.includes('segregation')) {
+                    return '🔒 Our Multi-tenant system guarantees complete data segregation between organizations. Each company has its own isolated space with granular roles, regulatory compliance and security certifications. Data never crosses between clients. Do you need information about specific certifications?';
+                }
+                
+                if (lowerMessage.includes('price') || lowerMessage.includes('pricing') || lowerMessage.includes('cost') || lowerMessage.includes('plan')) {
+                    return '💰 We offer flexible plans adapted to different business needs: Starter Plan (up to 5 users), Professional Plan (up to 50 users) and Enterprise Plan (unlimited users). All include AI, dashboards and 24/7 support. Would you like a specialist to contact you for a personalized quote?';
+                }
+                
+                if (lowerMessage.includes('dashboard') || lowerMessage.includes('chart') || lowerMessage.includes('visualization')) {
+                    return '📊 Our Interactive Dashboards allow you to visualize KPIs in real-time with customizable dynamic charts. You can create industry-specific widgets and share them with your team. What type of metrics are you most interested in visualizing?';
+                }
+                
+                if (lowerMessage.includes('real time') || lowerMessage.includes('real-time') || lowerMessage.includes('data') || lowerMessage.includes('connect')) {
+                    return '⚡ We connect with multiple data sources (APIs, databases, files, web services) to get instantly updated information. Insights are processed in real-time for immediate decisions. What data sources do you need to integrate?';
+                }
+                
+                if (lowerMessage.includes('collaboration') || lowerMessage.includes('team') || lowerMessage.includes('share')) {
+                    return '👥 Collaboration tools allow sharing analysis, commenting on dashboards, assigning tasks and making team decisions. Each member has specific roles and can contribute according to their permissions. Does your team need collaboration training?';
+                }
+                
+                if (lowerMessage.includes('report') || lowerMessage.includes('custom') || lowerMessage.includes('automated')) {
+                    return '📄 Reports are automatically generated according to your schedule (daily, weekly, monthly) and can be fully customized. They include charts, tables, AI insights and are sent by email or downloaded in PDF/Excel. What type of reports do you need?';
+                }
+                
+                if (lowerMessage.includes('contact') || lowerMessage.includes('sales') || lowerMessage.includes('demonstration') || lowerMessage.includes('demo')) {
+                    return '📞 Perfect! Our team of specialists is ready to assist you. You can schedule a free demonstration by contacting our sales team or request a free 14-day trial. Would you prefer us to contact you?';
+                }
+                
+                if (lowerMessage.includes('support') || lowerMessage.includes('help') || lowerMessage.includes('problem') || lowerMessage.includes('error')) {
+                    return '🛠️ Our technical support is available 24/7 to resolve any issues. We offer live chat, email and phone calls. We also have complete documentation and video tutorials. Do you need help with something specific?';
+                }
+                
+                return `I understand your inquiry about "${message}". As Gemini, your AI assistant, I can help you with information about:\n\n• Predictive AI and Machine Learning\n• Dashboards and data visualization\n• Multi-tenant Security\n• Real-time data\n• Custom reports\n• Team collaboration\n• Pricing and plans\n• Technical support\n\nWhich of these topics would you like to know more about?`;
+            }
+        }
+
+        // ===== FUNCIÓN DE IDIOMA =====
+        
+        function getCurrentLanguage() {
+            return localStorage.getItem('selectedLanguage') || 'es';
+        }
+
+        // ===== SISTEMA DE VOZ =====
+        
+        let isRecording = false;
+        let recognition = null;
+        let synthesis = window.speechSynthesis;
+        let voiceResponseEnabled = true;
+        let isProcessingVoice = false;
+        let microphonePermissionGranted = false;
+
+        // Inicializar reconocimiento de voz
+        function initVoiceRecognition() {
+            if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
+                const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+                recognition = new SpeechRecognition();
+                
+                recognition.continuous = false;
+                recognition.interimResults = false;
+                recognition.lang = getCurrentLanguage() === 'en' ? 'en-US' : 'es-ES';
+                
+                recognition.onstart = function() {
+                    isRecording = true;
+                    updateVoiceButton();
+                    const isEnglish = getCurrentLanguage() === 'en';
+                    updateVoiceStatus(isEnglish ? 'Listening...' : 'Escuchando...');
+                };
+                
+                recognition.onresult = function(event) {
+                    const transcript = event.results[0][0].transcript;
+                    document.getElementById('chatInput').value = transcript;
+                    const isEnglish = getCurrentLanguage() === 'en';
+                    updateVoiceStatus(isEnglish ? 'Message transcribed' : 'Mensaje transcrito');
+                    setTimeout(() => {
+                        sendMessage();
+                    }, 500);
+                };
+                
+                recognition.onerror = function(event) {
+                    console.error('Error de reconocimiento de voz:', event.error);
+                    const isEnglish = getCurrentLanguage() === 'en';
+                    let errorMessage = isEnglish ? 'Voice recognition error' : 'Error al reconocer voz';
+                    
+                    if (event.error === 'not-allowed' || event.error === 'permission-denied') {
+                        microphonePermissionGranted = false; // Actualizar estado de permisos
+                        errorMessage = isEnglish ? 
+                            'Microphone permission denied. Please allow microphone access in your browser.' :
+                            'Permiso de micrófono denegado. Permita el acceso al micrófono en su navegador.';
+                    } else if (event.error === 'no-speech') {
+                        errorMessage = isEnglish ? 'No speech detected. Please try again.' : 'No se detectó voz. Intente de nuevo.';
+                    } else if (event.error === 'audio-capture') {
+                        microphonePermissionGranted = false; // Actualizar estado de permisos
+                        errorMessage = isEnglish ? 'Could not access microphone.' : 'No se pudo acceder al micrófono.';
+                    } else if (event.error === 'network') {
+                        errorMessage = isEnglish ? 'Network error. Check your connection.' : 'Error de red. Verifique su conexión.';
+                    }
+                    
+                    updateVoiceStatus(errorMessage);
+                    stopVoiceRecording();
+                };
+                
+                recognition.onend = function() {
+                    stopVoiceRecording();
+                };
+                
+                return true;
+            } else {
+                console.warn('Reconocimiento de voz no soportado');
+                updateVoiceStatus('Voz no soportada en este navegador');
+                return false;
+            }
+        }
+
+        async function requestMicrophonePermission() {
+            // Si ya tenemos permisos, no solicitar de nuevo
+            if (microphonePermissionGranted) {
+                return true;
+            }
+            
+            try {
+                // Verificar permisos existentes primero
+                const permission = await navigator.permissions.query({name: 'microphone'});
+                if (permission.state === 'granted') {
+                    microphonePermissionGranted = true;
+                    return true;
+                }
+                
+                // Solo solicitar stream si no tenemos permisos
+                if (permission.state === 'prompt') {
+                    const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+                    stream.getTracks().forEach(track => track.stop()); // Liberar el stream inmediatamente
+                    microphonePermissionGranted = true;
+                    return true;
+                }
+                
+                return false;
+            } catch (error) {
+                console.error('Error al solicitar permiso de micrófono:', error);
+                microphonePermissionGranted = false;
+                return false;
+            }
+        }
+
+        function toggleVoiceRecording() {
+            if (isRecording) {
+                stopVoiceRecording();
+            } else {
+                startVoiceRecording();
+            }
+        }
+
+        async function startVoiceRecording() {
+            if (!recognition && !initVoiceRecognition()) {
+                const isEnglish = getCurrentLanguage() === 'en';
+                alert(isEnglish ? 'Voice recognition not available in this browser' : 'Reconocimiento de voz no disponible en este navegador');
+                return;
+            }
+            
+            if (isProcessingVoice) return;
+            
+            const isEnglish = getCurrentLanguage() === 'en';
+            
+            // Solo solicitar permisos si no los tenemos ya
+            if (!microphonePermissionGranted) {
+                updateVoiceStatus(isEnglish ? 'Requesting microphone permission...' : 'Solicitando permiso de micrófono...');
+                const hasPermission = await requestMicrophonePermission();
+                
+                if (!hasPermission) {
+                    updateVoiceStatus(isEnglish ? 
+                        'Microphone permission denied. Enable microphone in browser settings.' :
+                        'Permiso de micrófono denegado. Active el micrófono en la configuración del navegador.');
+                    return;
+                }
+            }
+            
+            try {
+                isProcessingVoice = true;
+                recognition.lang = getCurrentLanguage() === 'en' ? 'en-US' : 'es-ES';
+                recognition.start();
+            } catch (error) {
+                console.error('Error al iniciar reconocimiento:', error);
+                isProcessingVoice = false;
+                let errorMessage = isEnglish ? 'Error starting recording' : 'Error al iniciar grabación';
+                
+                if (error.name === 'InvalidStateError') {
+                    errorMessage = isEnglish ? 
+                        'Recognition already in use. Please wait.' :
+                        'El reconocimiento ya está en uso. Espere un momento.';
+                }
+                
+                updateVoiceStatus(errorMessage);
+            }
+        }
+
+        function stopVoiceRecording() {
+            if (recognition && isRecording) {
+                recognition.stop();
+            }
+            isRecording = false;
+            isProcessingVoice = false;
+            updateVoiceButton();
+            setTimeout(() => {
+                updateVoiceStatus('');
+            }, 2000);
+        }
+
+        function updateVoiceButton() {
+            const voiceBtn = document.getElementById('voiceBtn');
+            const voiceIcon = document.getElementById('voiceIcon');
+            const isEnglish = getCurrentLanguage() === 'en';
+            
+            voiceBtn.classList.remove('recording', 'processing');
+            
+            if (isRecording) {
+                voiceBtn.classList.add('recording');
+                voiceIcon.innerHTML = `
+                    <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4z"/>
+                    <path d="M21 12c0 4.97-4.03 9-9 9s-9-4.03-9-9"/>
+                `;
+                voiceBtn.title = isEnglish ? 'Stop recording' : 'Detener grabación';
+            } else if (isProcessingVoice) {
+                voiceBtn.classList.add('processing');
+                voiceBtn.title = isEnglish ? 'Processing...' : 'Procesando...';
+            } else {
+                voiceIcon.innerHTML = `
+                    <path d="M12 14c1.66 0 3-1.34 3-3V5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3z"/>
+                    <path d="M17 11c0 2.76-2.24 5-5 5s-5-2.24-5-5H5c0 3.53 2.61 6.43 6 6.92V21h2v-3.08c3.39-.49 6-3.39 6.92h-2z"/>
+                `;
+                voiceBtn.title = isEnglish ? 'Speak' : 'Hablar';
+            }
+        }
+
+        function updateVoiceStatus(message) {
+            const statusElement = document.getElementById('voiceStatus');
+            if (statusElement) {
+                statusElement.textContent = message;
+            }
+        }
+
+        function toggleVoiceResponse() {
+            voiceResponseEnabled = !voiceResponseEnabled;
+            const toggle = document.getElementById('voiceResponseToggle');
+            const text = document.getElementById('voiceToggleText');
+            
+            toggle.checked = voiceResponseEnabled;
+            text.textContent = voiceResponseEnabled ? 
+                (getCurrentLanguage() === 'en' ? 'Voice' : 'Voz') :
+                (getCurrentLanguage() === 'en' ? 'Muted' : 'Silencio');
+        }
+
+        function speakMessage(text) {
+            if (!voiceResponseEnabled || !synthesis) return;
+            
+            // Cancelar cualquier síntesis en curso
+            synthesis.cancel();
+            
+            const utterance = new SpeechSynthesisUtterance(text);
+            utterance.lang = getCurrentLanguage() === 'en' ? 'en-US' : 'es-ES';
+            
+            // Configuración de voz estilo Gemini
+            utterance.rate = 1.1;  // Velocidad ligeramente más rápida
+            utterance.pitch = 1.2; // Tono más alto y amigable
+            utterance.volume = 0.9; // Volumen más claro
+            
+            // Buscar una voz específica que suene más natural (estilo Gemini)
+            const voices = synthesis.getVoices();
+            let selectedVoice = null;
+            
+            if (getCurrentLanguage() === 'en') {
+                // Buscar voces en inglés más naturales
+                selectedVoice = voices.find(voice => 
+                    voice.lang.includes('en') && 
+                    (voice.name.includes('Google') || 
+                     voice.name.includes('Microsoft') ||
+                     voice.name.includes('Neural') ||
+                     voice.name.includes('Premium'))
+                ) || voices.find(voice => voice.lang.includes('en-US'));
+            } else {
+                // Buscar voces en español más naturales
+                selectedVoice = voices.find(voice => 
+                    voice.lang.includes('es') && 
+                    (voice.name.includes('Google') || 
+                     voice.name.includes('Microsoft') ||
+                     voice.name.includes('Neural') ||
+                     voice.name.includes('Premium'))
+                ) || voices.find(voice => voice.lang.includes('es-ES'));
+            }
+            
+            if (selectedVoice) {
+                utterance.voice = selectedVoice;
+            }
+            
+            utterance.onstart = function() {
+                const isEnglish = getCurrentLanguage() === 'en';
+                updateVoiceStatus(isEnglish ? 'Gemini responding...' : 'Gemini respondiendo...');
+            };
+            
+            utterance.onend = function() {
+                setTimeout(() => {
+                    updateVoiceStatus('');
+                }, 1000);
+            };
+            
+            utterance.onerror = function(event) {
+                console.error('Error en síntesis de voz:', event.error);
+                const isEnglish = getCurrentLanguage() === 'en';
+                updateVoiceStatus(isEnglish ? 'Gemini voice error' : 'Error en voz de Gemini');
+            };
+            
+            synthesis.speak(utterance);
+        }
+
+        // Modificar la función sendMessage para incluir síntesis de voz
+        const originalSendMessage = sendMessage;
+        sendMessage = function() {
+            const chatInput = document.getElementById('chatInput');
+            const message = chatInput.value.trim();
+            
+            if (!message) return;
+            
+            // Agregar mensaje del usuario
+            addMessage(message, 'user');
+            chatInput.value = '';
+            chatInput.style.height = 'auto';
+            
+            // Mostrar indicador de escritura
+            showTypingIndicator();
+            
+            // Simular respuesta del asistente
+            setTimeout(() => {
+                hideTypingIndicator();
+                const response = getAssistantResponse(message);
+                addMessage(response, 'assistant');
+                
+                // Reproducir respuesta por voz si está habilitada
+                if (voiceResponseEnabled) {
+                    setTimeout(() => {
+                        speakMessage(response);
+                    }, 500);
+                }
+            }, 1500 + Math.random() * 1000);
+        };
+
+        // Actualizar textos según idioma
+        function updateVoiceTexts() {
+            const isEnglish = getCurrentLanguage() === 'en';
+            const text = document.getElementById('voiceToggleText');
+            
+            if (text) {
+                text.textContent = voiceResponseEnabled ? 
+                    (isEnglish ? 'Voice response enabled' : 'Respuesta por voz activada') :
+                    (isEnglish ? 'Voice response disabled' : 'Respuesta por voz desactivada');
+            }
+            
+            const chatInput = document.getElementById('chatInput');
+            if (chatInput) {
+                chatInput.placeholder = isEnglish ? 'Type your message...' : 'Escribe tu mensaje...';
+            }
+        }
+
+        // Inicializar sistema de voz al cargar
+        document.addEventListener('DOMContentLoaded', function() {
+            initVoiceRecognition();
+            updateVoiceTexts();
+            
+            // Cargar voces disponibles para configuración estilo Gemini
+            if (synthesis) {
+                // Esperar a que las voces estén disponibles
+                if (synthesis.getVoices().length === 0) {
+                    synthesis.addEventListener('voiceschanged', function() {
+                        console.log('Voces disponibles cargadas para configuración Gemini');
+                    });
+                }
+            }
+            
+            // Verificar permisos de micrófono al cargar
+            navigator.permissions.query({name: 'microphone'}).then(function(result) {
+                const isEnglish = getCurrentLanguage() === 'en';
+                
+                if (result.state === 'granted') {
+                    microphonePermissionGranted = true;
+                    updateVoiceStatus('');
+                } else if (result.state === 'prompt') {
+                    updateVoiceStatus('');
+                } else {
+                    microphonePermissionGranted = false;
+                    updateVoiceStatus('');
+                }
+                
+                // Escuchar cambios en los permisos
+                result.onchange = function() {
+                    if (result.state === 'granted') {
+                        microphonePermissionGranted = true;
+                        updateVoiceStatus('');
+                    } else {
+                        microphonePermissionGranted = false;
+                    }
+                };
+                
+            }).catch(function(error) {
+                updateVoiceStatus('');
+            });
+        });
+
+        // ===== FIN SISTEMA DE VOZ =====
+
+        // Ajustar asistente virtual al redimensionar ventana
+        function adjustVirtualAssistant() {
+            const assistant = document.getElementById('virtualAssistant');
+            if (assistant) {
+                const viewportHeight = window.innerHeight;
+                const assistantHeight = Math.max(500, viewportHeight - 100);
+                assistant.style.height = `${assistantHeight}px`;
+                assistant.style.maxHeight = `${assistantHeight}px`;
+            }
+        }
+
+        // Listener para redimensionamiento
+        window.addEventListener('resize', adjustVirtualAssistant);
+        window.addEventListener('load', adjustVirtualAssistant);
+
+        // Simulación de detección de dominio al cargar
+document.addEventListener('DOMContentLoaded', function() {
+    // Configuración fija para TecnoCorp
+    const config = companyConfigs.tecnocorp;
+    
+    document.documentElement.style.setProperty('--primary-color', config.primary);
+    document.documentElement.style.setProperty('--secondary-color', config.secondary);
+    document.documentElement.style.setProperty('--tertiary-color', config.tertiary);
+    
+    document.getElementById('companyLogo').textContent = config.logo;
+    document.getElementById('companyName').textContent = config.name;
+    document.getElementById('heroTitle').textContent = config.heroTitle;
+    document.getElementById('heroSubtitle').textContent = config.heroSubtitle;
+    
+    setTimeout(() => {
+        document.querySelector('.hero').style.opacity = '1';
+    }, 100);
+});
+
+        // Efecto parallax suave en scroll
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const hero = document.querySelector('.hero');
+            hero.style.transform = `translateY(${scrolled * 0.1}px)`;
+        });
+
+        // Funciones del menú móvil
+        function toggleMobileMenu() {
+            const mobileMenu = document.getElementById('mobileMenu');
+            mobileMenu.classList.toggle('active');
+        }
+
+        function closeMobileMenu() {
+            const mobileMenu = document.getElementById('mobileMenu');
+            mobileMenu.classList.remove('active');
+        }
+
+        // Cerrar menú móvil al hacer clic fuera
+        document.addEventListener('click', function(event) {
+            const mobileMenu = document.getElementById('mobileMenu');
+            const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+            
+            if (!mobileMenu.contains(event.target) && !mobileMenuBtn.contains(event.target)) {
+                mobileMenu.classList.remove('active');
+            }
+        });
+
+        // Sincronizar selectores de idioma
+        function syncLanguageSelectors(selectedLang) {
+            const mainSelector = document.getElementById('languageSelector');
+            const mobileSelector = document.getElementById('mobileLangSelector');
+            
+            if (mainSelector && mobileSelector) {
+                mainSelector.value = selectedLang;
+                mobileSelector.value = selectedLang;
+            }
+        }
+
+        // Actualizar la función changeLanguage para sincronizar ambos selectores
+        const originalChangeLanguage = changeLanguage;
+        changeLanguage = function(lang) {
+            originalChangeLanguage(lang);
+            syncLanguageSelectors(lang);
+            
+            // Actualizar textos del sistema de voz
+            if (typeof updateVoiceTexts === 'function') {
+                updateVoiceTexts();
+            }
+            
+            // Actualizar idioma de reconocimiento de voz
+            if (recognition) {
+                recognition.lang = lang === 'en' ? 'en-US' : 'es-ES';
+            }
+        };
+    </script>
+
+<!-- Asistente Virtual Lateral -->
+<div class="virtual-assistant" id="virtualAssistant">
+    <div class="assistant-header">
+        <div class="assistant-avatar">
+            <svg width="28" height="28" viewBox="0 0 32 32">
+                <defs>
+                    <linearGradient id="avatarRobotHeadGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" style="stop-color:#1e40af"/>
+                        <stop offset="50%" style="stop-color:#3730a3"/>
+                        <stop offset="100%" style="stop-color:#581c87"/>
+                    </linearGradient>
+                    <linearGradient id="avatarRobotBodyGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" style="stop-color:#374151"/>
+                        <stop offset="50%" style="stop-color:#4b5563"/>
+                        <stop offset="100%" style="stop-color:#6b7280"/>
+                    </linearGradient>
+                    <linearGradient id="avatarEyeGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" style="stop-color:#dc2626"/>
+                        <stop offset="100%" style="stop-color:#991b1b"/>
+                    </linearGradient>
+                    <filter id="avatarRobotGlow">
+                        <feGaussianBlur stdDeviation="1.5" result="coloredBlur"/>
+                        <feMerge> 
+                            <feMergeNode in="coloredBlur"/>
+                            <feMergeNode in="SourceGraphic"/>
+                        </feMerge>
+                    </filter>
+                </defs>
+                
+                <!-- Cabeza del robot masculino -->
+                <rect x="9" y="6" width="14" height="10" rx="2" fill="url(#avatarRobotHeadGradient)" filter="url(#avatarRobotGlow)" stroke="rgba(255,255,255,0.3)" stroke-width="0.6"/>
+                
+                <!-- Visera/pantalla frontal angular -->
+                <rect x="10.5" y="8" width="11" height="5.5" rx="0.8" fill="rgba(0,0,0,0.4)" stroke="rgba(255,255,255,0.2)" stroke-width="0.4"/>
+                
+                <!-- Ojos masculinos más intensos -->
+                <rect x="12" y="9.5" width="2.5" height="2.5" rx="0.4" fill="url(#avatarEyeGradient)" filter="url(#avatarRobotGlow)"/>
+                <rect x="17.5" y="9.5" width="2.5" height="2.5" rx="0.4" fill="url(#avatarEyeGradient)" filter="url(#avatarRobotGlow)"/>
+                
+                <!-- Pupilas más intensas -->
+                <rect x="12.5" y="10" width="1.5" height="1.5" rx="0.3" fill="#ef4444"/>
+                <rect x="18" y="10" width="1.5" height="1.5" rx="0.3" fill="#ef4444"/>
+                <rect x="12.8" y="10.3" width="0.8" height="0.8" rx="0.2" fill="white"/>
+                <rect x="18.3" y="10.3" width="0.8" height="0.8" rx="0.2" fill="white"/>
+                
+                <!-- Antenas más robustas -->
+                <rect x="12" y="3" width="1.5" height="3.5" rx="0.75" fill="#f59e0b" stroke="#d97706" stroke-width="0.3"/>
+                <rect x="18.5" y="3" width="1.5" height="3.5" rx="0.75" fill="#f59e0b" stroke="#d97706" stroke-width="0.3"/>
+                <rect x="11.5" y="2.5" width="2.5" height="1.5" rx="1.25" fill="#fbbf24" filter="url(#avatarRobotGlow)"/>
+                <rect x="18" y="2.5" width="2.5" height="1.5" rx="1.25" fill="#fbbf24" filter="url(#avatarRobotGlow)"/>
+                
+                <!-- Mandíbula masculina -->
+                <rect x="11" y="14" width="10" height="2.5" rx="0.8" fill="url(#avatarRobotHeadGradient)" stroke="rgba(255,255,255,0.2)" stroke-width="0.3"/>
+                
+                <!-- Cuello más robusto -->
+                <rect x="14" y="16.5" width="4" height="2.5" rx="0.8" fill="url(#avatarRobotBodyGradient)"/>
+                
+                <!-- Cuerpo más ancho -->
+                <rect x="10" y="19" width="12" height="8" rx="1.5" fill="url(#avatarRobotBodyGradient)" filter="url(#avatarRobotGlow)" stroke="rgba(255,255,255,0.2)" stroke-width="0.4"/>
+                
+                <!-- Panel de control más grande -->
+                <rect x="12" y="20.5" width="8" height="3.5" rx="0.8" fill="rgba(0,0,0,0.3)" stroke="rgba(255,255,255,0.3)" stroke-width="0.3"/>
+                
+                <!-- Luces indicadoras espaciadas -->
+                <rect x="13.5" y="21.5" width="1.2" height="1.2" rx="0.2" fill="#dc2626" filter="url(#avatarRobotGlow)"/>
+                <rect x="15.4" y="21.5" width="1.2" height="1.2" rx="0.2" fill="#3b82f6" filter="url(#avatarRobotGlow)"/>
+                <rect x="17.3" y="21.5" width="1.2" height="1.2" rx="0.2" fill="#f59e0b" filter="url(#avatarRobotGlow)"/>
+                
+                <!-- Brazos más anchos -->
+                <rect x="6" y="20" width="4.5" height="5" rx="2.25" fill="url(#avatarRobotBodyGradient)" stroke="rgba(255,255,255,0.2)" stroke-width="0.3"/>
+                <rect x="21.5" y="20" width="4.5" height="5" rx="2.25" fill="url(#avatarRobotBodyGradient)" stroke="rgba(255,255,255,0.2)" stroke-width="0.3"/>
+                
+                <!-- Hombros definidos -->
+                <rect x="10" y="18.5" width="2.5" height="2" rx="1.25" fill="url(#avatarRobotBodyGradient)" stroke="rgba(255,255,255,0.2)" stroke-width="0.2"/>
+                <rect x="19.5" y="18.5" width="2.5" height="2" rx="1.25" fill="url(#avatarRobotBodyGradient)" stroke="rgba(255,255,255,0.2)" stroke-width="0.2"/>
+                
+                <!-- Puños más grandes -->
+                <rect x="7" y="26" width="2.5" height="2.5" rx="1.25" fill="#1f2937" stroke="rgba(255,255,255,0.3)" stroke-width="0.3"/>
+                <rect x="22.5" y="26" width="2.5" height="2.5" rx="1.25" fill="#1f2937" stroke="rgba(255,255,255,0.3)" stroke-width="0.3"/>
+                
+                <!-- Piernas más robustas -->
+                <rect x="12.5" y="27" width="3" height="4" rx="1.5" fill="url(#avatarRobotBodyGradient)" stroke="rgba(255,255,255,0.2)" stroke-width="0.3"/>
+                <rect x="16.5" y="27" width="3" height="4" rx="1.5" fill="url(#avatarRobotBodyGradient)" stroke="rgba(255,255,255,0.2)" stroke-width="0.3"/>
+                
+                <!-- Detalles masculinos -->
+                <rect x="14.5" y="15.5" width="3" height="0.8" rx="0.4" fill="rgba(255,255,255,0.2)"/>
+                <rect x="13" y="23.2" width="6" height="0.4" rx="0.2" fill="rgba(255,255,255,0.3)"/>
+                
+                <!-- Ondas de comunicación más intensas -->
+                <g opacity="0.7">
+                    <path d="M 4 14 Q 6 10 4 6" stroke="url(#avatarEyeGradient)" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+                    <path d="M 28 14 Q 26 10 28 6" stroke="url(#avatarEyeGradient)" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+                </g>
+            </svg>
+        </div>
+        <div class="assistant-info">
+            <h3 id="assistantTitle">Asistente virtual</h3>
+            <p id="assistantStatus">En línea</p>
+        </div>
+        <button class="assistant-toggle" id="assistantToggle" onclick="toggleAssistant()">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
+            </svg>
+        </button>
+    </div>
+    
+    <div class="assistant-content">
+        <div class="assistant-greeting">
+            <p id="assistantGreeting">Hola Josimar Joel, ¿en qué puedo ayudarte?</p>
+        </div>
+        
+        <div class="quick-options">
+            <button class="quick-option" onclick="selectQuickOption('dashboard')">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M9 11H7v6h2v-6zm4 0h-2v6h2v-6zm4 0h-2v6h2v-6zm4-7V2h-2v2H7V2H5v2H4c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2h-1zm0 16H4V8h16v12z"/>
+                </svg>
+                <span id="quickOption1">¿Cómo funciona la IA predictiva?</span>
+            </button>
+            
+            <button class="quick-option" onclick="selectQuickOption('ai')">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 3L2 12h3v8h6v-6h2v6h6v-8h3L12 3z"/>
+                </svg>
+                <span id="quickOption2">¿Qué es multi-tenant?</span>
+            </button>
+            
+            <button class="quick-option" onclick="selectQuickOption('security')">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                </svg>
+                <span id="quickOption3">Precio de la plataforma</span>
+            </button>
+            
+            <button class="quick-option" onclick="selectQuickOption('reports')">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm-5 14H4v-4h11v4zm0-5H4V9h11v4zm5 5h-4V9h4v9z"/>
+                </svg>
+                <span id="quickOption4">Contactar con ventas</span>
+            </button>
+        </div>
+        
+        <div class="chat-section">
+            <div class="chat-messages" id="assistantMessages">
+                <!-- Los mensajes se agregarán dinámicamente -->
+                <button class="scroll-to-bottom" onclick="scrollToBottom()" title="Ir al final de la conversación">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 16l-6-6h12l-6 6z"/>
+                        <path d="M12 8l-6-6h12l-6 6z" opacity="0.6"/>
+                    </svg>
+                </button>
+            </div>
+            
+            <div class="chat-input-container">
+                <div class="voice-controls-compact">
+                    <div class="voice-toggle" onclick="toggleVoiceResponse()">
+                        <input type="checkbox" id="voiceResponseToggle" checked>
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/>
+                        </svg>
+                        <span id="voiceToggleText">Voz</span>
+                    </div>
+                    <div class="voice-status" id="voiceStatus"></div>
+                </div>
+                <div class="chat-input-wrapper">
+                    <input type="text" class="chat-input" id="chatInput" placeholder="Escribe tu mensaje..." onkeypress="handleChatInput(event)" oninput="updateSendButtonState()">
+                    <button class="voice-btn" id="voiceBtn" onclick="toggleVoiceRecording()" title="Hablar">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" id="voiceIcon">
+                            <path d="M12 14c1.66 0 3-1.34 3-3V5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3z"/>
+                            <path d="M17 11c0 2.76-2.24 5-5 5s-5-2.24-5-5H5c0 3.53 2.61 6.43 6 6.92V21h2v-3.08c3.39-.49 6-3.39 6-6.92h-2z"/>
+                        </svg>
+                    </button>
+                    <button class="send-btn" onclick="sendMessage()" title="Enviar">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M3.4 20.4l17.45-7.48c.81-.35.81-1.49 0-1.84L3.4 3.6c-.66-.29-1.39.2-1.39.91L2 9.12c0 .5.37.93.87.99L17 12 2.87 13.88c-.5.07-.87.49-.87.99l.01 4.61c0 .71.73 1.2 1.39.91z"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Botón flotante para abrir asistente -->
+<button class="assistant-fab" id="assistantFab" onclick="openAssistant()">
+    <svg width="32" height="32" viewBox="0 0 32 32">
+        <defs>
+            <linearGradient id="robotHeadGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" style="stop-color:#1e40af"/>
+                <stop offset="50%" style="stop-color:#3730a3"/>
+                <stop offset="100%" style="stop-color:#581c87"/>
+            </linearGradient>
+            <linearGradient id="robotBodyGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" style="stop-color:#374151"/>
+                <stop offset="50%" style="stop-color:#4b5563"/>
+                <stop offset="100%" style="stop-color:#6b7280"/>
+            </linearGradient>
+            <linearGradient id="eyeGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" style="stop-color:#dc2626"/>
+                <stop offset="100%" style="stop-color:#991b1b"/>
+            </linearGradient>
+            <filter id="robotGlow">
+                <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
+                <feMerge> 
+                    <feMergeNode in="coloredBlur"/>
+                    <feMergeNode in="SourceGraphic"/>
+                </feMerge>
+            </filter>
+            <filter id="innerGlow">
+                <feGaussianBlur stdDeviation="1" result="coloredBlur"/>
+                <feMerge> 
+                    <feMergeNode in="coloredBlur"/>
+                    <feMergeNode in="SourceGraphic"/>
+                </feMerge>
+            </filter>
+        </defs>
+        
+        <!-- Cabeza del robot masculino (más angular) -->
+        <rect x="7" y="4" width="18" height="13" rx="3" fill="url(#robotHeadGradient)" filter="url(#robotGlow)" stroke="rgba(255,255,255,0.3)" stroke-width="1"/>
+        
+        <!-- Visera/pantalla frontal (más ancha y angular) -->
+        <rect x="9" y="7" width="14" height="7" rx="1" fill="rgba(0,0,0,0.4)" stroke="rgba(255,255,255,0.2)" stroke-width="0.5"/>
+        
+        <!-- Ojos del robot más intensos -->
+        <rect x="11" y="9" width="3" height="3" rx="0.5" fill="url(#eyeGradient)" filter="url(#innerGlow)">
+            <animate attributeName="opacity" values="0.8;1;0.8" dur="2s" repeatCount="indefinite"/>
+        </rect>
+        <rect x="18" y="9" width="3" height="3" rx="0.5" fill="url(#eyeGradient)" filter="url(#innerGlow)">
+            <animate attributeName="opacity" values="0.8;1;0.8" dur="2s" repeatCount="indefinite"/>
+        </rect>
+        
+        <!-- Pupilas más intensas -->
+        <rect x="11.5" y="9.5" width="2" height="2" rx="0.3" fill="#ef4444"/>
+        <rect x="18.5" y="9.5" width="2" height="2" rx="0.3" fill="#ef4444"/>
+        <rect x="12" y="10" width="1" height="1" rx="0.2" fill="white"/>
+        <rect x="19" y="10" width="1" height="1" rx="0.2" fill="white"/>
+        
+        <!-- Antenas más robustas -->
+        <rect x="11" y="1" width="2" height="4" rx="1" fill="#f59e0b" stroke="#d97706" stroke-width="0.5"/>
+        <rect x="19" y="1" width="2" height="4" rx="1" fill="#f59e0b" stroke="#d97706" stroke-width="0.5"/>
+        <rect x="10.5" y="0.5" width="3" height="2" rx="1.5" fill="#fbbf24" filter="url(#innerGlow)"/>
+        <rect x="18.5" y="0.5" width="3" height="2" rx="1.5" fill="#fbbf24" filter="url(#innerGlow)"/>
+        
+        <!-- Mandíbula/mentón más pronunciado -->
+        <rect x="10" y="14" width="12" height="3" rx="1" fill="url(#robotHeadGradient)" stroke="rgba(255,255,255,0.2)" stroke-width="0.5"/>
+        
+        <!-- Cuello más robusto -->
+        <rect x="13" y="17" width="6" height="3" rx="1" fill="url(#robotBodyGradient)"/>
+        
+        <!-- Cuerpo más ancho y musculoso -->
+        <rect x="8" y="20" width="16" height="11" rx="2" fill="url(#robotBodyGradient)" filter="url(#robotGlow)" stroke="rgba(255,255,255,0.2)" stroke-width="0.5"/>
+        
+        <!-- Panel de control más grande en el pecho -->
+        <rect x="11" y="22" width="10" height="5" rx="1" fill="rgba(0,0,0,0.3)" stroke="rgba(255,255,255,0.3)" stroke-width="0.5"/>
+        
+        <!-- Luces indicadoras más espaciadas -->
+        <rect x="13" y="23.5" width="1.5" height="1.5" rx="0.3" fill="#dc2626" filter="url(#innerGlow)"/>
+        <rect x="15.25" y="23.5" width="1.5" height="1.5" rx="0.3" fill="#3b82f6" filter="url(#innerGlow)"/>
+        <rect x="17.5" y="23.5" width="1.5" height="1.5" rx="0.3" fill="#f59e0b" filter="url(#innerGlow)"/>
+        
+        <!-- Brazos más anchos y musculosos -->
+        <rect x="3" y="21" width="6" height="7" rx="3" fill="url(#robotBodyGradient)" stroke="rgba(255,255,255,0.2)" stroke-width="0.5"/>
+        <rect x="23" y="21" width="6" height="7" rx="3" fill="url(#robotBodyGradient)" stroke="rgba(255,255,255,0.2)" stroke-width="0.5"/>
+        
+        <!-- Hombros más definidos -->
+        <rect x="8" y="19" width="3" height="3" rx="1.5" fill="url(#robotBodyGradient)" stroke="rgba(255,255,255,0.2)" stroke-width="0.3"/>
+        <rect x="21" y="19" width="3" height="3" rx="1.5" fill="url(#robotBodyGradient)" stroke="rgba(255,255,255,0.2)" stroke-width="0.3"/>
+        
+        <!-- Manos/puños más grandes -->
+        <rect x="5" y="29" width="3" height="3" rx="1.5" fill="#1f2937" stroke="rgba(255,255,255,0.3)" stroke-width="0.5"/>
+        <rect x="24" y="29" width="3" height="3" rx="1.5" fill="#1f2937" stroke="rgba(255,255,255,0.3)" stroke-width="0.5"/>
+        
+        <!-- Piernas más robustas -->
+        <rect x="11" y="31" width="4" height="6" rx="2" fill="url(#robotBodyGradient)" stroke="rgba(255,255,255,0.2)" stroke-width="0.5"/>
+        <rect x="17" y="31" width="4" height="6" rx="2" fill="url(#robotBodyGradient)" stroke="rgba(255,255,255,0.2)" stroke-width="0.5"/>
+        
+        <!-- Detalles masculinos adicionales -->
+        <rect x="14" y="15.5" width="4" height="1" rx="0.5" fill="rgba(255,255,255,0.2)"/>
+        <rect x="12" y="25.5" width="8" height="0.5" rx="0.25" fill="rgba(255,255,255,0.3)"/>
+        
+        <!-- Ondas de comunicación más intensas -->
+        <g opacity="0.8">
+            <path d="M 1 12 Q 3 8 1 4" stroke="url(#eyeGradient)" stroke-width="3" fill="none" stroke-linecap="round">
+                <animate attributeName="opacity" values="0.5;1;0.5" dur="1.5s" repeatCount="indefinite"/>
+            </path>
+            <path d="M 31 12 Q 29 8 31 4" stroke="url(#eyeGradient)" stroke-width="3" fill="none" stroke-linecap="round">
+                <animate attributeName="opacity" values="0.5;1;0.5" dur="1.5s" repeatCount="indefinite"/>
+            </path>
+        </g>
+        
+        <!-- Partículas de energía más agresivas -->
+        <rect cx="3" cy="16" width="2" height="2" rx="1" fill="#dc2626" opacity="0.7">
+            <animate attributeName="y" values="16;12;16" dur="2s" repeatCount="indefinite"/>
+        </rect>
+        <rect cx="29" cy="20" width="1.5" height="1.5" rx="0.75" fill="#3b82f6" opacity="0.7">
+            <animate attributeName="y" values="20;16;20" dur="2.2s" repeatCount="indefinite"/>
+        </rect>
+    </svg>
+</button>
+
+<!-- Footer -->
+<footer class="footer">
+    <div class="footer-container">
+        <div class="footer-bottom">
+            <p>&copy; 2025 TecnoCorp. Todos los derechos reservados.</p>
+            <div class="footer-bottom-links">
+                <a href="#">Política de Privacidad</a>
+                <a href="#">Términos de Uso</a>
+                <a href="#">Cookies</a>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+</body>
+</html>
