@@ -6,9 +6,38 @@ Thumbs.db
 .vscode/
 .idea/
 
-# Dependencias (si usas npm más adelante)
+# Dependencias
 node_modules/
+jspm_packages/
+
+# Logs
+logs
+*.log
 
 # Archivos temporales
 *.tmp
-*.log
+*.pid
+*.seed
+*.pid.lock
+
+# Archivos de entorno
+.env
+.env.*
+!.env.example
+
+# Cache
+.cache
+.parcel-cache
+.npm
+.eslintcache
+
+# Build outputs
+dist/
+build/
+out/
+.next/
+.nuxt/
+
+# Otros
+*.tgz
+.yarn-integrity
