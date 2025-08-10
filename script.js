@@ -6903,9 +6903,16 @@ function loadSavedCustomization() {
                            dashboardView.classList.add('active');
                            console.log('Activando vista principal de Gestión de Datos');
                        }
+                   } else if (contentId === 'conexiones-api') {
+                       // Solo activar la vista principal del dashboard de API
+                       const apiDashboardView = contentArea.querySelector('#apiDashboard');
+                       if (apiDashboardView) {
+                           apiDashboardView.classList.add('active');
+                           console.log('Activando vista principal de Conexiones API');
+                       }
                    } else {
                        // Para otros módulos, activar todas las vistas como antes
-                       const viewContainers = contentArea.querySelectorAll('.api-view, .etl-view');
+                       const viewContainers = contentArea.querySelectorAll('.etl-view');
                        viewContainers.forEach(container => {
                            container.classList.add('active');
                            console.log('Activando vista:', container.className);
@@ -7019,8 +7026,8 @@ function loadSavedCustomization() {
        } else if (contentId === 'conexiones-api') {
            // Configurar módulo de Conexiones API
            setTimeout(() => {
-               updateApiDashboardStats();
-               refreshApiMonitor();
+               // Asegurar que solo la vista principal esté activa
+               showApiDashboard();
            }, 100);
        }
    }
