@@ -6894,13 +6894,23 @@ function loadSavedCustomization() {
                contentArea.innerHTML = `<div class="content-section active">${dashboardContent[contentId]}</div>`;
                console.log('Contenido insertado. contentArea.innerHTML.length:', contentArea.innerHTML.length);
                
-               // Activar vistas específicas que requieren la clase active
+               // Activar solo la vista principal de cada módulo
                setTimeout(() => {
-                   const viewContainers = contentArea.querySelectorAll('.gestion-view, .api-view, .etl-view');
-                   viewContainers.forEach(container => {
-                       container.classList.add('active');
-                       console.log('Activando vista:', container.className);
-                   });
+                   if (contentId === 'gestion-datos') {
+                       // Solo activar la vista principal del dashboard
+                       const dashboardView = contentArea.querySelector('#gestionDashboard');
+                       if (dashboardView) {
+                           dashboardView.classList.add('active');
+                           console.log('Activando vista principal de Gestión de Datos');
+                       }
+                   } else {
+                       // Para otros módulos, activar todas las vistas como antes
+                       const viewContainers = contentArea.querySelectorAll('.api-view, .etl-view');
+                       viewContainers.forEach(container => {
+                           container.classList.add('active');
+                           console.log('Activando vista:', container.className);
+                       });
+                   }
                }, 10);
                
                // Debugging CSS styles
@@ -7003,8 +7013,8 @@ function loadSavedCustomization() {
        } else if (contentId === 'gestion-datos') {
            // Configurar módulo de Gestión de Datos
            setTimeout(() => {
-               refreshUploadHistory();
-               setupUploadHistorySearch();
+               // Asegurar que solo la vista principal esté activa
+               showGestionDashboard();
            }, 100);
        } else if (contentId === 'conexiones-api') {
            // Configurar módulo de Conexiones API
