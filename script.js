@@ -7081,7 +7081,19 @@ function loadSavedCustomization() {
             document.documentElement.style.setProperty('--secondary-color', currentCustomization.secondary);
             document.documentElement.style.setProperty('--tertiary-color', currentCustomization.tertiary);
             
-            document.getElementById('companyLogo').textContent = currentCustomization.logo;
+            // Manejar logo: distinguir entre imagen base64 y texto
+            const companyLogoDiv = document.getElementById('companyLogo');
+            if (currentCustomization.logo && currentCustomization.logo.startsWith('data:image/')) {
+                // Es una imagen base64, crear elemento img
+                companyLogoDiv.innerHTML = `<img src="${currentCustomization.logo}" alt="Logo" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;">`;
+            } else if (currentCustomization.logo && !currentCustomization.logo.startsWith('data:image/')) {
+                // Es texto (compatibilidad con versiones anteriores)
+                companyLogoDiv.textContent = currentCustomization.logo;
+            } else {
+                // No hay logo, mostrar placeholder
+                companyLogoDiv.innerHTML = `<div style="width: 100%; height: 100%; border-radius: 50%; background: #f0f0f0; display: flex; align-items: center; justify-content: center; color: #999; font-size: 12px; border: 2px dashed #ddd;">Sin Logo</div>`;
+            }
+            
             document.getElementById('companyName').textContent = currentCustomization.name;
             document.getElementById('companySubtitle').textContent = currentCustomization.subtitle;
             companyBreadcrumb.textContent = currentCustomization.name;
@@ -7824,6 +7836,13 @@ if (modalPlantillas) {
 
 // Inicializar funciones de personalización
 setupColorInputSync();
+
+// Inicializar placeholder de logo si no hay configuración guardada
+const companyLogoDiv = document.getElementById('companyLogo');
+if (companyLogoDiv && !localStorage.getItem('companyCustomization')) {
+    companyLogoDiv.innerHTML = `<div style="width: 100%; height: 100%; border-radius: 50%; background: #f0f0f0; display: flex; align-items: center; justify-content: center; color: #999; font-size: 12px; border: 2px dashed #ddd;">Sin Logo</div>`;
+}
+
 loadSavedCustomization();
 
 // Funciones para gráficos del dashboard
