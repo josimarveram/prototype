@@ -5700,8 +5700,11 @@ document.addEventListener('DOMContentLoaded', () => {
                        </div>
                        
                        <div class="form-group">
-                           <label class="form-label">Logo (Iniciales)</label>
-                           <input type="text" id="companyLogoInput" class="form-input" placeholder="Ej: TC" value="TC" maxlength="3">
+                           <label class="form-label">Logo</label>
+                           <input type="file" id="companyLogoInput" class="form-input" accept="image/*" onchange="handleLogoUpload(event)">
+                           <div id="logoPreview" class="logo-preview" style="margin-top: 10px;">
+                               <img id="logoPreviewImg" src="" alt="Vista previa del logo" style="display: none; max-width: 100px; max-height: 100px; border-radius: 6px; border: 1px solid var(--border-color);">
+                           </div>
                        </div>
                    </div>
 
@@ -6917,13 +6920,69 @@ function setupColorInputSync() {
     });
 }
 
+// Función para manejar la carga de logo
+window.handleLogoUpload = function(event) {
+    const file = event.target.files[0];
+    if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            const logoUrl = e.target.result;
+            
+            // Mostrar vista previa en el formulario
+            const previewImg = document.getElementById('logoPreviewImg');
+            if (previewImg) {
+                previewImg.src = logoUrl;
+                previewImg.style.display = 'block';
+            }
+            
+            // Actualizar el logo en el sidebar
+            const companyLogo = document.getElementById('companyLogo');
+            if (companyLogo) {
+                // Reemplazar el contenido de texto con una imagen
+                companyLogo.innerHTML = `<img src="${logoUrl}" alt="Logo" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;">`;
+            }
+            
+            // Actualizar vista previa en el panel del formulario
+            const previewLogo = document.getElementById('previewLogo');
+            if (previewLogo) {
+                previewLogo.innerHTML = `<img src="${logoUrl}" alt="Logo" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;">`;
+            }
+        };
+        reader.readAsDataURL(file);
+    }
+};
+
 // Función para restablecer personalización
 window.resetCustomization = function() {
     const defaultConfig = companyConfigs.tecnocorp;
     
     document.getElementById('companyNameInput').value = defaultConfig.name;
     document.getElementById('companySubtitleInput').value = defaultConfig.subtitle;
-    document.getElementById('companyLogoInput').value = defaultConfig.logo;
+    
+    // Limpiar el campo de archivo de logo
+    const logoInput = document.getElementById('companyLogoInput');
+    if (logoInput) {
+        logoInput.value = '';
+    }
+    
+    // Ocultar vista previa de imagen
+    const previewImg = document.getElementById('logoPreviewImg');
+    if (previewImg) {
+        previewImg.style.display = 'none';
+        previewImg.src = '';
+    }
+    
+    // Restaurar logo por defecto en sidebar
+    const companyLogo = document.getElementById('companyLogo');
+    if (companyLogo) {
+        companyLogo.innerHTML = defaultConfig.logo;
+    }
+    
+    // Restaurar logo por defecto en vista previa
+    const previewLogo = document.getElementById('previewLogo');
+    if (previewLogo) {
+        previewLogo.innerHTML = defaultConfig.logo;
+    }
     
     document.getElementById('primaryColor').value = defaultConfig.primary;
     document.getElementById('primaryColorText').value = defaultConfig.primary;
@@ -6941,19 +7000,28 @@ window.resetCustomization = function() {
 window.saveCustomization = function() {
     const name = document.getElementById('companyNameInput').value.trim();
     const subtitle = document.getElementById('companySubtitleInput').value.trim();
-    const logo = document.getElementById('companyLogoInput').value.trim();
+    const logoInput = document.getElementById('companyLogoInput');
     const primary = document.getElementById('primaryColor').value;
     const secondary = document.getElementById('secondaryColor').value;
     const tertiary = document.getElementById('accentColor').value;
     
     // Validaciones básicas
-    if (!name || !subtitle || !logo) {
+    if (!name || !subtitle) {
         alert('Por favor, completa todos los campos obligatorios.');
         return;
     }
     
-    if (logo.length > 3) {
-        alert('El logo debe tener máximo 3 caracteres.');
+    // Validar que se haya subido una imagen de logo
+    if (!logoInput.files || logoInput.files.length === 0) {
+        alert('Por favor, sube una imagen para el logo.');
+        return;
+    }
+    
+    // Validar que el archivo sea una imagen
+    const file = logoInput.files[0];
+    const validTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
+    if (!validTypes.includes(file.type)) {
+        alert('Por favor, sube un archivo de imagen válido (JPEG, PNG, GIF o WebP).');
         return;
     }
     
@@ -6961,7 +7029,7 @@ window.saveCustomization = function() {
     currentCustomization = {
         name,
         subtitle,
-        logo: logo.toUpperCase(),
+        logo: file.name, // Guardamos el nombre del archivo como referencia
         primary,
         secondary,
         tertiary
