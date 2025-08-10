@@ -5670,7 +5670,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
        'formulario': `
            <div class="dashboard-header">
-               <h2 class="dashboard-title">🎨 Generador de Formularios</h2>
+               <h2 class="dashboard-title">🎨 Personalizar Empresa</h2>
                <div class="quick-actions">
                    <button class="quick-action-btn">
                        <span>➕</span>
@@ -5684,30 +5684,30 @@ document.addEventListener('DOMContentLoaded', () => {
            </div>
 
            <div class="customize-panel-content">
-               <form id="formularioForm" class="customize-form">
+               <form id="customizeForm" class="customize-form">
                    <!-- Información Básica -->
                    <div class="customize-section">
-                       <h4 class="customize-section-title">📋 Información del Formulario</h4>
+                       <h4 class="customize-section-title">📋 Información Básica</h4>
                        
                        <div class="form-group">
-                           <label class="form-label">Nombre del Formulario</label>
-                           <input type="text" id="formularioNameInput" class="form-input" placeholder="Nombre del formulario" value="">
+                           <label class="form-label">Nombre de la Empresa</label>
+                           <input type="text" id="companyNameInput" class="form-input" placeholder="Nombre de la empresa" value="TecnoCorp">
                        </div>
                        
                        <div class="form-group">
-                           <label class="form-label">Descripción</label>
-                           <input type="text" id="formularioDescInput" class="form-input" placeholder="Descripción del formulario" value="">
+                           <label class="form-label">Subtítulo</label>
+                           <input type="text" id="companySubtitleInput" class="form-input" placeholder="Subtítulo o eslogan" value="Admin Total">
                        </div>
                        
                        <div class="form-group">
-                           <label class="form-label">Categoría</label>
-                           <input type="text" id="formularioCatInput" class="form-input" placeholder="Ej: Contacto, Registro, Encuesta" value="">
+                           <label class="form-label">Logo (Iniciales)</label>
+                           <input type="text" id="companyLogoInput" class="form-input" placeholder="Ej: TC" value="TC" maxlength="3">
                        </div>
                    </div>
 
                    <!-- Paleta de Colores -->
                    <div class="customize-section">
-                       <h4 class="customize-section-title">🎨 Paleta de Colores del Formulario</h4>
+                       <h4 class="customize-section-title">🎨 Paleta de Colores</h4>
                        
                        <div class="color-presets">
                            <div class="preset-label">Paletas Predefinidas:</div>
@@ -5768,28 +5768,28 @@ document.addEventListener('DOMContentLoaded', () => {
                            </div>
                        </div>
 
-                       <div class="custom-colors" id="customColorsFormulario" style="display: none;">
+                       <div class="custom-colors" id="customColors" style="display: none;">
                            <div class="form-group">
                                <label class="form-label">Color Primario</label>
                                <div class="color-input-group">
-                                   <input type="color" id="primaryColorFormulario" class="color-picker" value="#4f7cff">
-                                   <input type="text" id="primaryColorTextFormulario" class="color-text" value="#4f7cff">
+                                   <input type="color" id="primaryColor" class="color-picker" value="#4f7cff">
+                                   <input type="text" id="primaryColorText" class="color-text" value="#4f7cff">
                                </div>
                            </div>
                            
                            <div class="form-group">
                                <label class="form-label">Color Secundario</label>
                                <div class="color-input-group">
-                                   <input type="color" id="secondaryColorFormulario" class="color-picker" value="#3b5bdb">
-                                   <input type="text" id="secondaryColorTextFormulario" class="color-text" value="#3b5bdb">
+                                   <input type="color" id="secondaryColor" class="color-picker" value="#3b5bdb">
+                                   <input type="text" id="secondaryColorText" class="color-text" value="#3b5bdb">
                                </div>
                            </div>
                            
                            <div class="form-group">
                                <label class="form-label">Color de Acento</label>
                                <div class="color-input-group">
-                                   <input type="color" id="accentColorFormulario" class="color-picker" value="#6c8eff">
-                                   <input type="text" id="accentColorTextFormulario" class="color-text" value="#6c8eff">
+                                   <input type="color" id="accentColor" class="color-picker" value="#6c8eff">
+                                   <input type="text" id="accentColorText" class="color-text" value="#6c8eff">
                                </div>
                            </div>
                        </div>
@@ -5797,22 +5797,22 @@ document.addEventListener('DOMContentLoaded', () => {
 
                    <!-- Vista Previa -->
                    <div class="customize-section">
-                       <h4 class="customize-section-title">👁️ Vista Previa del Formulario</h4>
+                       <h4 class="customize-section-title">👁️ Vista Previa</h4>
                        <div class="preview-container">
                            <div class="preview-company-header">
-                               <div class="preview-logo" id="previewLogoFormulario">📝</div>
+                               <div class="preview-logo" id="previewLogo">TC</div>
                                <div class="preview-info">
-                                   <div class="preview-name" id="previewNameFormulario">Formulario de Ejemplo</div>
-                                   <div class="preview-subtitle" id="previewSubtitleFormulario">Descripción del formulario</div>
+                                   <div class="preview-name" id="previewName">TecnoCorp</div>
+                                   <div class="preview-subtitle" id="previewSubtitle">Admin Total</div>
                                </div>
                            </div>
                            
                            <div class="preview-elements">
-                               <button class="preview-btn">Campo de Ejemplo</button>
+                               <button class="preview-btn">Botón de Ejemplo</button>
                                <div class="preview-card">
-                                   <div class="preview-card-header">Vista Previa del Formulario</div>
+                                   <div class="preview-card-header">Tarjeta de Ejemplo</div>
                                    <div class="preview-card-content">
-                                       Este es un ejemplo de cómo se verá tu formulario con la paleta de colores seleccionada.
+                                       Este es un ejemplo de cómo se verían los elementos con la nueva paleta de colores.
                                    </div>
                                </div>
                            </div>
@@ -5821,13 +5821,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
                    <!-- Botones de Acción -->
                    <div class="customize-actions">
-                       <button type="button" class="btn-secondary" onclick="resetFormulario()">
+                       <button type="button" class="btn-secondary" onclick="resetCustomization()">
                            <span>🔄</span>
-                           Limpiar Formulario
+                           Restablecer
                        </button>
-                       <button type="button" class="btn-primary" onclick="saveFormulario()">
+                       <button type="button" class="btn-primary" onclick="saveCustomization()">
                            <span>💾</span>
-                           Guardar Formulario
+                           Guardar Cambios
                        </button>
                    </div>
                </form>
