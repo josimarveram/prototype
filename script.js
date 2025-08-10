@@ -5668,6 +5668,172 @@ document.addEventListener('DOMContentLoaded', () => {
            </div>
        `,
 
+       'formulario': `
+           <div class="dashboard-header">
+               <h2 class="dashboard-title">🎨 Generador de Formularios</h2>
+               <div class="quick-actions">
+                   <button class="quick-action-btn">
+                       <span>➕</span>
+                       Nuevo Formulario
+                   </button>
+                   <button class="quick-action-btn secondary">
+                       <span>📋</span>
+                       Plantillas
+                   </button>
+               </div>
+           </div>
+
+           <div class="customize-panel-content">
+               <form id="formularioForm" class="customize-form">
+                   <!-- Información Básica -->
+                   <div class="customize-section">
+                       <h4 class="customize-section-title">📋 Información del Formulario</h4>
+                       
+                       <div class="form-group">
+                           <label class="form-label">Nombre del Formulario</label>
+                           <input type="text" id="formularioNameInput" class="form-input" placeholder="Nombre del formulario" value="">
+                       </div>
+                       
+                       <div class="form-group">
+                           <label class="form-label">Descripción</label>
+                           <input type="text" id="formularioDescInput" class="form-input" placeholder="Descripción del formulario" value="">
+                       </div>
+                       
+                       <div class="form-group">
+                           <label class="form-label">Categoría</label>
+                           <input type="text" id="formularioCatInput" class="form-input" placeholder="Ej: Contacto, Registro, Encuesta" value="">
+                       </div>
+                   </div>
+
+                   <!-- Paleta de Colores -->
+                   <div class="customize-section">
+                       <h4 class="customize-section-title">🎨 Paleta de Colores del Formulario</h4>
+                       
+                       <div class="color-presets">
+                           <div class="preset-label">Paletas Predefinidas:</div>
+                           <div class="color-preset-grid">
+                               <button type="button" class="color-preset active" data-preset="azul" onclick="applyColorPreset('azul')">
+                                   <div class="preset-colors">
+                                       <span style="background: #4f7cff;"></span>
+                                       <span style="background: #3b5bdb;"></span>
+                                       <span style="background: #6c8eff;"></span>
+                                   </div>
+                                   <span>Azul</span>
+                               </button>
+                               
+                               <button type="button" class="color-preset" data-preset="verde" onclick="applyColorPreset('verde')">
+                                   <div class="preset-colors">
+                                       <span style="background: #059669;"></span>
+                                       <span style="background: #047857;"></span>
+                                       <span style="background: #10b981;"></span>
+                                   </div>
+                                   <span>Verde</span>
+                               </button>
+                               
+                               <button type="button" class="color-preset" data-preset="morado" onclick="applyColorPreset('morado')">
+                                   <div class="preset-colors">
+                                       <span style="background: #7c3aed;"></span>
+                                       <span style="background: #6d28d9;"></span>
+                                       <span style="background: #8b5cf6;"></span>
+                                   </div>
+                                   <span>Morado</span>
+                               </button>
+                               
+                               <button type="button" class="color-preset" data-preset="naranja" onclick="applyColorPreset('naranja')">
+                                   <div class="preset-colors">
+                                       <span style="background: #ea580c;"></span>
+                                       <span style="background: #c2410c;"></span>
+                                       <span style="background: #fb923c;"></span>
+                                   </div>
+                                   <span>Naranja</span>
+                               </button>
+                               
+                               <button type="button" class="color-preset" data-preset="rojo" onclick="applyColorPreset('rojo')">
+                                   <div class="preset-colors">
+                                       <span style="background: #dc2626;"></span>
+                                       <span style="background: #b91c1c;"></span>
+                                       <span style="background: #f87171;"></span>
+                                   </div>
+                                   <span>Rojo</span>
+                               </button>
+                               
+                               <button type="button" class="color-preset" data-preset="personalizado" onclick="applyColorPreset('personalizado')">
+                                   <div class="preset-colors">
+                                       <span style="background: #6b7280;"></span>
+                                       <span style="background: #4b5563;"></span>
+                                       <span style="background: #9ca3af;"></span>
+                                   </div>
+                                   <span>Personalizado</span>
+                               </button>
+                           </div>
+                       </div>
+
+                       <div class="custom-colors" id="customColorsFormulario" style="display: none;">
+                           <div class="form-group">
+                               <label class="form-label">Color Primario</label>
+                               <div class="color-input-group">
+                                   <input type="color" id="primaryColorFormulario" class="color-picker" value="#4f7cff">
+                                   <input type="text" id="primaryColorTextFormulario" class="color-text" value="#4f7cff">
+                               </div>
+                           </div>
+                           
+                           <div class="form-group">
+                               <label class="form-label">Color Secundario</label>
+                               <div class="color-input-group">
+                                   <input type="color" id="secondaryColorFormulario" class="color-picker" value="#3b5bdb">
+                                   <input type="text" id="secondaryColorTextFormulario" class="color-text" value="#3b5bdb">
+                               </div>
+                           </div>
+                           
+                           <div class="form-group">
+                               <label class="form-label">Color de Acento</label>
+                               <div class="color-input-group">
+                                   <input type="color" id="accentColorFormulario" class="color-picker" value="#6c8eff">
+                                   <input type="text" id="accentColorTextFormulario" class="color-text" value="#6c8eff">
+                               </div>
+                           </div>
+                       </div>
+                   </div>
+
+                   <!-- Vista Previa -->
+                   <div class="customize-section">
+                       <h4 class="customize-section-title">👁️ Vista Previa del Formulario</h4>
+                       <div class="preview-container">
+                           <div class="preview-company-header">
+                               <div class="preview-logo" id="previewLogoFormulario">📝</div>
+                               <div class="preview-info">
+                                   <div class="preview-name" id="previewNameFormulario">Formulario de Ejemplo</div>
+                                   <div class="preview-subtitle" id="previewSubtitleFormulario">Descripción del formulario</div>
+                               </div>
+                           </div>
+                           
+                           <div class="preview-elements">
+                               <button class="preview-btn">Campo de Ejemplo</button>
+                               <div class="preview-card">
+                                   <div class="preview-card-header">Vista Previa del Formulario</div>
+                                   <div class="preview-card-content">
+                                       Este es un ejemplo de cómo se verá tu formulario con la paleta de colores seleccionada.
+                                   </div>
+                               </div>
+                           </div>
+                       </div>
+                   </div>
+
+                   <!-- Botones de Acción -->
+                   <div class="customize-actions">
+                       <button type="button" class="btn-secondary" onclick="resetFormulario()">
+                           <span>🔄</span>
+                           Limpiar Formulario
+                       </button>
+                       <button type="button" class="btn-primary" onclick="saveFormulario()">
+                           <span>💾</span>
+                           Guardar Formulario
+                       </button>
+                   </div>
+               </form>
+           </div>
+       `,
+
        'usuarios': `
            <div class="dashboard-header">
                <h2 class="dashboard-title">Gestión de Usuarios</h2>
@@ -6877,6 +7043,7 @@ function loadSavedCustomization() {
            'informes': 'Informes',
            'dashboards': 'Dashboards',
            'exportar': 'Exportar',
+           'formulario': 'Formulario',
            'usuarios': 'Usuarios',
            'roles-permisos': 'Roles y Permisos',
            'configuracion': 'Configuración'
