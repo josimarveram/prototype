@@ -4059,11 +4059,15 @@ document.addEventListener('DOMContentLoaded', () => {
                            </div>
                        </div>
 
-                       <div class="api-selector">
+                       <div class="connection-field">
+                           <label for="apiToTest">API a probar</label>
                            <select id="apiToTest" onchange="loadApiDetails()">
                                <option value="">Seleccionar API...</option>
                                <!-- Se llenará dinámicamente -->
                            </select>
+                       </div>
+                       
+                       <div class="api-selector">
                            <button type="button" class="btn-secondary" onclick="refreshApiList()">
                                <span>🔄</span>
                                Actualizar
