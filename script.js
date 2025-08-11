@@ -5911,64 +5911,362 @@ document.addEventListener('DOMContentLoaded', () => {
        `,
 
        'informes': `
-           <div class="dashboard-header">
-               <h2 class="dashboard-title">Informes y Reportes</h2>
-               <div class="quick-actions">
-                   <button class="quick-action-btn">
-                       <span>📊</span>
-                       Nuevo Informe
-                   </button>
-                   <button class="quick-action-btn secondary">
-                       <span>📤</span>
-                       Exportar
-                   </button>
+           <!-- Header Principal -->
+           <div class="informes-header">
+               <div class="header-content">
+                   <div class="header-info">
+                       <h1 class="main-title">📊 Centro de Informes Empresariales</h1>
+                       <p class="main-subtitle">Analítica avanzada de las principales plataformas tecnológicas</p>
+                   </div>
+                   <div class="header-actions">
+                       <button class="action-btn primary" onclick="crearNuevoInforme()">
+                           <i class="fas fa-plus"></i>
+                           Nuevo Informe
+                       </button>
+                       <button class="action-btn secondary" onclick="exportarInformes()">
+                           <i class="fas fa-download"></i>
+                           Exportar Todo
+                       </button>
+                   </div>
                </div>
            </div>
 
-           <div class="stats-grid">
-               <div class="stat-card">
-                   <div class="stat-header">
-                       <div class="stat-icon">📋</div>
-                       <div class="stat-trend up">
-                           <span>↗️</span>
-                           +8
-                       </div>
+           <!-- Estadísticas Generales -->
+           <div class="stats-overview">
+               <div class="stat-item">
+                   <div class="stat-icon google">
+                       <i class="fab fa-google"></i>
                    </div>
-                   <div class="stat-value">156</div>
-                   <div class="stat-label">Informes Generados</div>
+                   <div class="stat-info">
+                       <div class="stat-number">847K</div>
+                       <div class="stat-label">Búsquedas Analytics</div>
+                       <div class="stat-change positive">+23.5%</div>
+                   </div>
                </div>
-
-               <div class="stat-card">
-                   <div class="stat-header">
-                       <div class="stat-icon">📈</div>
-                       <div class="stat-trend up">
-                           <span>↗️</span>
-                           +25%
-                       </div>
+               <div class="stat-item">
+                   <div class="stat-icon amazon">
+                       <i class="fab fa-amazon"></i>
                    </div>
-                   <div class="stat-value">47</div>
-                   <div class="stat-label">Informes Automáticos</div>
+                   <div class="stat-info">
+                       <div class="stat-number">$2.3M</div>
+                       <div class="stat-label">Ventas AWS</div>
+                       <div class="stat-change positive">+18.2%</div>
+                   </div>
                </div>
-
-               <div class="stat-card">
-                   <div class="stat-header">
-                       <div class="stat-icon">👥</div>
-                       <div class="stat-trend up">
-                           <span>↗️</span>
-                           +15%
-                       </div>
+               <div class="stat-item">
+                   <div class="stat-icon microsoft">
+                       <i class="fab fa-microsoft"></i>
                    </div>
-                   <div class="stat-value">89</div>
-                   <div class="stat-label">Usuarios Activos</div>
+                   <div class="stat-info">
+                       <div class="stat-number">156</div>
+                       <div class="stat-label">Licencias Office</div>
+                       <div class="stat-change positive">+7.8%</div>
+                   </div>
+               </div>
+               <div class="stat-item">
+                   <div class="stat-icon general">
+                       <i class="fas fa-chart-line"></i>
+                   </div>
+                   <div class="stat-info">
+                       <div class="stat-number">94.2%</div>
+                       <div class="stat-label">Eficiencia Global</div>
+                       <div class="stat-change positive">+12.1%</div>
+                   </div>
                </div>
            </div>
 
-           <div class="chart-container">
-               <div class="chart-header">
-                   <h3 class="chart-title">Informes Más Utilizados</h3>
+           <!-- Sección de Informes por Plataforma -->
+           <div class="informes-platforms">
+               <!-- Google Reports -->
+               <div class="platform-section">
+                   <div class="platform-header">
+                       <div class="platform-title">
+                           <div class="platform-icon google">
+                               <i class="fab fa-google"></i>
+                           </div>
+                           <div class="platform-info">
+                               <h3>Google Analytics & Ads</h3>
+                               <p>Informes de tráfico web, conversiones y campañas publicitarias</p>
+                           </div>
+                       </div>
+                       <button class="platform-btn" onclick="verTodosGoogle()">Ver Todos</button>
+                   </div>
+                   
+                   <div class="reports-grid">
+                       <div class="report-card featured" onclick="abrirInforme('google-analytics')">
+                           <div class="report-header">
+                               <div class="report-icon">📈</div>
+                               <div class="report-status">En Vivo</div>
+                           </div>
+                           <h4>Tráfico Web en Tiempo Real</h4>
+                           <p>Usuarios activos, páginas más visitadas y fuentes de tráfico</p>
+                           <div class="report-metrics">
+                               <div class="metric">
+                                   <span class="metric-value">12,847</span>
+                                   <span class="metric-label">Usuarios Activos</span>
+                               </div>
+                               <div class="metric">
+                                   <span class="metric-value">4.2min</span>
+                                   <span class="metric-label">Tiempo Promedio</span>
+                               </div>
+                           </div>
+                       </div>
+
+                       <div class="report-card" onclick="abrirInforme('google-ads')">
+                           <div class="report-header">
+                               <div class="report-icon">💰</div>
+                               <div class="report-status">Actualizado</div>
+                           </div>
+                           <h4>Rendimiento Google Ads</h4>
+                           <p>ROI de campañas, CTR y costo por conversión</p>
+                           <div class="report-metrics">
+                               <div class="metric">
+                                   <span class="metric-value">$4.2K</span>
+                                   <span class="metric-label">Inversión Hoy</span>
+                               </div>
+                               <div class="metric">
+                                   <span class="metric-value">3.8%</span>
+                                   <span class="metric-label">CTR Promedio</span>
+                               </div>
+                           </div>
+                       </div>
+
+                       <div class="report-card" onclick="abrirInforme('google-search')">
+                           <div class="report-header">
+                               <div class="report-icon">🔍</div>
+                               <div class="report-status">Diario</div>
+                           </div>
+                           <h4>Search Console</h4>
+                           <p>Posicionamiento SEO y rendimiento en búsquedas</p>
+                           <div class="report-metrics">
+                               <div class="metric">
+                                   <span class="metric-value">847K</span>
+                                   <span class="metric-label">Impresiones</span>
+                               </div>
+                               <div class="metric">
+                                   <span class="metric-value">23.4</span>
+                                   <span class="metric-label">Posición Media</span>
+                               </div>
+                           </div>
+                       </div>
+                   </div>
                </div>
-               <div class="chart-placeholder">
-                   📊 Análisis de Uso de Reportes
+
+               <!-- Amazon Reports -->
+               <div class="platform-section">
+                   <div class="platform-header">
+                       <div class="platform-title">
+                           <div class="platform-icon amazon">
+                               <i class="fab fa-amazon"></i>
+                           </div>
+                           <div class="platform-info">
+                               <h3>Amazon Web Services</h3>
+                               <p>Monitoreo de infraestructura, costos y rendimiento en la nube</p>
+                           </div>
+                       </div>
+                       <button class="platform-btn" onclick="verTodosAmazon()">Ver Todos</button>
+                   </div>
+                   
+                   <div class="reports-grid">
+                       <div class="report-card featured" onclick="abrirInforme('aws-costs')">
+                           <div class="report-header">
+                               <div class="report-icon">💳</div>
+                               <div class="report-status critical">Crítico</div>
+                           </div>
+                           <h4>Costos y Facturación AWS</h4>
+                           <p>Análisis detallado de gastos por servicios y proyecciones</p>
+                           <div class="report-metrics">
+                               <div class="metric">
+                                   <span class="metric-value">$2.3M</span>
+                                   <span class="metric-label">Gasto Mensual</span>
+                               </div>
+                               <div class="metric">
+                                   <span class="metric-value">+18%</span>
+                                   <span class="metric-label">vs Mes Anterior</span>
+                               </div>
+                           </div>
+                       </div>
+
+                       <div class="report-card" onclick="abrirInforme('aws-performance')">
+                           <div class="report-header">
+                               <div class="report-icon">⚡</div>
+                               <div class="report-status">Óptimo</div>
+                           </div>
+                           <h4>Rendimiento EC2 & RDS</h4>
+                           <p>Métricas de CPU, memoria y latencia de bases de datos</p>
+                           <div class="report-metrics">
+                               <div class="metric">
+                                   <span class="metric-value">94.2%</span>
+                                   <span class="metric-label">Uptime</span>
+                               </div>
+                               <div class="metric">
+                                   <span class="metric-value">45ms</span>
+                                   <span class="metric-label">Latencia Media</span>
+                               </div>
+                           </div>
+                       </div>
+
+                       <div class="report-card" onclick="abrirInforme('aws-security')">
+                           <div class="report-header">
+                               <div class="report-icon">🛡️</div>
+                               <div class="report-status">Seguro</div>
+                           </div>
+                           <h4>Seguridad y Compliance</h4>
+                           <p>Auditoría de accesos, vulnerabilidades y cumplimiento</p>
+                           <div class="report-metrics">
+                               <div class="metric">
+                                   <span class="metric-value">0</span>
+                                   <span class="metric-label">Vulnerabilidades</span>
+                               </div>
+                               <div class="metric">
+                                   <span class="metric-value">100%</span>
+                                   <span class="metric-label">Compliance</span>
+                               </div>
+                           </div>
+                       </div>
+                   </div>
+               </div>
+
+               <!-- Microsoft Reports -->
+               <div class="platform-section">
+                   <div class="platform-header">
+                       <div class="platform-title">
+                           <div class="platform-icon microsoft">
+                               <i class="fab fa-microsoft"></i>
+                           </div>
+                           <div class="platform-info">
+                               <h3>Microsoft 365 & Azure</h3>
+                               <p>Productividad empresarial y servicios en la nube de Microsoft</p>
+                           </div>
+                       </div>
+                       <button class="platform-btn" onclick="verTodosMicrosoft()">Ver Todos</button>
+                   </div>
+                   
+                   <div class="reports-grid">
+                       <div class="report-card featured" onclick="abrirInforme('office-usage')">
+                           <div class="report-header">
+                               <div class="report-icon">📋</div>
+                               <div class="report-status">Activo</div>
+                           </div>
+                           <h4>Uso de Office 365</h4>
+                           <p>Estadísticas de Teams, SharePoint, OneDrive y aplicaciones</p>
+                           <div class="report-metrics">
+                               <div class="metric">
+                                   <span class="metric-value">156</span>
+                                   <span class="metric-label">Usuarios Activos</span>
+                               </div>
+                               <div class="metric">
+                                   <span class="metric-value">8.4h</span>
+                                   <span class="metric-label">Uso Diario</span>
+                               </div>
+                           </div>
+                       </div>
+
+                       <div class="report-card" onclick="abrirInforme('teams-analytics')">
+                           <div class="report-header">
+                               <div class="report-icon">👥</div>
+                               <div class="report-status">En Vivo</div>
+                           </div>
+                           <h4>Microsoft Teams Analytics</h4>
+                           <p>Reuniones, chats, colaboración y productividad del equipo</p>
+                           <div class="report-metrics">
+                               <div class="metric">
+                                   <span class="metric-value">1,247</span>
+                                   <span class="metric-label">Reuniones/Mes</span>
+                               </div>
+                               <div class="metric">
+                                   <span class="metric-value">42min</span>
+                                   <span class="metric-label">Duración Media</span>
+                               </div>
+                           </div>
+                       </div>
+
+                       <div class="report-card" onclick="abrirInforme('azure-resources')">
+                           <div class="report-header">
+                               <div class="report-icon">☁️</div>
+                               <div class="report-status">Monitoreando</div>
+                           </div>
+                           <h4>Recursos Azure</h4>
+                           <p>Consumo de recursos, costos y optimización en Azure</p>
+                           <div class="report-metrics">
+                               <div class="metric">
+                                   <span class="metric-value">$847</span>
+                                   <span class="metric-label">Costo Mensual</span>
+                               </div>
+                               <div class="metric">
+                                   <span class="metric-value">23</span>
+                                   <span class="metric-label">Recursos Activos</span>
+                               </div>
+                           </div>
+                       </div>
+                   </div>
+               </div>
+           </div>
+
+           <!-- Sección de Informes Recientes -->
+           <div class="recent-reports">
+               <div class="section-header">
+                   <h3>📈 Informes Generados Recientemente</h3>
+                   <button class="view-all-btn" onclick="verTodosRecientes()">Ver Historial Completo</button>
+               </div>
+               
+               <div class="recent-reports-list">
+                   <div class="recent-item" onclick="abrirInforme('recent-1')">
+                       <div class="recent-icon google">
+                           <i class="fab fa-google"></i>
+                       </div>
+                       <div class="recent-info">
+                           <h4>Reporte Mensual Google Analytics</h4>
+                           <p>Análisis completo de tráfico web - Diciembre 2024</p>
+                           <span class="recent-time">Hace 2 horas</span>
+                       </div>
+                       <div class="recent-actions">
+                           <button class="action-icon" onclick="descargarInforme('recent-1'); event.stopPropagation();">
+                               <i class="fas fa-download"></i>
+                           </button>
+                           <button class="action-icon" onclick="compartirInforme('recent-1'); event.stopPropagation();">
+                               <i class="fas fa-share"></i>
+                           </button>
+                       </div>
+                   </div>
+
+                   <div class="recent-item" onclick="abrirInforme('recent-2')">
+                       <div class="recent-icon amazon">
+                           <i class="fab fa-amazon"></i>
+                       </div>
+                       <div class="recent-info">
+                           <h4>Optimización de Costos AWS</h4>
+                           <p>Recomendaciones para reducir gastos en servicios</p>
+                           <span class="recent-time">Hace 5 horas</span>
+                       </div>
+                       <div class="recent-actions">
+                           <button class="action-icon" onclick="descargarInforme('recent-2'); event.stopPropagation();">
+                               <i class="fas fa-download"></i>
+                           </button>
+                           <button class="action-icon" onclick="compartirInforme('recent-2'); event.stopPropagation();">
+                               <i class="fas fa-share"></i>
+                           </button>
+                       </div>
+                   </div>
+
+                   <div class="recent-item" onclick="abrirInforme('recent-3')">
+                       <div class="recent-icon microsoft">
+                           <i class="fab fa-microsoft"></i>
+                       </div>
+                       <div class="recent-info">
+                           <h4>Productividad Office 365</h4>
+                           <p>Métricas de colaboración y uso de herramientas</p>
+                           <span class="recent-time">Hace 1 día</span>
+                       </div>
+                       <div class="recent-actions">
+                           <button class="action-icon" onclick="descargarInforme('recent-3'); event.stopPropagation();">
+                               <i class="fas fa-download"></i>
+                           </button>
+                           <button class="action-icon" onclick="compartirInforme('recent-3'); event.stopPropagation();">
+                               <i class="fas fa-share"></i>
+                           </button>
+                       </div>
+                   </div>
                </div>
            </div>
        `,
@@ -14444,6 +14742,1096 @@ window.seleccionarModelo = function(modeloId) {
     }
     
     console.log('Modelo seleccionado:', modeloId);
+};
+
+// Funciones para el módulo de Informes
+window.crearNuevoInforme = function() {
+    console.log('Creando nuevo informe...');
+    // Simular creación de informe
+    alert('🚀 Creando nuevo informe personalizado...\n\nSelecciona las métricas y fuentes de datos que deseas incluir.');
+};
+
+window.exportarInformes = function() {
+    console.log('Exportando todos los informes...');
+    // Simular exportación
+    alert('📁 Preparando exportación...\n\nTodos los informes se descargarán en formato PDF y Excel.');
+};
+
+window.abrirInforme = function(informeId) {
+    console.log('Abriendo informe:', informeId);
+    
+    const informesDetallados = {
+        'google-analytics': {
+            titulo: '📈 Google Analytics - Tráfico Web en Tiempo Real',
+            contenido: `
+🌐 RESUMEN EJECUTIVO (Últimas 24h)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+👥 USUARIOS ACTIVOS: 12,847
+⏱️ TIEMPO PROMEDIO: 4min 23seg
+📄 PÁGINAS/SESIÓN: 3.2
+📊 TASA DE REBOTE: 32.8% (-15% vs ayer)
+
+🔥 PÁGINAS MÁS VISITADAS:
+• /dashboard - 28,945 vistas
+• /productos - 15,782 vistas  
+• /servicios - 12,456 vistas
+• /contacto - 8,932 vistas
+
+🌍 TRÁFICO POR PAÍSES:
+• Estados Unidos: 42.3%
+• España: 18.7%
+• México: 15.2%
+• Colombia: 12.8%
+• Argentina: 8.1%
+
+📱 DISPOSITIVOS:
+• Desktop: 58.4%
+• Mobile: 35.2%
+• Tablet: 6.4%
+
+🎯 CONVERSIONES HOY: 247 (+23%)
+💰 VALOR GENERADO: $18,450
+            `
+        },
+        'google-ads': {
+            titulo: '💰 Google Ads - Rendimiento de Campañas',
+            contenido: `
+💼 RESUMEN FINANCIERO (Diciembre 2024)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+💸 INVERSIÓN TOTAL: $127,850
+💵 INGRESOS GENERADOS: $485,920
+📈 ROI: 380% (+45% vs mes anterior)
+🎯 CPA PROMEDIO: $12.45 (-18%)
+
+🚀 CAMPAÑAS TOP PERFORMANCE:
+1. "Software Empresarial" - ROI 420%
+   💰 Gasto: $28,500 | Ingresos: $119,700
+   🎯 CTR: 4.2% | CPC: $1.85
+
+2. "Soluciones Cloud" - ROI 356%
+   💰 Gasto: $22,100 | Ingresos: $78,676
+   🎯 CTR: 3.8% | CPC: $2.15
+
+3. "Consultoría TI" - ROI 298%
+   💰 Gasto: $18,750 | Ingresos: $55,875
+   🎯 CTR: 3.1% | CPC: $2.90
+
+📊 MÉTRICAS CLAVE:
+• Impresiones: 2.8M (+12%)
+• Clics: 95,420 (+18%)
+• CTR Global: 3.4% (+0.3%)
+• Conversiones: 10,268 (+23%)
+
+🔍 PALABRAS CLAVE TOP:
+• "software empresarial" - 15,420 clics
+• "soluciones cloud" - 12,850 clics
+• "erp empresas" - 9,760 clics
+            `
+        },
+        'google-search': {
+            titulo: '🔍 Google Search Console - SEO Performance',
+            contenido: `
+🎯 RENDIMIENTO SEO (Últimos 30 días)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+📊 MÉTRICAS PRINCIPALES:
+• Impresiones: 847,520 (+28%)
+• Clics: 42,376 (+35%)
+• CTR: 5.0% (+0.4%)
+• Posición Media: 23.4 (+2.1 posiciones)
+
+🏆 KEYWORDS TOP RANKING:
+1. "software empresarial" - Pos. 3 (↑5)
+2. "sistema erp" - Pos. 7 (↑12)  
+3. "gestión empresarial" - Pos. 12 (↑8)
+4. "soluciones cloud" - Pos. 15 (↑3)
+5. "automatización procesos" - Pos. 18 (↑7)
+
+📈 PÁGINAS MEJOR POSICIONADAS:
+• /productos/erp - 18,750 clics
+• /soluciones/cloud - 12,430 clics
+• /servicios/consultoria - 8,920 clics
+
+🔧 OPORTUNIDADES DE MEJORA:
+• 23 páginas sin meta description
+• 47 títulos duplicados detectados
+• 12 páginas con carga lenta
+• Implementar datos estructurados
+
+📱 USABILIDAD MÓVIL: 96.8% páginas OK
+⚡ CORE WEB VITALS: 89% páginas pasan
+            `
+        },
+        'aws-costs': {
+            titulo: '☁️ AWS - Análisis de Costos y Optimización',
+            contenido: `
+💳 FACTURACIÓN AWS (Diciembre 2024)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+💰 COSTO TOTAL: $2,347,892 (+18.2%)
+📊 PRESUPUESTO: $2,100,000 (112% utilizado)
+⚠️ SOBRECOSTO: $247,892 - ACCIÓN REQUERIDA
+
+🏗️ DESGLOSE POR SERVICIOS:
+1. EC2 Instances: $1,103,248 (47%)
+   • m5.xlarge: $456,780
+   • c5.2xlarge: $334,125
+   • r5.large: $312,343
+
+2. RDS Databases: $387,421 (16.5%)
+   • PostgreSQL: $198,230
+   • MySQL: $124,891
+   • Oracle: $64,300
+
+3. S3 Storage: $234,567 (10%)
+   • Standard: $145,234
+   • IA: $67,123
+   • Glacier: $22,210
+
+4. Data Transfer: $198,432 (8.5%)
+5. Lambda: $156,789 (6.7%)
+6. CloudWatch: $89,234 (3.8%)
+7. Otros: $178,201 (7.5%)
+
+💡 RECOMENDACIONES DE AHORRO:
+• Migrar 12 instancias a Spot: -$89,400/mes
+• Usar Reserved Instances: -$156,700/mes  
+• Optimizar storage S3: -$45,200/mes
+• TOTAL AHORRO POTENCIAL: $291,300/mes
+
+🎯 ACCIONES INMEDIATAS:
+1. Revisar instancias infrautilizadas
+2. Implementar auto-scaling
+3. Configurar alertas de presupuesto
+4. Auditar políticas de retención
+            `
+        },
+        'aws-performance': {
+            titulo: '⚡ AWS - Rendimiento y Monitoreo',
+            contenido: `
+📊 HEALTH CHECK INFRASTRUCTURE (Tiempo Real)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+🟢 ESTADO GENERAL: ÓPTIMO (94.2%)
+⚡ UPTIME: 99.97% (últimos 30 días)
+🎯 SLA TARGET: 99.9% - ✅ CUMPLIDO
+
+🖥️ EC2 INSTANCES STATUS:
+• Producción: 23/25 instancias OK
+• Staging: 8/8 instancias OK  
+• Development: 12/12 instancias OK
+
+📈 MÉTRICAS DE RENDIMIENTO:
+• CPU Promedio: 68% (Normal)
+• RAM Utilizada: 72% (Normal)
+• Disk I/O: 145 IOPS (Bajo)
+• Network: 2.4 Gbps (Normal)
+
+🗄️ RDS PERFORMANCE:
+• Latencia DB: 45ms (Excelente)
+• Conexiones: 287/400 (Normal)
+• CPU DB: 34% (Óptimo)
+• Read Replicas: 3 activas
+
+⚠️ ALERTAS ACTIVAS:
+1. i-0abc123: CPU >80% (2h 15m)
+2. rds-prod-01: Conexiones >350 (45m)
+
+🔧 AUTO-SCALING EVENTOS:
+• Scale Out: 3 instancias (14:30)
+• Scale In: 1 instancia (16:45)
+
+📊 TENDENCIAS (7 días):
+• Tráfico: +15% vs semana anterior
+• Errores 5xx: 0.02% (Muy bajo)
+• Tiempo Respuesta: 180ms (-8%)
+            `
+        },
+        'aws-security': {
+            titulo: '🛡️ AWS - Seguridad y Compliance',
+            contenido: `
+🔒 SECURITY DASHBOARD (Estado Actual)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+🛡️ SECURITY SCORE: 98.5% (Excelente)
+🎯 COMPLIANCE: 100% SOC2, 100% ISO27001
+⚠️ VULNERABILIDADES: 0 Críticas, 2 Medias
+
+🔐 ACCESO Y AUTENTICACIÓN:
+• MFA Habilitado: 156/156 usuarios (100%)
+• Policies Activas: 47 (Todas auditadas)
+• Root Access: Última actividad hace 127 días
+• Failed Logins: 3 (Bloqueados automáticamente)
+
+🔍 CLOUDTRAIL AUDIT (Últimas 24h):
+• API Calls: 1,247,892
+• Admin Actions: 23 (Todas autorizadas)
+• Data Access: 456,789 eventos
+• Suspicious Activity: 0 detectadas
+
+🔥 GUARDDUTY FINDINGS:
+• Amenazas Bloqueadas: 47 (último mes)
+• Malware Detectado: 0
+• Crypto Mining: 0
+• Bot Activity: 12 (Mitigado)
+
+📋 COMPLIANCE CHECKS:
+✅ Encriptación en reposo: 100%
+✅ Encriptación en tránsito: 100% 
+✅ Backup automático: Configurado
+✅ Network ACLs: Restrictivas
+✅ Security Groups: Principio menor privilegio
+✅ VPC Flow Logs: Habilitados
+
+🔧 ACCIONES RECOMENDADAS:
+1. Actualizar 2 AMIs con parches menores
+2. Rotar 5 keys de acceso (>90 días)
+3. Revisar permisos S3 bucket legacy
+            `
+        },
+        'office-usage': {
+            titulo: '📋 Office 365 - Análisis de Productividad',
+            contenido: `
+👥 DASHBOARD PRODUCTIVIDAD (Diciembre 2024)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+📊 USUARIOS ACTIVOS: 156/160 licencias (97.5%)
+⏰ TIEMPO USO DIARIO: 8h 24m promedio
+📈 PRODUCTIVIDAD: +12% vs mes anterior
+
+📱 APLICACIONES MÁS USADAS:
+1. Outlook: 156 usuarios (8.2h/día)
+2. Teams: 147 usuarios (3.1h/día)
+3. Word: 134 usuarios (2.4h/día)
+4. Excel: 128 usuarios (1.8h/día)
+5. PowerPoint: 89 usuarios (1.2h/día)
+6. SharePoint: 112 usuarios (45m/día)
+
+📧 EXCHANGE ONLINE:
+• Emails Enviados: 18,947/día
+• Emails Recibidos: 31,205/día
+• Storage Usado: 2.8TB/5TB (56%)
+• Usuarios >90% buzón: 12
+
+☁️ ONEDRIVE BUSINESS:
+• Files Compartidos: 5,678 este mes
+• Storage Total: 890GB/1.6TB (56%)
+• Sync Errors: 23 (Resueltos)
+• Colaboraciones: 1,247 archivos
+
+📈 SHAREPOINT SITES:
+• Sites Activos: 23/28
+• Visitas Únicas: 8,947/mes
+• Documents Creados: 1,567
+• Workflows Ejecutados: 2,345
+
+🎯 INSIGHTS DE PRODUCTIVIDAD:
+• Reuniones Programadas: 1,247
+• Tiempo en Reuniones: 42min promedio
+• Focus Time: 4.2h/día promedio
+• After Hours: 1.3h/día (Aceptable)
+            `
+        },
+        'teams-analytics': {
+            titulo: '👥 Microsoft Teams - Colaboración y Reuniones',
+            contenido: `
+🎥 TEAMS ANALYTICS (Últimas 4 semanas)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+📊 USUARIOS ACTIVOS: 147/156 (94.2%)
+🎯 REUNIONES TOTALES: 1,247 (+18%)
+⏱️ TIEMPO REUNIONES: 52,374 minutos
+📱 CHATS ENVIADOS: 28,947 mensajes
+
+📅 ESTADÍSTICAS DE REUNIONES:
+• Promedio Duración: 42 minutos
+• Participantes/Reunión: 4.2 personas
+• Reuniones Grabadas: 234 (18.8%)
+• Screen Sharing: 892 sesiones (71.5%)
+
+🕐 HORARIOS PICO:
+• 09:00-10:00: 23% de reuniones
+• 14:00-15:00: 19% de reuniones  
+• 16:00-17:00: 16% de reuniones
+
+👥 TOP COLABORADORES:
+1. Marketing Team: 247 reuniones
+2. Development: 189 reuniones
+3. Sales: 156 reuniones
+4. Support: 134 reuniones
+
+💬 CHAT STATISTICS:
+• Mensajes/Usuario/Día: 31.4
+• Archivos Compartidos: 2,567
+• GIFs Enviados: 1,247 😄
+• @Mentions: 5,689
+
+📺 CALLS & VIDEO:
+• Video Habilitado: 87% reuniones
+• Audio Quality: 4.8/5.0
+• Conexión Issues: <2%
+
+🔧 APPS MÁS USADAS:
+• Planner: 89 teams
+• OneNote: 67 teams  
+• SharePoint: 56 teams
+• Power BI: 23 teams
+
+🎯 ENGAGEMENT INSIGHTS:
+• Response Time: 4.2 minutos
+• Active Hours: 9.1h/día promedio
+• Weekend Usage: 12% usuarios
+            `
+        },
+        'azure-resources': {
+            titulo: '☁️ Azure - Gestión de Recursos',
+            contenido: `
+🏗️ AZURE RESOURCE OVERVIEW (Estado Actual)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+💰 COSTO MENSUAL: $847,230 (+12%)
+📊 RECURSOS ACTIVOS: 234 recursos
+🌍 REGIONES: East US, West Europe, Asia Pacific
+
+🖥️ VIRTUAL MACHINES:
+• VMs Activas: 23 instancias
+• CPU Utilization: 64% promedio
+• RAM Usage: 71% promedio
+• Storage: 2.8TB usado/4TB total
+
+🗄️ DATABASES:
+• SQL Databases: 8 activas
+• PostgreSQL: 3 instancias
+• CosmosDB: 2 colecciones
+• Storage Used: 890GB
+
+🌐 NETWORKING:
+• Virtual Networks: 5 VNets
+• Load Balancers: 3 activos
+• Public IPs: 12 asignadas
+• VPN Gateways: 2 conectados
+
+📱 APP SERVICES:
+• Web Apps: 15 aplicaciones
+• Function Apps: 23 funciones
+• API Management: 1 instancia
+• Uptime: 99.8% (30 días)
+
+📊 STORAGE ACCOUNTS:
+• Blob Storage: 1.2TB
+• File Shares: 340GB
+• Queue Storage: 45MB
+• Table Storage: 12GB
+
+🔒 SECURITY CENTER:
+• Security Score: 89%
+• Policy Compliance: 94%
+• Recommendations: 7 pendientes
+• Threats Detected: 0
+
+⚡ PERFORMANCE INSIGHTS:
+• Response Time: 156ms promedio
+• Availability: 99.97%
+• Error Rate: 0.03%
+• Bandwidth: 2.4 Gbps pico
+
+💡 OPTIMIZATION TIPS:
+• Resize 3 VMs infrautilizadas: -$234/mes
+• Archive old data: -$89/mes
+• Reserved Instances: -$156/mes
+            `
+        }
+    };
+    
+    const informe = informesDetallados[informeId];
+    if (informe) {
+        // Crear modal personalizado para mostrar el informe detallado
+        const modal = document.createElement('div');
+        modal.style.cssText = `
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            z-index: 10000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(5px);
+        `;
+        
+        modal.innerHTML = `
+            <div style="
+                background: white;
+                border-radius: 12px;
+                max-width: 800px;
+                max-height: 90vh;
+                overflow-y: auto;
+                margin: 20px;
+                box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+            ">
+                <div style="
+                    background: linear-gradient(135deg, #4f7cff, #6b8eff);
+                    color: white;
+                    padding: 20px;
+                    border-radius: 12px 12px 0 0;
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                ">
+                    <h2 style="margin: 0; font-size: 1.3rem;">${informe.titulo}</h2>
+                    <button onclick="this.closest('.modal').remove()" style="
+                        background: rgba(255,255,255,0.2);
+                        border: none;
+                        color: white;
+                        width: 30px;
+                        height: 30px;
+                        border-radius: 50%;
+                        cursor: pointer;
+                        font-size: 18px;
+                    ">×</button>
+                </div>
+                <div style="
+                    padding: 30px;
+                    font-family: 'Courier New', monospace;
+                    font-size: 13px;
+                    line-height: 1.6;
+                    white-space: pre-line;
+                    color: #333;
+                ">${informe.contenido}</div>
+                <div style="
+                    padding: 20px;
+                    border-top: 1px solid #eee;
+                    display: flex;
+                    gap: 10px;
+                    justify-content: flex-end;
+                ">
+                    <button onclick="alert('📥 Descargando informe como PDF...')" style="
+                        background: #4f7cff;
+                        color: white;
+                        border: none;
+                        padding: 10px 20px;
+                        border-radius: 6px;
+                        cursor: pointer;
+                    ">📥 Descargar PDF</button>
+                    <button onclick="alert('📧 Compartiendo informe...')" style="
+                        background: #28a745;
+                        color: white;
+                        border: none;
+                        padding: 10px 20px;
+                        border-radius: 6px;
+                        cursor: pointer;
+                    ">📧 Compartir</button>
+                </div>
+            </div>
+        `;
+        
+        modal.className = 'modal';
+        document.body.appendChild(modal);
+        
+        // Cerrar al hacer clic fuera del modal
+        modal.addEventListener('click', function(e) {
+            if (e.target === modal) {
+                modal.remove();
+            }
+        });
+    } else {
+        // Fallback para informes no definidos
+        alert(`📊 Informe: ${informeId}\n\n🔍 Cargando datos...\n\nEste informe contiene métricas actualizadas y análisis detallado de la plataforma seleccionada.`);
+    }
+};
+
+window.verTodosGoogle = function() {
+    console.log('Ver todos los informes de Google...');
+    
+    const modal = document.createElement('div');
+    modal.style.cssText = `
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0,0,0,0.8);
+        z-index: 10000;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        backdrop-filter: blur(5px);
+    `;
+    
+    modal.innerHTML = `
+        <div style="
+            background: white;
+            border-radius: 12px;
+            max-width: 900px;
+            max-height: 90vh;
+            overflow-y: auto;
+            margin: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+        ">
+            <div style="
+                background: linear-gradient(135deg, #4285f4, #34a853);
+                color: white;
+                padding: 20px;
+                border-radius: 12px 12px 0 0;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+            ">
+                <h2 style="margin: 0; font-size: 1.4rem;">📈 Google Analytics & Ads - Todos los Informes</h2>
+                <button onclick="this.closest('.modal').remove()" style="
+                    background: rgba(255,255,255,0.2);
+                    border: none;
+                    color: white;
+                    width: 30px;
+                    height: 30px;
+                    border-radius: 50%;
+                    cursor: pointer;
+                    font-size: 18px;
+                ">×</button>
+            </div>
+            <div style="padding: 30px;">
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px;">
+                    <div onclick="window.abrirInforme('google-analytics')" style="
+                        border: 2px solid #4285f4;
+                        border-radius: 8px;
+                        padding: 20px;
+                        cursor: pointer;
+                        transition: all 0.3s;
+                        background: rgba(66, 133, 244, 0.05);
+                    " onmouseover="this.style.transform='translateY(-3px)'" onmouseout="this.style.transform='translateY(0)'">
+                        <h3 style="color: #4285f4; margin-top: 0;">📊 Google Analytics</h3>
+                        <p><strong>Tráfico Web en Tiempo Real</strong></p>
+                        <p style="font-size: 0.9rem; color: #666;">
+                            • 12,847 usuarios activos<br>
+                            • 4.2min tiempo promedio<br>
+                            • 32.8% tasa de rebote<br>
+                            • 247 conversiones hoy
+                        </p>
+                        <span style="background: #28a745; color: white; padding: 4px 8px; border-radius: 12px; font-size: 0.8rem;">En Vivo</span>
+                    </div>
+                    
+                    <div onclick="window.abrirInforme('google-ads')" style="
+                        border: 2px solid #fbbc04;
+                        border-radius: 8px;
+                        padding: 20px;
+                        cursor: pointer;
+                        transition: all 0.3s;
+                        background: rgba(251, 188, 4, 0.05);
+                    " onmouseover="this.style.transform='translateY(-3px)'" onmouseout="this.style.transform='translateY(0)'">
+                        <h3 style="color: #fbbc04; margin-top: 0;">💰 Google Ads</h3>
+                        <p><strong>Rendimiento de Campañas</strong></p>
+                        <p style="font-size: 0.9rem; color: #666;">
+                            • $127,850 inversión total<br>
+                            • ROI 380% (+45%)<br>
+                            • CTR 3.4% global<br>
+                            • 10,268 conversiones
+                        </p>
+                        <span style="background: #007bff; color: white; padding: 4px 8px; border-radius: 12px; font-size: 0.8rem;">Actualizado</span>
+                    </div>
+                    
+                    <div onclick="window.abrirInforme('google-search')" style="
+                        border: 2px solid #ea4335;
+                        border-radius: 8px;
+                        padding: 20px;
+                        cursor: pointer;
+                        transition: all 0.3s;
+                        background: rgba(234, 67, 53, 0.05);
+                    " onmouseover="this.style.transform='translateY(-3px)'" onmouseout="this.style.transform='translateY(0)'">
+                        <h3 style="color: #ea4335; margin-top: 0;">🔍 Search Console</h3>
+                        <p><strong>SEO Performance</strong></p>
+                        <p style="font-size: 0.9rem; color: #666;">
+                            • 847,520 impresiones<br>
+                            • 42,376 clics (+35%)<br>
+                            • CTR 5.0% (+0.4%)<br>
+                            • Posición 23.4 (+2.1)
+                        </p>
+                        <span style="background: #28a745; color: white; padding: 4px 8px; border-radius: 12px; font-size: 0.8rem;">Diario</span>
+                    </div>
+                    
+                    <div onclick="alert('📺 YouTube Analytics\\n\\n• 45,678 views este mes\\n• 2,345 suscriptores nuevos\\n• 4.2min duración promedio\\n• 89% retention rate')" style="
+                        border: 2px solid #ff0000;
+                        border-radius: 8px;
+                        padding: 20px;
+                        cursor: pointer;
+                        transition: all 0.3s;
+                        background: rgba(255, 0, 0, 0.05);
+                    " onmouseover="this.style.transform='translateY(-3px)'" onmouseout="this.style.transform='translateY(0)'">
+                        <h3 style="color: #ff0000; margin-top: 0;">📺 YouTube Analytics</h3>
+                        <p><strong>Canal Empresarial</strong></p>
+                        <p style="font-size: 0.9rem; color: #666;">
+                            • 45,678 visualizaciones<br>
+                            • 2,345 suscriptores nuevos<br>
+                            • 4.2min duración promedio<br>
+                            • 89% retention rate
+                        </p>
+                        <span style="background: #ffc107; color: #333; padding: 4px 8px; border-radius: 12px; font-size: 0.8rem;">Semanal</span>
+                    </div>
+                    
+                    <div onclick="alert('🏢 Google My Business\\n\\n• 12,456 views del perfil\\n• 847 búsquedas directas\\n• 234 calls desde GMB\\n• 4.8/5 rating promedio')" style="
+                        border: 2px solid #34a853;
+                        border-radius: 8px;
+                        padding: 20px;
+                        cursor: pointer;
+                        transition: all 0.3s;
+                        background: rgba(52, 168, 83, 0.05);
+                    " onmouseover="this.style.transform='translateY(-3px)'" onmouseout="this.style.transform='translateY(0)'">
+                        <h3 style="color: #34a853; margin-top: 0;">🏢 Google My Business</h3>
+                        <p><strong>Presencia Local</strong></p>
+                        <p style="font-size: 0.9rem; color: #666;">
+                            • 12,456 views del perfil<br>
+                            • 847 búsquedas directas<br>
+                            • 234 calls desde GMB<br>
+                            • 4.8/5 rating promedio
+                        </p>
+                        <span style="background: #28a745; color: white; padding: 4px 8px; border-radius: 12px; font-size: 0.8rem;">En Vivo</span>
+                    </div>
+                    
+                    <div onclick="alert('🏷️ Google Tag Manager\\n\\n• 47 tags configurados\\n• 23 triggers activos\\n• 12 variables personalizadas\\n• 99.8% firing rate')" style="
+                        border: 2px solid #4285f4;
+                        border-radius: 8px;
+                        padding: 20px;
+                        cursor: pointer;
+                        transition: all 0.3s;
+                        background: rgba(66, 133, 244, 0.05);
+                    " onmouseover="this.style.transform='translateY(-3px)'" onmouseout="this.style.transform='translateY(0)'">
+                        <h3 style="color: #4285f4; margin-top: 0;">🏷️ Tag Manager</h3>
+                        <p><strong>Gestión de Etiquetas</strong></p>
+                        <p style="font-size: 0.9rem; color: #666;">
+                            • 47 tags configurados<br>
+                            • 23 triggers activos<br>
+                            • 12 variables personalizadas<br>
+                            • 99.8% firing rate
+                        </p>
+                        <span style="background: #007bff; color: white; padding: 4px 8px; border-radius: 12px; font-size: 0.8rem;">Configurado</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    `;
+    
+    modal.className = 'modal';
+    document.body.appendChild(modal);
+    
+    modal.addEventListener('click', function(e) {
+        if (e.target === modal) {
+            modal.remove();
+        }
+    });
+};
+
+window.verTodosAmazon = function() {
+    console.log('Ver todos los informes de Amazon...');
+    
+    const modal = document.createElement('div');
+    modal.style.cssText = `
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0,0,0,0.8);
+        z-index: 10000;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        backdrop-filter: blur(5px);
+    `;
+    
+    modal.innerHTML = `
+        <div style="
+            background: white;
+            border-radius: 12px;
+            max-width: 900px;
+            max-height: 90vh;
+            overflow-y: auto;
+            margin: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+        ">
+            <div style="
+                background: linear-gradient(135deg, #ff9900, #232f3e);
+                color: white;
+                padding: 20px;
+                border-radius: 12px 12px 0 0;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+            ">
+                <h2 style="margin: 0; font-size: 1.4rem;">☁️ Amazon Web Services - Informes Completos</h2>
+                <button onclick="this.closest('.modal').remove()" style="
+                    background: rgba(255,255,255,0.2);
+                    border: none;
+                    color: white;
+                    width: 30px;
+                    height: 30px;
+                    border-radius: 50%;
+                    cursor: pointer;
+                    font-size: 18px;
+                ">×</button>
+            </div>
+            <div style="padding: 30px;">
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px;">
+                    <div onclick="window.abrirInforme('aws-costs')" style="
+                        border: 2px solid #ff9900;
+                        border-radius: 8px;
+                        padding: 20px;
+                        cursor: pointer;
+                        transition: all 0.3s;
+                        background: rgba(255, 153, 0, 0.05);
+                    " onmouseover="this.style.transform='translateY(-3px)'" onmouseout="this.style.transform='translateY(0)'">
+                        <h3 style="color: #ff9900; margin-top: 0;">💳 Costos y Facturación</h3>
+                        <p><strong>Análisis Financiero AWS</strong></p>
+                        <p style="font-size: 0.9rem; color: #666;">
+                            • $2.3M gasto mensual<br>
+                            • +18% vs mes anterior<br>
+                            • EC2 47% del total<br>
+                            • $291K ahorro potencial
+                        </p>
+                        <span style="background: #dc3545; color: white; padding: 4px 8px; border-radius: 12px; font-size: 0.8rem;">Crítico</span>
+                    </div>
+                    
+                    <div onclick="window.abrirInforme('aws-performance')" style="
+                        border: 2px solid #28a745;
+                        border-radius: 8px;
+                        padding: 20px;
+                        cursor: pointer;
+                        transition: all 0.3s;
+                        background: rgba(40, 167, 69, 0.05);
+                    " onmouseover="this.style.transform='translateY(-3px)'" onmouseout="this.style.transform='translateY(0)'">
+                        <h3 style="color: #28a745; margin-top: 0;">⚡ EC2 & RDS Performance</h3>
+                        <p><strong>Monitoreo de Rendimiento</strong></p>
+                        <p style="font-size: 0.9rem; color: #666;">
+                            • 94.2% uptime<br>
+                            • 45ms latencia DB<br>
+                            • CPU 68% promedio<br>
+                            • 43 instancias activas
+                        </p>
+                        <span style="background: #28a745; color: white; padding: 4px 8px; border-radius: 12px; font-size: 0.8rem;">Óptimo</span>
+                    </div>
+                    
+                    <div onclick="window.abrirInforme('aws-security')" style="
+                        border: 2px solid #6f42c1;
+                        border-radius: 8px;
+                        padding: 20px;
+                        cursor: pointer;
+                        transition: all 0.3s;
+                        background: rgba(111, 66, 193, 0.05);
+                    " onmouseover="this.style.transform='translateY(-3px)'" onmouseout="this.style.transform='translateY(0)'">
+                        <h3 style="color: #6f42c1; margin-top: 0;">🛡️ Seguridad & Compliance</h3>
+                        <p><strong>Auditoría de Seguridad</strong></p>
+                        <p style="font-size: 0.9rem; color: #666;">
+                            • 98.5% security score<br>
+                            • 0 vulnerabilidades críticas<br>
+                            • 100% compliance<br>
+                            • MFA habilitado 100%
+                        </p>
+                        <span style="background: #28a745; color: white; padding: 4px 8px; border-radius: 12px; font-size: 0.8rem;">Seguro</span>
+                    </div>
+                    
+                    <div onclick="alert('📊 CloudWatch Metrics\\n\\n• 2.8M datapoints/hora\\n• 47 custom metrics\\n• 23 alarms configuradas\\n• 156 logs groups activos')" style="
+                        border: 2px solid #007bff;
+                        border-radius: 8px;
+                        padding: 20px;
+                        cursor: pointer;
+                        transition: all 0.3s;
+                        background: rgba(0, 123, 255, 0.05);
+                    " onmouseover="this.style.transform='translateY(-3px)'" onmouseout="this.style.transform='translateY(0)'">
+                        <h3 style="color: #007bff; margin-top: 0;">📊 CloudWatch</h3>
+                        <p><strong>Monitoreo y Logs</strong></p>
+                        <p style="font-size: 0.9rem; color: #666;">
+                            • 2.8M datapoints/hora<br>
+                            • 47 custom metrics<br>
+                            • 23 alarms configuradas<br>
+                            • 156 logs groups
+                        </p>
+                        <span style="background: #17a2b8; color: white; padding: 4px 8px; border-radius: 12px; font-size: 0.8rem;">Monitoreando</span>
+                    </div>
+                    
+                    <div onclick="alert('💾 S3 Storage Analytics\\n\\n• 1.2TB storage total\\n• 456GB standard tier\\n• 234GB IA tier\\n• $234,567 costo mensual')" style="
+                        border: 2px solid #fd7e14;
+                        border-radius: 8px;
+                        padding: 20px;
+                        cursor: pointer;
+                        transition: all 0.3s;
+                        background: rgba(253, 126, 20, 0.05);
+                    " onmouseover="this.style.transform='translateY(-3px)'" onmouseout="this.style.transform='translateY(0)'">
+                        <h3 style="color: #fd7e14; margin-top: 0;">💾 S3 Storage</h3>
+                        <p><strong>Análisis de Almacenamiento</strong></p>
+                        <p style="font-size: 0.9rem; color: #666;">
+                            • 1.2TB storage total<br>
+                            • 456GB standard tier<br>
+                            • 234GB IA tier<br>
+                            • $234K costo mensual
+                        </p>
+                        <span style="background: #ffc107; color: #333; padding: 4px 8px; border-radius: 12px; font-size: 0.8rem;">Optimizable</span>
+                    </div>
+                    
+                    <div onclick="alert('⚡ Lambda Functions\\n\\n• 2.3M invocations/mes\\n• 156ms duración promedio\\n• $156,789 costo total\\n• 0.02% error rate')" style="
+                        border: 2px solid #ff6b6b;
+                        border-radius: 8px;
+                        padding: 20px;
+                        cursor: pointer;
+                        transition: all 0.3s;
+                        background: rgba(255, 107, 107, 0.05);
+                    " onmouseover="this.style.transform='translateY(-3px)'" onmouseout="this.style.transform='translateY(0)'">
+                        <h3 style="color: #ff6b6b; margin-top: 0;">⚡ Lambda Functions</h3>
+                        <p><strong>Serverless Computing</strong></p>
+                        <p style="font-size: 0.9rem; color: #666;">
+                            • 2.3M invocations/mes<br>
+                            • 156ms duración promedio<br>
+                            • $156K costo total<br>
+                            • 0.02% error rate
+                        </p>
+                        <span style="background: #28a745; color: white; padding: 4px 8px; border-radius: 12px; font-size: 0.8rem;">Eficiente</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    `;
+    
+    modal.className = 'modal';
+    document.body.appendChild(modal);
+    
+    modal.addEventListener('click', function(e) {
+        if (e.target === modal) {
+            modal.remove();
+        }
+    });
+};
+
+window.verTodosMicrosoft = function() {
+    console.log('Ver todos los informes de Microsoft...');
+    
+    const modal = document.createElement('div');
+    modal.style.cssText = `
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0,0,0,0.8);
+        z-index: 10000;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        backdrop-filter: blur(5px);
+    `;
+    
+    modal.innerHTML = `
+        <div style="
+            background: white;
+            border-radius: 12px;
+            max-width: 900px;
+            max-height: 90vh;
+            overflow-y: auto;
+            margin: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+        ">
+            <div style="
+                background: linear-gradient(135deg, #00bcf2, #0078d4);
+                color: white;
+                padding: 20px;
+                border-radius: 12px 12px 0 0;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+            ">
+                <h2 style="margin: 0; font-size: 1.4rem;">🏢 Microsoft 365 & Azure - Suite Completa</h2>
+                <button onclick="this.closest('.modal').remove()" style="
+                    background: rgba(255,255,255,0.2);
+                    border: none;
+                    color: white;
+                    width: 30px;
+                    height: 30px;
+                    border-radius: 50%;
+                    cursor: pointer;
+                    font-size: 18px;
+                ">×</button>
+            </div>
+            <div style="padding: 30px;">
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px;">
+                    <div onclick="window.abrirInforme('office-usage')" style="
+                        border: 2px solid #0078d4;
+                        border-radius: 8px;
+                        padding: 20px;
+                        cursor: pointer;
+                        transition: all 0.3s;
+                        background: rgba(0, 120, 212, 0.05);
+                    " onmouseover="this.style.transform='translateY(-3px)'" onmouseout="this.style.transform='translateY(0)'">
+                        <h3 style="color: #0078d4; margin-top: 0;">📋 Office 365 Usage</h3>
+                        <p><strong>Productividad Empresarial</strong></p>
+                        <p style="font-size: 0.9rem; color: #666;">
+                            • 156/160 usuarios activos<br>
+                            • 8h 24m uso diario<br>
+                            • +12% productividad<br>
+                            • 18,947 emails/día
+                        </p>
+                        <span style="background: #28a745; color: white; padding: 4px 8px; border-radius: 12px; font-size: 0.8rem;">Activo</span>
+                    </div>
+                    
+                    <div onclick="window.abrirInforme('teams-analytics')" style="
+                        border: 2px solid #6264a7;
+                        border-radius: 8px;
+                        padding: 20px;
+                        cursor: pointer;
+                        transition: all 0.3s;
+                        background: rgba(98, 100, 167, 0.05);
+                    " onmouseover="this.style.transform='translateY(-3px)'" onmouseout="this.style.transform='translateY(0)'">
+                        <h3 style="color: #6264a7; margin-top: 0;">👥 Teams Analytics</h3>
+                        <p><strong>Colaboración y Reuniones</strong></p>
+                        <p style="font-size: 0.9rem; color: #666;">
+                            • 1,247 reuniones/mes<br>
+                            • 42min duración promedio<br>
+                            • 28,947 mensajes<br>
+                            • 87% video habilitado
+                        </p>
+                        <span style="background: #28a745; color: white; padding: 4px 8px; border-radius: 12px; font-size: 0.8rem;">En Vivo</span>
+                    </div>
+                    
+                    <div onclick="window.abrirInforme('azure-resources')" style="
+                        border: 2px solid #00bcf2;
+                        border-radius: 8px;
+                        padding: 20px;
+                        cursor: pointer;
+                        transition: all 0.3s;
+                        background: rgba(0, 188, 242, 0.05);
+                    " onmouseover="this.style.transform='translateY(-3px)'" onmouseout="this.style.transform='translateY(0)'">
+                        <h3 style="color: #00bcf2; margin-top: 0;">☁️ Azure Resources</h3>
+                        <p><strong>Gestión en la Nube</strong></p>
+                        <p style="font-size: 0.9rem; color: #666;">
+                            • $847K costo mensual<br>
+                            • 234 recursos activos<br>
+                            • 99.8% availability<br>
+                            • 89% security score
+                        </p>
+                        <span style="background: #17a2b8; color: white; padding: 4px 8px; border-radius: 12px; font-size: 0.8rem;">Monitoreando</span>
+                    </div>
+                    
+                    <div onclick="alert('📧 Exchange Online\\n\\n• 156 buzones activos\\n• 18,947 emails enviados/día\\n• 31,205 emails recibidos/día\\n• 2.8TB/5TB storage usado')" style="
+                        border: 2px solid #0072c6;
+                        border-radius: 8px;
+                        padding: 20px;
+                        cursor: pointer;
+                        transition: all 0.3s;
+                        background: rgba(0, 114, 198, 0.05);
+                    " onmouseover="this.style.transform='translateY(-3px)'" onmouseout="this.style.transform='translateY(0)'">
+                        <h3 style="color: #0072c6; margin-top: 0;">📧 Exchange Online</h3>
+                        <p><strong>Correo Empresarial</strong></p>
+                        <p style="font-size: 0.9rem; color: #666;">
+                            • 156 buzones activos<br>
+                            • 18,947 emails enviados/día<br>
+                            • 31,205 emails recibidos/día<br>
+                            • 2.8TB/5TB storage
+                        </p>
+                        <span style="background: #28a745; color: white; padding: 4px 8px; border-radius: 12px; font-size: 0.8rem;">Operativo</span>
+                    </div>
+                    
+                    <div onclick="alert('☁️ OneDrive Business\\n\\n• 890GB/1.6TB storage usado\\n• 5,678 archivos compartidos\\n• 1,247 colaboraciones activas\\n• 23 sync errors (resueltos)')" style="
+                        border: 2px solid #0364b8;
+                        border-radius: 8px;
+                        padding: 20px;
+                        cursor: pointer;
+                        transition: all 0.3s;
+                        background: rgba(3, 100, 184, 0.05);
+                    " onmouseover="this.style.transform='translateY(-3px)'" onmouseout="this.style.transform='translateY(0)'">
+                        <h3 style="color: #0364b8; margin-top: 0;">☁️ OneDrive Business</h3>
+                        <p><strong>Almacenamiento en la Nube</strong></p>
+                        <p style="font-size: 0.9rem; color: #666;">
+                            • 890GB/1.6TB usado<br>
+                            • 5,678 archivos compartidos<br>
+                            • 1,247 colaboraciones<br>
+                            • Sync 99.7% exitoso
+                        </p>
+                        <span style="background: #28a745; color: white; padding: 4px 8px; border-radius: 12px; font-size: 0.8rem;">Sincronizado</span>
+                    </div>
+                    
+                    <div onclick="alert('📊 SharePoint Online\\n\\n• 23/28 sites activos\\n• 8,947 visitas únicas/mes\\n• 1,567 documentos creados\\n• 2,345 workflows ejecutados')" style="
+                        border: 2px solid #0078d4;
+                        border-radius: 8px;
+                        padding: 20px;
+                        cursor: pointer;
+                        transition: all 0.3s;
+                        background: rgba(0, 120, 212, 0.05);
+                    " onmouseover="this.style.transform='translateY(-3px)'" onmouseout="this.style.transform='translateY(0)'">
+                        <h3 style="color: #0078d4; margin-top: 0;">📊 SharePoint Online</h3>
+                        <p><strong>Colaboración Documental</strong></p>
+                        <p style="font-size: 0.9rem; color: #666;">
+                            • 23/28 sites activos<br>
+                            • 8,947 visitas únicas/mes<br>
+                            • 1,567 documentos creados<br>
+                            • 2,345 workflows
+                        </p>
+                        <span style="background: #17a2b8; color: white; padding: 4px 8px; border-radius: 12px; font-size: 0.8rem;">Colaborando</span>
+                    </div>
+                    
+                    <div onclick="alert('📈 Power BI\\n\\n• 89 dashboards activos\\n• 234 reportes publicados\\n• 12,456 views este mes\\n• 156 usuarios con acceso')" style="
+                        border: 2px solid #f2c811;
+                        border-radius: 8px;
+                        padding: 20px;
+                        cursor: pointer;
+                        transition: all 0.3s;
+                        background: rgba(242, 200, 17, 0.05);
+                    " onmouseover="this.style.transform='translateY(-3px)'" onmouseout="this.style.transform='translateY(0)'">
+                        <h3 style="color: #f2c811; margin-top: 0;">📈 Power BI</h3>
+                        <p><strong>Business Intelligence</strong></p>
+                        <p style="font-size: 0.9rem; color: #666;">
+                            • 89 dashboards activos<br>
+                            • 234 reportes publicados<br>
+                            • 12,456 views/mes<br>
+                            • 156 usuarios activos
+                        </p>
+                        <span style="background: #007bff; color: white; padding: 4px 8px; border-radius: 12px; font-size: 0.8rem;">Analítica</span>
+                    </div>
+                    
+                    <div onclick="alert('🔒 Microsoft Defender\\n\\n• 98.7% protection score\\n• 0 amenazas activas\\n• 234 emails bloqueados/día\\n• 47 intentos phishing bloqueados')" style="
+                        border: 2px solid #ff4444;
+                        border-radius: 8px;
+                        padding: 20px;
+                        cursor: pointer;
+                        transition: all 0.3s;
+                        background: rgba(255, 68, 68, 0.05);
+                    " onmouseover="this.style.transform='translateY(-3px)'" onmouseout="this.style.transform='translateY(0)'">
+                        <h3 style="color: #ff4444; margin-top: 0;">🔒 Microsoft Defender</h3>
+                        <p><strong>Seguridad Avanzada</strong></p>
+                        <p style="font-size: 0.9rem; color: #666;">
+                            • 98.7% protection score<br>
+                            • 0 amenazas activas<br>
+                            • 234 emails bloqueados/día<br>
+                            • 47 phishing bloqueados
+                        </p>
+                        <span style="background: #28a745; color: white; padding: 4px 8px; border-radius: 12px; font-size: 0.8rem;">Protegido</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    `;
+    
+    modal.className = 'modal';
+    document.body.appendChild(modal);
+    
+    modal.addEventListener('click', function(e) {
+        if (e.target === modal) {
+            modal.remove();
+        }
+    });
+};
+
+window.verTodosRecientes = function() {
+    console.log('Ver historial completo...');
+    alert('📅 Historial de Informes:\n\nÚltimos 30 días: 47 informes\nÚltimos 7 días: 12 informes\nHoy: 3 informes\n\n🔍 Buscar por fecha, plataforma o tipo...');
+};
+
+window.descargarInforme = function(informeId) {
+    console.log('Descargando informe:', informeId);
+    alert(`⬇️ Descargando informe...\n\nFormatos disponibles:\n• PDF (Reporte visual)\n• Excel (Datos detallados)\n• PowerPoint (Presentación)`);
+};
+
+window.compartirInforme = function(informeId) {
+    console.log('Compartiendo informe:', informeId);
+    alert(`📤 Compartir informe:\n\n📧 Email\n🔗 Link público\n👥 Equipo interno\n📱 Slack/Teams\n\n🔒 Configurar permisos de acceso...`);
 };
 
 // Inicializar vista principal de IA al cargar
