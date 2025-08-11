@@ -2277,22 +2277,460 @@ document.addEventListener('DOMContentLoaded', () => {
        `,
 
        'ia-predictiva': `
-           <div class="dashboard-header">
-               <h2 class="dashboard-title">Inteligencia Artificial Predictiva</h2>
-               <div class="quick-actions">
-                   <button class="quick-action-btn" onclick="showTrainModelForm()">
-                       <span>🤖</span>
-                       Entrenar Modelo
-                   </button>
-                   <button class="quick-action-btn secondary" onclick="showNewPredictionForm()">
-                       <span>�</span>
-                       Nueva Predicción
-                   </button>
+           <div id="iaPredictiva">
+               <!-- Vista Principal -->
+               <div id="vistaIAPrincipal" class="ia-view active">
+                   <div class="page-header">
+                       <h2>Inteligencia Artificial Predictiva</h2>
+                       <p>Entrenar modelos, generar predicciones y analizar resultados con IA avanzada</p>
+                   </div>
+
+                   <div class="ia-dashboard">
+                       <div class="ia-item" onclick="navegarIA('entrenar')">
+                           <div class="ia-icon">
+                               <i class="fas fa-brain"></i>
+                           </div>
+                           <h3 class="ia-title">Entrenar Modelo</h3>
+                           <p class="ia-desc">Crear y entrenar nuevos modelos de machine learning</p>
+                           <div class="ia-stats">
+                               <span class="stat-number">8</span>
+                               <span class="stat-label">Modelos activos</span>
+                           </div>
+                       </div>
+
+                       <div class="ia-item" onclick="navegarIA('prediccion')">
+                           <div class="ia-icon">
+                               <i class="fas fa-crystal-ball"></i>
+                           </div>
+                           <h3 class="ia-title">Nueva Predicción</h3>
+                           <p class="ia-desc">Generar predicciones usando modelos entrenados</p>
+                           <div class="ia-stats">
+                               <span class="stat-number">156</span>
+                               <span class="stat-label">Predicciones hoy</span>
+                           </div>
+                       </div>
+
+                       <div class="ia-item" onclick="navegarIA('modelos')">
+                           <div class="ia-icon">
+                               <i class="fas fa-cogs"></i>
+                           </div>
+                           <h3 class="ia-title">Gestionar Modelos</h3>
+                           <p class="ia-desc">Administrar y monitorear modelos existentes</p>
+                           <div class="ia-stats">
+                               <span class="stat-number">94.8%</span>
+                               <span class="stat-label">Precisión promedio</span>
+                           </div>
+                       </div>
+
+                       <div class="ia-item" onclick="navegarIA('analisis')">
+                           <div class="ia-icon">
+                               <i class="fas fa-chart-line"></i>
+                           </div>
+                           <h3 class="ia-title">Análisis y Métricas</h3>
+                           <p class="ia-desc">Evaluar rendimiento y precisión de modelos</p>
+                           <div class="ia-stats">
+                               <span class="stat-number">24</span>
+                               <span class="stat-label">Reportes generados</span>
+                           </div>
+                       </div>
+                   </div>
+
+                   <!-- Resumen de Actividad Reciente -->
+                   <div class="activity-summary">
+                       <h3>Actividad Reciente</h3>
+                       <div class="activity-grid">
+                           <div class="activity-card">
+                               <div class="activity-icon success">
+                                   <i class="fas fa-check"></i>
+                               </div>
+                               <div class="activity-content">
+                                   <h4>Modelo "Predicción Ventas Q4" entrenado</h4>
+                                   <p>Precisión alcanzada: 94.8%</p>
+                                   <span class="activity-time">Hace 2 horas</span>
+                               </div>
+                           </div>
+
+                           <div class="activity-card">
+                               <div class="activity-icon info">
+                                   <i class="fas fa-chart-bar"></i>
+                               </div>
+                               <div class="activity-content">
+                                   <h4>156 predicciones generadas hoy</h4>
+                                   <p>Modelos: Ventas, ROI Marketing, Retención</p>
+                                   <span class="activity-time">Último: hace 15 min</span>
+                               </div>
+                           </div>
+
+                           <div class="activity-card">
+                               <div class="activity-icon warning">
+                                   <i class="fas fa-exclamation-triangle"></i>
+                               </div>
+                               <div class="activity-content">
+                                   <h4>Modelo "ROI Marketing" requiere actualización</h4>
+                                   <p>Precisión ha bajado a 89.3%</p>
+                                   <span class="activity-time">Hace 1 día</span>
+                               </div>
+                           </div>
+                       </div>
+                   </div>
+               </div>
+
+               <!-- Vista Entrenar Modelo -->
+               <div id="vistaEntrenarModelo" class="ia-view">
+                   <div class="page-header">
+                       <button class="btn-back" onclick="navegarIA('principal')">
+                           <i class="fas fa-arrow-left"></i>
+                           Volver
+                       </button>
+                       <h2>🤖 Entrenar Nuevo Modelo</h2>
+                       <p>Configura y entrena un modelo de machine learning personalizado</p>
+                   </div>
+
+                   <div class="form-container">
+                       <form id="formEntrenarModelo">
+                           <!-- Información Básica -->
+                           <div class="form-section">
+                               <div class="section-header">
+                                   <i class="fas fa-info-circle"></i>
+                                   <h3>Información Básica</h3>
+                               </div>
+                               
+                               <div class="form-group">
+                                   <label for="modelName">Nombre del Modelo</label>
+                                   <input type="text" id="modelName" class="form-control" placeholder="Ej: Predicción de Ventas Q4">
+                               </div>
+
+                               <div class="form-row">
+                                   <div class="form-group">
+                                       <label for="algorithmType">Tipo de Algoritmo</label>
+                                       <select id="algorithmType" class="form-control">
+                                           <option value="">Seleccionar algoritmo...</option>
+                                           <option value="linear-regression">Regresión Lineal</option>
+                                           <option value="random-forest">Random Forest</option>
+                                           <option value="neural-network">Red Neuronal</option>
+                                           <option value="svm">Support Vector Machine</option>
+                                       </select>
+                                   </div>
+                                   <div class="form-group">
+                                       <label for="problemType">Problema a Resolver</label>
+                                       <select id="problemType" class="form-control">
+                                           <option value="">Seleccionar tipo...</option>
+                                           <option value="regression">Regresión</option>
+                                           <option value="classification">Clasificación</option>
+                                           <option value="clustering">Clustering</option>
+                                       </select>
+                                   </div>
+                               </div>
+                               
+                               <div class="form-group">
+                                   <label for="modelDescription">Descripción</label>
+                                   <textarea id="modelDescription" class="form-control" rows="3" placeholder="Describe el objetivo del modelo y casos de uso..."></textarea>
+                               </div>
+                           </div>
+
+                           <!-- Fuente de Datos -->
+                           <div class="form-section">
+                               <div class="section-header">
+                                   <i class="fas fa-folder"></i>
+                                   <h3>Fuente de Datos</h3>
+                               </div>
+                               
+                               <div class="data-source-options">
+                                   <label class="data-option">
+                                       <input type="radio" name="dataSource" value="csv" checked>
+                                       <div class="option-card">
+                                           <i class="fas fa-file-csv"></i>
+                                           <h4>Archivo CSV/Excel</h4>
+                                           <p>Subir archivo desde tu dispositivo</p>
+                                       </div>
+                                   </label>
+
+                                   <label class="data-option">
+                                       <input type="radio" name="dataSource" value="database">
+                                       <div class="option-card">
+                                           <i class="fas fa-database"></i>
+                                           <h4>Base de Datos</h4>
+                                           <p>Conectar a base de datos existente</p>
+                                       </div>
+                                   </label>
+
+                                   <label class="data-option">
+                                       <input type="radio" name="dataSource" value="api">
+                                       <div class="option-card">
+                                           <i class="fas fa-link"></i>
+                                           <h4>API Externa</h4>
+                                           <p>Obtener datos desde una API</p>
+                                       </div>
+                                   </label>
+                               </div>
+                           </div>
+
+                           <!-- Configuración del Modelo -->
+                           <div class="form-section">
+                               <div class="section-header">
+                                   <i class="fas fa-cogs"></i>
+                                   <h3>Configuración del Modelo</h3>
+                               </div>
+
+                               <div class="form-row">
+                                   <div class="form-group">
+                                       <label for="targetVariable">Variable Objetivo</label>
+                                       <select id="targetVariable" class="form-control">
+                                           <option value="">Seleccionar variable...</option>
+                                           <option value="sales">Ventas</option>
+                                           <option value="revenue">Ingresos</option>
+                                           <option value="customers">Clientes</option>
+                                       </select>
+                                   </div>
+                                   <div class="form-group">
+                                       <label for="trainingPercentage">Porcentaje de Entrenamiento</label>
+                                       <div class="range-container">
+                                           <input type="range" id="trainingPercentage" class="form-range" min="60" max="90" value="80">
+                                           <span class="range-value">80%</span>
+                                       </div>
+                                   </div>
+                               </div>
+
+                               <div class="form-group">
+                                   <label>Características (Features)</label>
+                                   <div class="features-grid">
+                                       <label class="feature-option">
+                                           <input type="checkbox" checked>
+                                           <span class="checkmark"></span>
+                                           <span class="feature-indicator"></span>
+                                           Fecha/Tiempo
+                                       </label>
+                                       <label class="feature-option">
+                                           <input type="checkbox" checked>
+                                           <span class="checkmark"></span>
+                                           <span class="feature-indicator"></span>
+                                           Precio
+                                       </label>
+                                       <label class="feature-option">
+                                           <input type="checkbox">
+                                           <span class="checkmark"></span>
+                                           <span class="feature-indicator"></span>
+                                           Promociones
+                                       </label>
+                                       <label class="feature-option">
+                                           <input type="checkbox" checked>
+                                           <span class="checkmark"></span>
+                                           <span class="feature-indicator"></span>
+                                           Temporada
+                                       </label>
+                                   </div>
+                               </div>
+                           </div>
+
+                           <!-- Botones de Acción -->
+                           <div class="form-actions">
+                               <button type="button" class="btn btn-secondary" onclick="navegarIA('principal')">Cancelar</button>
+                               <button type="submit" class="btn btn-primary" onclick="entrenarModelo(); return false;">
+                                   🚀 Iniciar Entrenamiento
+                               </button>
+                           </div>
+                       </form>
+                   </div>
+               </div>
+
+               <!-- Vista Nueva Predicción -->
+               <div id="vistaNuevaPrediccion" class="ia-view">
+                   <div class="page-header">
+                       <button class="btn-back" onclick="navegarIA('principal')">
+                           <i class="fas fa-arrow-left"></i>
+                           Volver
+                       </button>
+                       <h2>🔮 Nueva Predicción</h2>
+                       <p>Genera predicciones usando modelos entrenados</p>
+                   </div>
+
+                   <div class="form-container">
+                       <form id="formNuevaPrediccion">
+                           <!-- Modelo a Utilizar -->
+                           <div class="form-section">
+                               <div class="section-header">
+                                   <i class="fas fa-robot"></i>
+                                   <h3>Modelo a Utilizar</h3>
+                               </div>
+
+                               <div class="model-selection">
+                                   <label class="model-option active">
+                                       <input type="radio" name="selectedModel" value="sales-q4" checked>
+                                       <div class="model-card">
+                                           <div class="model-icon">
+                                               <i class="fas fa-chart-line"></i>
+                                           </div>
+                                           <div class="model-info">
+                                               <h4>Predicción de Ventas Q4</h4>
+                                               <p>Random Forest • Precisión: 94.8%</p>
+                                           </div>
+                                           <div class="model-status">
+                                               <span class="status-badge active">Activo</span>
+                                           </div>
+                                       </div>
+                                   </label>
+
+                                   <label class="model-option">
+                                       <input type="radio" name="selectedModel" value="roi-marketing">
+                                       <div class="model-card">
+                                           <div class="model-icon">
+                                               <i class="fas fa-dollar-sign"></i>
+                                           </div>
+                                           <div class="model-info">
+                                               <h4>ROI Marketing</h4>
+                                               <p>Neural Network • Precisión: 89.3%</p>
+                                           </div>
+                                           <div class="model-status">
+                                               <span class="status-badge available">Disponible</span>
+                                           </div>
+                                       </div>
+                                   </label>
+
+                                   <label class="model-option">
+                                       <input type="radio" name="selectedModel" value="retention">
+                                       <div class="model-card">
+                                           <div class="model-icon">
+                                               <i class="fas fa-users"></i>
+                                           </div>
+                                           <div class="model-info">
+                                               <h4>Retención de Clientes</h4>
+                                               <p>Gradient Boosting • Precisión: 92.1%</p>
+                                           </div>
+                                           <div class="model-status">
+                                               <span class="status-badge available">Disponible</span>
+                                           </div>
+                                       </div>
+                                   </label>
+                               </div>
+                           </div>
+
+                           <!-- Datos de Entrada -->
+                           <div class="form-section">
+                               <div class="section-header">
+                                   <i class="fas fa-chart-bar"></i>
+                                   <h3>Datos de Entrada</h3>
+                               </div>
+
+                               <div class="form-row">
+                                   <div class="form-group">
+                                       <label for="predictionDate">Fecha de Predicción</label>
+                                       <input type="text" id="predictionDate" class="form-control" placeholder="dd/mm/aaaa">
+                                   </div>
+                                   <div class="form-group">
+                                       <label for="predictionPeriod">Período</label>
+                                       <select id="predictionPeriod" class="form-control">
+                                           <option value="monthly" selected>Mensual</option>
+                                           <option value="weekly">Semanal</option>
+                                           <option value="daily">Diario</option>
+                                       </select>
+                                   </div>
+                               </div>
+
+                               <div class="form-row">
+                                   <div class="form-group">
+                                       <label for="avgPrice">Precio Promedio ($)</label>
+                                       <input type="number" id="avgPrice" class="form-control" placeholder="100.00" step="0.01">
+                                   </div>
+                                   <div class="form-group">
+                                       <label for="season">Temporada</label>
+                                       <select id="season" class="form-control">
+                                           <option value="spring" selected>Primavera</option>
+                                           <option value="summer">Verano</option>
+                                           <option value="fall">Otoño</option>
+                                           <option value="winter">Invierno</option>
+                                       </select>
+                                   </div>
+                               </div>
+
+                               <div class="form-group">
+                                   <label>Promociones Activas</label>
+                                   <div class="toggle-options">
+                                       <label class="toggle-option">
+                                           <input type="checkbox" id="hasDiscounts">
+                                           <span class="toggle-indicator"></span>
+                                           Descuentos
+                                       </label>
+                                       <label class="toggle-option">
+                                           <input type="checkbox" id="hasPromotions">
+                                           <span class="toggle-indicator"></span>
+                                           Promociones
+                                       </label>
+                                       <label class="toggle-option">
+                                           <input type="checkbox" id="hasEvents">
+                                           <span class="toggle-indicator"></span>
+                                           Eventos Especiales
+                                       </label>
+                                   </div>
+                               </div>
+                           </div>
+
+                           <!-- Configuración -->
+                           <div class="form-section">
+                               <div class="section-header">
+                                   <i class="fas fa-cogs"></i>
+                                   <h3>Configuración</h3>
+                               </div>
+
+                               <div class="form-row">
+                                   <div class="form-group">
+                                       <label for="confidenceInterval">Intervalo de Confianza</label>
+                                       <select id="confidenceInterval" class="form-control">
+                                           <option value="90">90%</option>
+                                           <option value="95" selected>95%</option>
+                                           <option value="99">99%</option>
+                                       </select>
+                                   </div>
+                                   <div class="form-group">
+                                       <label for="predictionCount">Número de Predicciones</label>
+                                       <input type="number" id="predictionCount" class="form-control" value="1" min="1" max="12">
+                                   </div>
+                               </div>
+
+                               <div class="form-group">
+                                   <label>Opciones Adicionales</label>
+                                   <div class="checkbox-group">
+                                       <label class="checkbox-option">
+                                           <input type="checkbox" checked>
+                                           <span class="checkmark"></span>
+                                           <span class="option-indicator"></span>
+                                           Incluir gráfico de tendencias
+                                       </label>
+                                       <label class="checkbox-option">
+                                           <input type="checkbox">
+                                           <span class="checkmark"></span>
+                                           <span class="option-indicator"></span>
+                                           Generar reporte PDF
+                                       </label>
+                                       <label class="checkbox-option">
+                                           <input type="checkbox" checked>
+                                           <span class="checkmark"></span>
+                                           <span class="option-indicator"></span>
+                                           Enviar notificación por email
+                                       </label>
+                                   </div>
+                               </div>
+                           </div>
+
+                           <!-- Campo oculto para modelo seleccionado -->
+                           <input type="hidden" id="modeloSeleccionado" name="modeloSeleccionado" value="">
+
+                           <!-- Botones de Acción -->
+                           <div class="form-actions">
+                               <button type="button" class="btn btn-secondary" onclick="navegarIA('principal')">Cancelar</button>
+                               <button type="submit" class="btn btn-primary" onclick="generarPrediccion(); return false;">
+                                   🔮 Generar Predicción
+                               </button>
+                           </div>
+                       </form>
+
+                       <!-- Contenedor de Resultados -->
+                       <div id="resultadosPrediccion" style="display: none;"></div>
+                   </div>
                </div>
            </div>
+       `,
 
-           <!-- Stats Grid -->
-           <div class="stats-grid">
+       'gestion-datos': `
                <div class="stat-card">
                    <div class="stat-header">
                        <div class="stat-icon">🤖</div>
@@ -3343,13 +3781,6 @@ document.addEventListener('DOMContentLoaded', () => {
                            </div>
                        </div>
 
-                       <!-- Botones de Acción -->
-                       <div class="form-actions">
-                           <button type="button" class="btn-secondary" onclick="showIaDashboard()">Cancelar</button>
-                           <button type="button" class="btn-primary" onclick="generatePrediction()">
-                               <span>🔮</span>
-                               Generar Predicción
-                           </button>
                        </div>
                    </form>
                </div>
@@ -13856,5 +14287,165 @@ menuItems.forEach(item => {
 });
 
 console.log('Event listeners configurados para', menuItems.length, 'elementos del sidebar');
+
+// Funciones para navegación de IA Predictiva
+window.navegarIA = function(vista) {
+    console.log('Navegando a vista IA:', vista);
+    
+    // Ocultar todas las vistas de IA
+    const vistas = ['vistaIAPrincipal', 'vistaEntrenarModelo', 'vistaNuevaPrediccion'];
+    vistas.forEach(v => {
+        const elemento = document.getElementById(v);
+        if (elemento) {
+            elemento.style.display = 'none';
+        }
+    });
+    
+    // Mapear nombres de vista a IDs
+    let vistaId;
+    switch(vista) {
+        case 'principal':
+            vistaId = 'vistaIAPrincipal';
+            break;
+        case 'entrenar':
+            vistaId = 'vistaEntrenarModelo';
+            break;
+        case 'prediccion':
+            vistaId = 'vistaNuevaPrediccion';
+            break;
+        case 'modelos':
+            // Por ahora redirigir a principal hasta implementar vista de modelos
+            vistaId = 'vistaIAPrincipal';
+            break;
+        case 'analisis':
+            // Por ahora redirigir a principal hasta implementar vista de análisis
+            vistaId = 'vistaIAPrincipal';
+            break;
+        default:
+            vistaId = 'vistaIAPrincipal';
+    }
+    
+    // Mostrar la vista seleccionada
+    const vistaElemento = document.getElementById(vistaId);
+    if (vistaElemento) {
+        vistaElemento.style.display = 'block';
+    } else {
+        console.error('Vista no encontrada:', vistaId);
+    }
+};
+
+// Función para entrenar modelo
+window.entrenarModelo = function() {
+    const form = document.getElementById('formEntrenarModelo');
+    if (!form) return;
+    
+    const formData = new FormData(form);
+    const datos = Object.fromEntries(formData);
+    
+    console.log('Entrenando modelo con datos:', datos);
+    
+    // Validaciones básicas
+    if (!datos.nombreModelo || !datos.tipoAlgoritmo || !datos.tipoProblema) {
+        alert('Por favor complete todos los campos obligatorios');
+        return;
+    }
+    
+    // Mostrar indicador de carga
+    const btnEntrena = form.querySelector('button[type="submit"]');
+    const textoOriginal = btnEntrena.textContent;
+    btnEntrena.textContent = 'Entrenando...';
+    btnEntrena.disabled = true;
+    
+    // Simular entrenamiento
+    setTimeout(() => {
+        alert('Modelo entrenado exitosamente');
+        btnEntrena.textContent = textoOriginal;
+        btnEntrena.disabled = false;
+        
+        // Limpiar formulario
+        form.reset();
+        
+        // Volver a vista principal
+        navegarIA('principal');
+    }, 3000);
+};
+
+// Función para generar predicción
+window.generarPrediccion = function() {
+    const form = document.getElementById('formNuevaPrediccion');
+    if (!form) return;
+    
+    const formData = new FormData(form);
+    const datos = Object.fromEntries(formData);
+    
+    console.log('Generando predicción con datos:', datos);
+    
+    // Validaciones básicas
+    if (!datos.modeloSeleccionado) {
+        alert('Por favor seleccione un modelo');
+        return;
+    }
+    
+    // Mostrar indicador de carga
+    const btnPredice = form.querySelector('button[type="submit"]');
+    const textoOriginal = btnPredice.textContent;
+    btnPredice.textContent = 'Generando...';
+    btnPredice.disabled = true;
+    
+    // Simular predicción
+    setTimeout(() => {
+        const prediccion = Math.random() * 100;
+        const confianza = 85 + Math.random() * 15;
+        
+        alert(`Predicción generada: ${prediccion.toFixed(2)}% (Confianza: ${confianza.toFixed(1)}%)`);
+        
+        btnPredice.textContent = textoOriginal;
+        btnPredice.disabled = false;
+        
+        // Mostrar resultados
+        const resultados = document.getElementById('resultadosPrediccion');
+        if (resultados) {
+            resultados.innerHTML = `
+                <div class="prediction-result">
+                    <h4>Resultado de la Predicción</h4>
+                    <div class="result-value">${prediccion.toFixed(2)}%</div>
+                    <div class="result-confidence">Confianza: ${confianza.toFixed(1)}%</div>
+                    <div class="result-timestamp">Generado: ${new Date().toLocaleString()}</div>
+                </div>
+            `;
+            resultados.style.display = 'block';
+        }
+    }, 2000);
+};
+
+// Función para seleccionar modelo
+window.seleccionarModelo = function(modeloId) {
+    // Remover selección previa
+    document.querySelectorAll('.model-card').forEach(card => {
+        card.classList.remove('selected');
+    });
+    
+    // Seleccionar nuevo modelo
+    const card = document.querySelector(`[onclick="seleccionarModelo('${modeloId}')"]`);
+    if (card) {
+        card.classList.add('selected');
+    }
+    
+    // Actualizar campo oculto
+    const input = document.getElementById('modeloSeleccionado');
+    if (input) {
+        input.value = modeloId;
+    }
+    
+    console.log('Modelo seleccionado:', modeloId);
+};
+
+// Inicializar vista principal de IA al cargar
+document.addEventListener('DOMContentLoaded', function() {
+    // Por defecto mostrar vista principal
+    setTimeout(() => {
+        navegarIA('principal');
+    }, 100);
+});
 
 }); // End DOMContentLoaded
