@@ -8316,6 +8316,12 @@ function loadSavedCustomization() {
                // Asegurar que solo la vista principal esté activa
                showApiDashboard();
            }, 100);
+       } else if (contentId === 'etl-procesos') {
+           // Configurar módulo de ETL Procesos
+           setTimeout(() => {
+               // Asegurar que solo la vista principal esté activa
+               showEtlDashboard();
+           }, 100);
        }
    }
 
