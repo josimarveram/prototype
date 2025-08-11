@@ -3883,11 +3883,9 @@ document.addEventListener('DOMContentLoaded', () => {
                            <span id="uploadHistoryPaginationInfo">Mostrando cargas recientes</span>
                        </div>
                        <div class="pagination-controls">
-                           <button class="pagination-btn" onclick="refreshUploadHistory()">
-                               <span>🔄</span>
-                               Actualizar
-                           </button>
-                       </div>
+                            <button class="pagination-btn" id="activityPrevBtn" onclick="changeActivityPage(-1)">‹</button>
+                            <button class="pagination-btn" id="activityNextBtn" onclick="changeActivityPage(1)">›</button>
+                        </div>
                    </div>
                </div>
            </div>
