@@ -6272,64 +6272,519 @@ document.addEventListener('DOMContentLoaded', () => {
        `,
 
        'dashboards': `
-           <div class="dashboard-header">
-               <h2 class="dashboard-title">Dashboards Personalizados</h2>
-               <div class="quick-actions">
-                   <button class="quick-action-btn">
-                       <span>➕</span>
-                       Crear Dashboard
-                   </button>
-                   <button class="quick-action-btn secondary">
-                       <span>📋</span>
-                       Plantillas
-                   </button>
+           <!-- Dashboard Principal -->
+           <div id="dashboardsPrincipal" class="dashboard-view active">
+               <div class="dashboard-header">
+                   <h2 class="dashboard-title">📊 Centro de Dashboards Empresariales</h2>
+                   <div class="quick-actions">
+                       <button class="quick-action-btn" onclick="navegarDashboards('crear')">
+                           <span>➕</span>
+                           Crear Dashboard
+                       </button>
+                       <button class="quick-action-btn secondary" onclick="navegarDashboards('plantillas')">
+                           <span>📋</span>
+                           Plantillas
+                       </button>
+                       <button class="quick-action-btn secondary">
+                           <span>📤</span>
+                           Exportar
+                       </button>
+                   </div>
+               </div>
+
+               <!-- Estadísticas Generales -->
+               <div class="stats-grid">
+                   <div class="stat-card">
+                       <div class="stat-header">
+                           <div class="stat-icon">📊</div>
+                           <div class="stat-trend up">
+                               <span>↗️</span>
+                               +5
+                           </div>
+                       </div>
+                       <div class="stat-value">23</div>
+                       <div class="stat-label">Dashboards Activos</div>
+                   </div>
+
+                   <div class="stat-card">
+                       <div class="stat-header">
+                           <div class="stat-icon">👁️</div>
+                           <div class="stat-trend up">
+                               <span>↗️</span>
+                               +35%
+                           </div>
+                       </div>
+                       <div class="stat-value">1.2K</div>
+                       <div class="stat-label">Visualizaciones</div>
+                   </div>
+
+                   <div class="stat-card">
+                       <div class="stat-header">
+                           <div class="stat-icon">🔄</div>
+                           <div class="stat-trend up">
+                               <span>↗️</span>
+                               +12%
+                           </div>
+                       </div>
+                       <div class="stat-value">78</div>
+                       <div class="stat-label">Actualizaciones Diarias</div>
+                   </div>
+
+                   <div class="stat-card">
+                       <div class="stat-header">
+                           <div class="stat-icon">⚡</div>
+                           <div class="stat-trend up">
+                               <span>↗️</span>
+                               +18%
+                           </div>
+                       </div>
+                       <div class="stat-value">94.8%</div>
+                       <div class="stat-label">Performance</div>
+                   </div>
+               </div>
+
+               <!-- Dashboards Recientes -->
+               <div class="dashboard-grid">
+                   <div class="dashboard-category">
+                       <h3 class="category-title">📈 Dashboards Recientes</h3>
+                       <div class="dashboard-cards">
+                           <div class="dashboard-card featured" onclick="abrirDashboard('analytics-principal')">
+                               <div class="card-header">
+                                   <div class="card-icon">📊</div>
+                                   <div class="card-status active">En Vivo</div>
+                               </div>
+                               <h4>Analytics Principal</h4>
+                               <p>Dashboard general con métricas clave del negocio</p>
+                               <div class="card-metrics">
+                                   <span class="metric">847K visitas</span>
+                                   <span class="metric">94.2% uptime</span>
+                               </div>
+                               <div class="card-footer">
+                                   <span class="last-update">Actualizado hace 2 min</span>
+                               </div>
+                           </div>
+
+                           <div class="dashboard-card" onclick="abrirDashboard('ventas-comercial')">
+                               <div class="card-header">
+                                   <div class="card-icon">💰</div>
+                                   <div class="card-status success">Actualizado</div>
+                               </div>
+                               <h4>Ventas Comercial</h4>
+                               <p>Seguimiento de ventas, leads y conversiones</p>
+                               <div class="card-metrics">
+                                   <span class="metric">$2.3M ingresos</span>
+                                   <span class="metric">+18% vs mes anterior</span>
+                               </div>
+                               <div class="card-footer">
+                                   <span class="last-update">Actualizado hace 15 min</span>
+                               </div>
+                           </div>
+
+                           <div class="dashboard-card" onclick="abrirDashboard('operaciones-ti')">
+                               <div class="card-header">
+                                   <div class="card-icon">⚙️</div>
+                                   <div class="card-status warning">Mantenimiento</div>
+                               </div>
+                               <h4>Operaciones TI</h4>
+                               <p>Monitoreo de infraestructura y servicios</p>
+                               <div class="card-metrics">
+                                   <span class="metric">99.8% availability</span>
+                                   <span class="metric">23 servers activos</span>
+                               </div>
+                               <div class="card-footer">
+                                   <span class="last-update">Actualizado hace 1 hora</span>
+                               </div>
+                           </div>
+                       </div>
+                   </div>
+
+                   <!-- Dashboards por Categoría -->
+                   <div class="dashboard-category">
+                       <h3 class="category-title">🏢 Por Departamento</h3>
+                       <div class="category-grid">
+                           <div class="category-item" onclick="verCategoria('marketing')">
+                               <div class="category-icon">📈</div>
+                               <h4>Marketing</h4>
+                               <p>8 dashboards</p>
+                           </div>
+                           <div class="category-item" onclick="verCategoria('ventas')">
+                               <div class="category-icon">💼</div>
+                               <h4>Ventas</h4>
+                               <p>12 dashboards</p>
+                           </div>
+                           <div class="category-item" onclick="verCategoria('ti')">
+                               <div class="category-icon">🖥️</div>
+                               <h4>TI</h4>
+                               <p>15 dashboards</p>
+                           </div>
+                           <div class="category-item" onclick="verCategoria('rrhh')">
+                               <div class="category-icon">👥</div>
+                               <h4>RRHH</h4>
+                               <p>6 dashboards</p>
+                           </div>
+                       </div>
+                   </div>
+
+                   <!-- Accesos Rápidos -->
+                   <div class="dashboard-category">
+                       <h3 class="category-title">⚡ Accesos Rápidos</h3>
+                       <div class="quick-access-grid">
+                           <button class="quick-access-btn" onclick="accionRapida('crear-widget')">
+                               <i class="fas fa-plus"></i>
+                               <span>Crear Widget</span>
+                           </button>
+                           <button class="quick-access-btn" onclick="accionRapida('importar-datos')">
+                               <i class="fas fa-upload"></i>
+                               <span>Importar Datos</span>
+                           </button>
+                           <button class="quick-access-btn" onclick="accionRapida('compartir')">
+                               <i class="fas fa-share"></i>
+                               <span>Compartir</span>
+                           </button>
+                           <button class="quick-access-btn" onclick="accionRapida('exportar')">
+                               <i class="fas fa-download"></i>
+                               <span>Exportar</span>
+                           </button>
+                       </div>
+                   </div>
                </div>
            </div>
 
-           <div class="stats-grid">
-               <div class="stat-card">
-                   <div class="stat-header">
-                       <div class="stat-icon">📊</div>
-                       <div class="stat-trend up">
-                           <span>↗️</span>
-                           +5
-                       </div>
+           <!-- Vista Crear Dashboard -->
+           <div id="dashboardsCrear" class="dashboard-view" style="display: none;">
+               <div class="dashboard-header">
+                   <button class="back-btn" onclick="navegarDashboards('principal')">
+                       <i class="fas fa-arrow-left"></i> Volver
+                   </button>
+                   <h2 class="dashboard-title">➕ Crear Nuevo Dashboard</h2>
+                   <div class="quick-actions">
+                       <button class="quick-action-btn" onclick="guardarDashboard()">
+                           <span>💾</span>
+                           Guardar
+                       </button>
+                       <button class="quick-action-btn secondary" onclick="previsualizarDashboard()">
+                           <span>👁️</span>
+                           Vista Previa
+                       </button>
                    </div>
-                   <div class="stat-value">23</div>
-                   <div class="stat-label">Dashboards Activos</div>
                </div>
 
-               <div class="stat-card">
-                   <div class="stat-header">
-                       <div class="stat-icon">👁️</div>
-                       <div class="stat-trend up">
-                           <span>↗️</span>
-                           +35%
+               <!-- Configuración Básica -->
+               <div class="create-dashboard-content">
+                   <div class="create-section">
+                       <h3 class="section-title">📋 Información Básica</h3>
+                       <div class="form-grid">
+                           <div class="form-group">
+                               <label>Nombre del Dashboard</label>
+                               <input type="text" class="form-input" placeholder="Ej: Análisis de Ventas Q4" id="dashboardName">
+                           </div>
+                           <div class="form-group">
+                               <label>Descripción</label>
+                               <textarea class="form-input" rows="3" placeholder="Describe el propósito y alcance del dashboard" id="dashboardDesc"></textarea>
+                           </div>
+                           <div class="form-group">
+                               <label>Categoría</label>
+                               <select class="form-input" id="dashboardCategory">
+                                   <option value="">Seleccionar categoría</option>
+                                   <option value="marketing">📈 Marketing</option>
+                                   <option value="ventas">💼 Ventas</option>
+                                   <option value="ti">🖥️ Tecnología</option>
+                                   <option value="rrhh">👥 Recursos Humanos</option>
+                                   <option value="finanzas">💰 Finanzas</option>
+                                   <option value="operaciones">⚙️ Operaciones</option>
+                               </select>
+                           </div>
+                           <div class="form-group">
+                               <label>Nivel de Acceso</label>
+                               <select class="form-input" id="dashboardAccess">
+                                   <option value="publico">🌐 Público</option>
+                                   <option value="privado">🔒 Privado</option>
+                                   <option value="equipo">👥 Solo mi equipo</option>
+                                   <option value="admin">👑 Solo administradores</option>
+                               </select>
+                           </div>
                        </div>
                    </div>
-                   <div class="stat-value">1.2K</div>
-                   <div class="stat-label">Visualizaciones</div>
-               </div>
 
-               <div class="stat-card">
-                   <div class="stat-header">
-                       <div class="stat-icon">🔄</div>
-                       <div class="stat-trend up">
-                           <span>↗️</span>
-                           +12%
+                   <!-- Selección de Widgets -->
+                   <div class="create-section">
+                       <h3 class="section-title">🧩 Agregar Widgets</h3>
+                       <div class="widget-gallery">
+                           <div class="widget-category">
+                               <h4>📊 Gráficos</h4>
+                               <div class="widget-grid">
+                                   <div class="widget-option" onclick="agregarWidget('lineas')">
+                                       <div class="widget-icon">📈</div>
+                                       <span>Gráfico de Líneas</span>
+                                   </div>
+                                   <div class="widget-option" onclick="agregarWidget('barras')">
+                                       <div class="widget-icon">📊</div>
+                                       <span>Gráfico de Barras</span>
+                                   </div>
+                                   <div class="widget-option" onclick="agregarWidget('circular')">
+                                       <div class="widget-icon">🥧</div>
+                                       <span>Gráfico Circular</span>
+                                   </div>
+                                   <div class="widget-option" onclick="agregarWidget('area')">
+                                       <div class="widget-icon">📉</div>
+                                       <span>Gráfico de Área</span>
+                                   </div>
+                               </div>
+                           </div>
+
+                           <div class="widget-category">
+                               <h4>📋 Métricas</h4>
+                               <div class="widget-grid">
+                                   <div class="widget-option" onclick="agregarWidget('kpi')">
+                                       <div class="widget-icon">🎯</div>
+                                       <span>KPI Card</span>
+                                   </div>
+                                   <div class="widget-option" onclick="agregarWidget('contador')">
+                                       <div class="widget-icon">🔢</div>
+                                       <span>Contador</span>
+                                   </div>
+                                   <div class="widget-option" onclick="agregarWidget('gauge')">
+                                       <div class="widget-icon">⏲️</div>
+                                       <span>Medidor</span>
+                                   </div>
+                                   <div class="widget-option" onclick="agregarWidget('progreso')">
+                                       <div class="widget-icon">📶</div>
+                                       <span>Barra de Progreso</span>
+                                   </div>
+                               </div>
+                           </div>
+
+                           <div class="widget-category">
+                               <h4>📊 Tablas</h4>
+                               <div class="widget-grid">
+                                   <div class="widget-option" onclick="agregarWidget('tabla')">
+                                       <div class="widget-icon">📋</div>
+                                       <span>Tabla de Datos</span>
+                                   </div>
+                                   <div class="widget-option" onclick="agregarWidget('ranking')">
+                                       <div class="widget-icon">🏆</div>
+                                       <span>Ranking</span>
+                                   </div>
+                                   <div class="widget-option" onclick="agregarWidget('pivot')">
+                                       <div class="widget-icon">🔄</div>
+                                       <span>Tabla Dinámica</span>
+                                   </div>
+                               </div>
+                           </div>
                        </div>
                    </div>
-                   <div class="stat-value">78</div>
-                   <div class="stat-label">Actualizaciones Diarias</div>
+
+                   <!-- Vista Previa del Dashboard -->
+                   <div class="create-section">
+                       <h3 class="section-title">👁️ Vista Previa</h3>
+                       <div class="dashboard-preview">
+                           <div class="preview-header">
+                               <span id="previewTitle">Mi Nuevo Dashboard</span>
+                               <div class="preview-actions">
+                                   <button onclick="editarLayout()">📐 Editar Layout</button>
+                                   <button onclick="configurarFiltros()">🔍 Filtros</button>
+                               </div>
+                           </div>
+                           <div class="preview-canvas" id="dashboardCanvas">
+                               <div class="canvas-placeholder">
+                                   <i class="fas fa-plus-circle"></i>
+                                   <p>Agrega widgets para ver la vista previa</p>
+                               </div>
+                           </div>
+                       </div>
+                   </div>
                </div>
            </div>
 
-           <div class="chart-container">
-               <div class="chart-header">
-                   <h3 class="chart-title">Galería de Dashboards</h3>
+           <!-- Vista Plantillas -->
+           <div id="dashboardsPlantillas" class="dashboard-view" style="display: none;">
+               <div class="dashboard-header">
+                   <button class="back-btn" onclick="navegarDashboards('principal')">
+                       <i class="fas fa-arrow-left"></i> Volver
+                   </button>
+                   <h2 class="dashboard-title">📋 Plantillas de Dashboard</h2>
+                   <div class="quick-actions">
+                       <button class="quick-action-btn" onclick="crearPlantillaPersonalizada()">
+                           <span>➕</span>
+                           Nueva Plantilla
+                       </button>
+                       <button class="quick-action-btn secondary" onclick="importarPlantilla()">
+                           <span>📥</span>
+                           Importar
+                       </button>
+                   </div>
                </div>
-               <div class="chart-placeholder">
-                   📊 Vista Previa de Dashboards Disponibles
+
+               <!-- Filtros de Plantillas -->
+               <div class="template-filters">
+                   <div class="filter-group">
+                       <label>Categoría:</label>
+                       <select class="filter-select" onchange="filtrarPlantillas('categoria', this.value)">
+                           <option value="">Todas las categorías</option>
+                           <option value="marketing">📈 Marketing</option>
+                           <option value="ventas">💼 Ventas</option>
+                           <option value="ti">🖥️ Tecnología</option>
+                           <option value="rrhh">👥 RRHH</option>
+                           <option value="finanzas">💰 Finanzas</option>
+                       </select>
+                   </div>
+                   <div class="filter-group">
+                       <label>Industria:</label>
+                       <select class="filter-select" onchange="filtrarPlantillas('industria', this.value)">
+                           <option value="">Todas las industrias</option>
+                           <option value="tecnologia">💻 Tecnología</option>
+                           <option value="retail">🛒 Retail</option>
+                           <option value="salud">🏥 Salud</option>
+                           <option value="educacion">📚 Educación</option>
+                           <option value="manufactura">🏭 Manufactura</option>
+                       </select>
+                   </div>
+                   <div class="filter-group">
+                       <label>Popularidad:</label>
+                       <select class="filter-select" onchange="filtrarPlantillas('popularidad', this.value)">
+                           <option value="">Ordenar por</option>
+                           <option value="mas-usado">⭐ Más usadas</option>
+                           <option value="recientes">🆕 Más recientes</option>
+                           <option value="valoracion">👍 Mejor valoradas</option>
+                       </select>
+                   </div>
+               </div>
+
+               <!-- Galería de Plantillas -->
+               <div class="templates-gallery">
+                   <div class="template-category">
+                       <h3 class="category-title">⭐ Plantillas Populares</h3>
+                       <div class="template-grid">
+                           <div class="template-card featured" onclick="usarPlantilla('analytics-general')">
+                               <div class="template-preview">
+                                   <div class="preview-badge popular">⭐ Popular</div>
+                                   <div class="preview-image">📊📈📉</div>
+                               </div>
+                               <div class="template-info">
+                                   <h4>Analytics General</h4>
+                                   <p>Dashboard completo con métricas clave del negocio</p>
+                                   <div class="template-stats">
+                                       <span>👥 2.3K usos</span>
+                                       <span>⭐ 4.8/5</span>
+                                   </div>
+                                   <div class="template-tags">
+                                       <span class="tag">Analytics</span>
+                                       <span class="tag">KPIs</span>
+                                       <span class="tag">General</span>
+                                   </div>
+                               </div>
+                           </div>
+
+                           <div class="template-card" onclick="usarPlantilla('ventas-comercial')">
+                               <div class="template-preview">
+                                   <div class="preview-badge new">🆕 Nuevo</div>
+                                   <div class="preview-image">💰📊🎯</div>
+                               </div>
+                               <div class="template-info">
+                                   <h4>Dashboard de Ventas</h4>
+                                   <p>Seguimiento completo del pipeline de ventas</p>
+                                   <div class="template-stats">
+                                       <span>👥 1.8K usos</span>
+                                       <span>⭐ 4.7/5</span>
+                                   </div>
+                                   <div class="template-tags">
+                                       <span class="tag">Ventas</span>
+                                       <span class="tag">CRM</span>
+                                       <span class="tag">Revenue</span>
+                                   </div>
+                               </div>
+                           </div>
+
+                           <div class="template-card" onclick="usarPlantilla('marketing-digital')">
+                               <div class="template-preview">
+                                   <div class="preview-badge trending">🔥 Trending</div>
+                                   <div class="preview-image">📈📱💻</div>
+                               </div>
+                               <div class="template-info">
+                                   <h4>Marketing Digital</h4>
+                                   <p>ROI de campañas, tráfico web y conversiones</p>
+                                   <div class="template-stats">
+                                       <span>👥 1.5K usos</span>
+                                       <span>⭐ 4.9/5</span>
+                                   </div>
+                                   <div class="template-tags">
+                                       <span class="tag">Marketing</span>
+                                       <span class="tag">Digital</span>
+                                       <span class="tag">ROI</span>
+                                   </div>
+                               </div>
+                           </div>
+
+                           <div class="template-card" onclick="usarPlantilla('operaciones-ti')">
+                               <div class="template-preview">
+                                   <div class="preview-image">🖥️⚙️📊</div>
+                               </div>
+                               <div class="template-info">
+                                   <h4>Operaciones TI</h4>
+                                   <p>Monitoreo de infraestructura y servicios</p>
+                                   <div class="template-stats">
+                                       <span>👥 956 usos</span>
+                                       <span>⭐ 4.6/5</span>
+                                   </div>
+                                   <div class="template-tags">
+                                       <span class="tag">IT</span>
+                                       <span class="tag">Monitoring</span>
+                                       <span class="tag">Infrastructure</span>
+                                   </div>
+                               </div>
+                           </div>
+                       </div>
+                   </div>
+
+                   <div class="template-category">
+                       <h3 class="category-title">🏢 Por Departamento</h3>
+                       <div class="department-templates">
+                           <div class="department-section">
+                               <h4>📈 Marketing</h4>
+                               <div class="mini-template-grid">
+                                   <div class="mini-template" onclick="usarPlantilla('seo-analytics')">
+                                       <span>🔍 SEO Analytics</span>
+                                   </div>
+                                   <div class="mini-template" onclick="usarPlantilla('social-media')">
+                                       <span>📱 Social Media</span>
+                                   </div>
+                                   <div class="mini-template" onclick="usarPlantilla('email-marketing')">
+                                       <span>📧 Email Marketing</span>
+                                   </div>
+                               </div>
+                           </div>
+
+                           <div class="department-section">
+                               <h4>💼 Ventas</h4>
+                               <div class="mini-template-grid">
+                                   <div class="mini-template" onclick="usarPlantilla('pipeline-ventas')">
+                                       <span>📊 Pipeline Ventas</span>
+                                   </div>
+                                   <div class="mini-template" onclick="usarPlantilla('performance-vendedores')">
+                                       <span>👨‍💼 Performance Vendedores</span>
+                                   </div>
+                                   <div class="mini-template" onclick="usarPlantilla('forecast-ventas')">
+                                       <span>🔮 Forecast Ventas</span>
+                                   </div>
+                               </div>
+                           </div>
+
+                           <div class="department-section">
+                               <h4>👥 Recursos Humanos</h4>
+                               <div class="mini-template-grid">
+                                   <div class="mini-template" onclick="usarPlantilla('talent-analytics')">
+                                       <span>🎯 Talent Analytics</span>
+                                   </div>
+                                   <div class="mini-template" onclick="usarPlantilla('employee-engagement')">
+                                       <span>😊 Employee Engagement</span>
+                                   </div>
+                                   <div class="mini-template" onclick="usarPlantilla('recruitment')">
+                                       <span>📝 Recruitment</span>
+                                   </div>
+                               </div>
+                           </div>
+                       </div>
+                   </div>
                </div>
            </div>
        `,
@@ -8495,6 +8950,12 @@ function loadSavedCustomization() {
                            apiDashboardView.classList.add('active');
                            console.log('Activando vista principal de Conexiones API');
                        }
+                   } else if (contentId === 'etl-procesos') {
+                       // Mostrar dashboard ETL por defecto
+                       showEtlDashboard();
+                   } else if (contentId === 'dashboards') {
+                       // Mostrar vista principal de Dashboards por defecto
+                       navegarDashboards('principal');
                    } else {
                        // Para otros módulos, activar todas las vistas como antes
                        const viewContainers = contentArea.querySelectorAll('.etl-view');
@@ -15841,5 +16302,182 @@ document.addEventListener('DOMContentLoaded', function() {
         navegarIA('principal');
     }, 100);
 });
+
+// ===== FUNCIONES MÓDULO DASHBOARDS =====
+
+window.navegarDashboards = function(vista) {
+    console.log('Navegando a vista de Dashboards:', vista);
+    
+    // Ocultar todas las vistas
+    const vistas = ['Principal', 'Crear', 'Plantillas'];
+    vistas.forEach(v => {
+        const elemento = document.getElementById(`dashboards${v}`);
+        if (elemento) {
+            elemento.style.display = 'none';
+            elemento.classList.remove('active');
+        }
+    });
+    
+    // Mostrar vista seleccionada
+    const vistaSeleccionada = document.getElementById(`dashboards${vista.charAt(0).toUpperCase() + vista.slice(1)}`);
+    if (vistaSeleccionada) {
+        vistaSeleccionada.style.display = 'block';
+        vistaSeleccionada.classList.add('active');
+        console.log(`Vista ${vista} activada`);
+    }
+};
+
+window.abrirDashboard = function(dashboardId) {
+    console.log('Abriendo dashboard:', dashboardId);
+    
+    const dashboards = {
+        'analytics-principal': {
+            titulo: '📊 Analytics Principal - Dashboard Ejecutivo',
+            descripcion: 'Vista general de métricas clave del negocio en tiempo real',
+            metricas: ['847K visitas únicas', '94.2% uptime', '$2.3M ingresos', '156 usuarios activos']
+        },
+        'ventas-comercial': {
+            titulo: '💰 Ventas Comercial - Pipeline y Conversiones',
+            descripcion: 'Seguimiento completo del proceso de ventas y forecasting',
+            metricas: ['$2.3M ingresos mes', '+18% vs anterior', '247 leads activos', '78% tasa cierre']
+        },
+        'operaciones-ti': {
+            titulo: '⚙️ Operaciones TI - Infraestructura y Servicios',
+            descripcion: 'Monitoreo de sistemas, rendimiento y disponibilidad',
+            metricas: ['99.8% availability', '23 servers activos', '45ms latencia promedio', '0 incidentes críticos']
+        }
+    };
+    
+    const dashboard = dashboards[dashboardId] || {
+        titulo: 'Dashboard Personalizado',
+        descripcion: 'Vista de datos empresariales',
+        metricas: ['Datos actualizados', 'Métricas en tiempo real']
+    };
+    
+    alert(`${dashboard.titulo}\n\n${dashboard.descripcion}\n\n✅ ${dashboard.metricas.join('\n✅ ')}\n\n🎯 Dashboard completamente funcional con widgets interactivos`);
+};
+
+window.verCategoria = function(categoria) {
+    console.log('Viendo categoría:', categoria);
+    
+    const categorias = {
+        'marketing': '📈 Dashboards de Marketing:\n\n• SEO Analytics\n• Social Media Performance\n• Email Marketing ROI\n• Content Marketing\n• PPC Campaigns\n• Lead Generation\n• Brand Awareness\n• Customer Journey',
+        'ventas': '💼 Dashboards de Ventas:\n\n• Pipeline de Ventas\n• Performance Vendedores\n• Forecast Revenue\n• Customer Acquisition\n• Deal Analytics\n• Territory Management\n• Commission Tracking\n• Win/Loss Analysis',
+        'ti': '🖥️ Dashboards de TI:\n\n• Infrastructure Monitoring\n• Application Performance\n• Security Dashboard\n• Network Analytics\n• Database Performance\n• Cloud Resources\n• Incident Management\n• Capacity Planning',
+        'rrhh': '👥 Dashboards de RRHH:\n\n• Employee Analytics\n• Recruitment Metrics\n• Performance Reviews\n• Training & Development\n• Payroll Analytics\n• Attendance Tracking\n• Employee Satisfaction\n• Diversity & Inclusion'
+    };
+    
+    alert(categorias[categoria] || 'Categoría no encontrada');
+};
+
+window.accionRapida = function(accion) {
+    console.log('Ejecutando acción rápida:', accion);
+    
+    const acciones = {
+        'crear-widget': '🧩 Crear Widget:\n\nTipos disponibles:\n• KPI Cards\n• Gráficos (Líneas, Barras, Circular)\n• Tablas de datos\n• Medidores\n• Mapas\n• Texto personalizado',
+        'importar-datos': '📥 Importar Datos:\n\nFuentes compatibles:\n• CSV/Excel\n• Google Sheets\n• Bases de datos SQL\n• APIs REST\n• Google Analytics\n• Salesforce',
+        'compartir': '📤 Compartir Dashboard:\n\nOpciones:\n• Link público\n• Email a equipo\n• Incrustar en web\n• Exportar PDF\n• Presentación automática',
+        'exportar': '📁 Exportar Dashboard:\n\nFormatos:\n• PDF (Reporte)\n• PowerPoint\n• Excel (Datos)\n• Imagen PNG\n• Código HTML'
+    };
+    
+    alert(acciones[accion] || 'Acción no disponible');
+};
+
+window.guardarDashboard = function() {
+    const nombre = document.getElementById('dashboardName')?.value || 'Mi Dashboard';
+    const descripcion = document.getElementById('dashboardDesc')?.value || 'Dashboard personalizado';
+    
+    alert(`💾 Guardando Dashboard:\n\nNombre: ${nombre}\nDescripción: ${descripcion}\n\n✅ Dashboard guardado exitosamente\n🎯 Disponible en la galería principal`);
+};
+
+window.previsualizarDashboard = function() {
+    alert('👁️ Vista Previa del Dashboard:\n\n🎨 Mostrando preview interactivo...\n📊 Widgets configurados\n🔧 Layout responsive\n📱 Compatible móvil\n\n✨ Dashboard listo para usar');
+};
+
+window.agregarWidget = function(tipo) {
+    console.log('Agregando widget:', tipo);
+    
+    const widgets = {
+        'lineas': '📈 Gráfico de Líneas agregado\n\nPerfecto para mostrar tendencias',
+        'barras': '📊 Gráfico de Barras agregado\n\nIdeal para comparar valores',
+        'circular': '🥧 Gráfico Circular agregado\n\nExcelente para mostrar proporciones',
+        'area': '📉 Gráfico de Área agregado\n\nMuestra volúmenes y tendencias',
+        'kpi': '🎯 KPI Card agregado\n\nMétrica clave destacada',
+        'contador': '🔢 Contador agregado\n\nValor numérico principal',
+        'gauge': '⏲️ Medidor agregado\n\nIndicador visual de progreso',
+        'progreso': '📶 Barra de Progreso agregada\n\nMuestra avance hacia objetivo',
+        'tabla': '📋 Tabla de Datos agregada\n\nListado detallado de información',
+        'ranking': '🏆 Ranking agregado\n\nTop performers o elementos',
+        'pivot': '🔄 Tabla Dinámica agregada\n\nAnálisis multidimensional'
+    };
+    
+    alert(`✅ ${widgets[tipo] || 'Widget agregado'}\n\n🎨 Configura los datos y personaliza el diseño`);
+    
+    // Actualizar preview
+    const canvas = document.getElementById('dashboardCanvas');
+    if (canvas) {
+        const placeholder = canvas.querySelector('.canvas-placeholder');
+        if (placeholder) {
+            placeholder.innerHTML = `
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; padding: 20px;">
+                    <div style="background: #f8f9fa; border: 2px dashed #dee2e6; border-radius: 8px; padding: 20px; text-align: center;">
+                        <div style="font-size: 2rem; margin-bottom: 10px;">${tipo === 'lineas' ? '📈' : tipo === 'barras' ? '📊' : tipo === 'circular' ? '🥧' : tipo === 'kpi' ? '🎯' : '📋'}</div>
+                        <div style="font-weight: 600;">${widgets[tipo]?.split('\n')[0].replace('✅ ', '') || 'Widget'}</div>
+                    </div>
+                </div>
+            `;
+        }
+    }
+};
+
+window.usarPlantilla = function(plantillaId) {
+    console.log('Usando plantilla:', plantillaId);
+    
+    const plantillas = {
+        'analytics-general': 'Analytics General - Dashboard completo con KPIs principales',
+        'ventas-comercial': 'Dashboard de Ventas - Pipeline y métricas comerciales',
+        'marketing-digital': 'Marketing Digital - ROI campañas y tráfico web',
+        'operaciones-ti': 'Operaciones TI - Monitoreo infraestructura',
+        'seo-analytics': 'SEO Analytics - Posicionamiento y tráfico orgánico',
+        'social-media': 'Social Media - Engagement y alcance en redes',
+        'email-marketing': 'Email Marketing - Campañas y conversiones',
+        'pipeline-ventas': 'Pipeline Ventas - Seguimiento oportunidades',
+        'performance-vendedores': 'Performance Vendedores - Métricas individuales',
+        'forecast-ventas': 'Forecast Ventas - Proyecciones y predicciones'
+    };
+    
+    const plantilla = plantillas[plantillaId] || 'Plantilla personalizada';
+    
+    alert(`📋 Usando Plantilla:\n\n${plantilla}\n\n✅ Plantilla aplicada\n🎨 Personaliza colores y datos\n🚀 Lista para usar`);
+    
+    // Navegar a crear dashboard con plantilla
+    navegarDashboards('crear');
+    
+    // Simular carga de plantilla
+    setTimeout(() => {
+        const nombreInput = document.getElementById('dashboardName');
+        if (nombreInput) {
+            nombreInput.value = plantilla.split(' - ')[0];
+        }
+        
+        const descInput = document.getElementById('dashboardDesc');
+        if (descInput) {
+            descInput.value = plantilla.split(' - ')[1] || 'Dashboard basado en plantilla';
+        }
+    }, 500);
+};
+
+window.filtrarPlantillas = function(tipo, valor) {
+    console.log('Filtrando plantillas:', tipo, valor);
+    alert(`🔍 Filtros aplicados:\n\n${tipo}: ${valor || 'Todos'}\n\n📋 Mostrando plantillas relevantes`);
+};
+
+window.crearPlantillaPersonalizada = function() {
+    alert('➕ Crear Nueva Plantilla:\n\n📝 Define la estructura\n🎨 Personaliza widgets\n💾 Guarda para reutilizar\n📤 Comparte con el equipo');
+};
+
+window.importarPlantilla = function() {
+    alert('📥 Importar Plantilla:\n\nFormatos compatibles:\n• JSON (Configuración)\n• ZIP (Completa)\n• URL (Galería online)\n• Excel (Estructura)');
+};
 
 }); // End DOMContentLoaded
