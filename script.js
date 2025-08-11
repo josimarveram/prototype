@@ -5838,64 +5838,346 @@ document.addEventListener('DOMContentLoaded', () => {
        `,
 
        'usuarios': `
-           <div class="dashboard-header">
-               <h2 class="dashboard-title">Gestión de Usuarios</h2>
-               <div class="quick-actions">
-                   <button class="quick-action-btn">
-                       <span>👤</span>
-                       Nuevo Usuario
-                   </button>
-                   <button class="quick-action-btn secondary">
-                       <span>📊</span>
-                       Reportes
-                   </button>
+           <!-- Vista Lista de Usuarios Administradores -->
+           <div id="vistaListaUsuarios" class="usuario-vista active">
+               <div class="dashboard-header">
+                   <h2 class="dashboard-title">Usuarios Administradores</h2>
+                   <div class="quick-actions">
+                       <button class="quick-action-btn" onclick="mostrarVistaAgregarUsuario()">
+                           <span>👤</span>
+                           Nuevo Usuario
+                       </button>
+                       <button class="quick-action-btn secondary">
+                           <span>📊</span>
+                           Reportes
+                       </button>
+                   </div>
+               </div>
+
+               <div class="stats-grid">
+                   <div class="stat-card">
+                       <div class="stat-header">
+                           <div class="stat-icon">👥</div>
+                           <div class="stat-trend up">
+                               <span>↗️</span>
+                               +2
+                           </div>
+                       </div>
+                       <div class="stat-value">8</div>
+                       <div class="stat-label">Total Administradores</div>
+                   </div>
+
+                   <div class="stat-card">
+                       <div class="stat-header">
+                           <div class="stat-icon">✅</div>
+                           <div class="stat-trend up">
+                               <span>↗️</span>
+                               +1
+                           </div>
+                       </div>
+                       <div class="stat-value">6</div>
+                       <div class="stat-label">Activos</div>
+                   </div>
+
+                   <div class="stat-card">
+                       <div class="stat-header">
+                           <div class="stat-icon">🔐</div>
+                           <div class="stat-trend up">
+                               <span>↗️</span>
+                               +1
+                           </div>
+                       </div>
+                       <div class="stat-value">3</div>
+                       <div class="stat-label">Admin Total</div>
+                   </div>
+               </div>
+
+               <div class="table-controls">
+                   <div class="search-container">
+                       <input type="text" class="search-input" placeholder="Buscar usuarios..." onkeyup="buscarUsuarios(this.value)">
+                   </div>
+                   <div class="filter-controls">
+                       <select class="filter-select" onchange="filtrarPorPerfil(this.value)">
+                           <option value="">Todos los perfiles</option>
+                           <option value="basico">Administrador Básico</option>
+                           <option value="medio">Administrador Medio</option>
+                           <option value="total">Administrador Total</option>
+                       </select>
+                       <select class="filter-select" onchange="filtrarPorEstado(this.value)">
+                           <option value="">Todos los estados</option>
+                           <option value="activo">Activo</option>
+                           <option value="inactivo">Inactivo</option>
+                       </select>
+                   </div>
+               </div>
+
+               <div class="activity-table">
+                   <table>
+                       <thead>
+                           <tr>
+                               <th>Usuario</th>
+                               <th>Email</th>
+                               <th>Perfil</th>
+                               <th>Estado</th>
+                               <th>Último Acceso</th>
+                               <th>Acciones</th>
+                           </tr>
+                       </thead>
+                       <tbody id="usuariosTableBody">
+                           <tr>
+                               <td>
+                                   <div class="user-info">
+                                       <div class="user-avatar">JM</div>
+                                       <div>
+                                           <div class="user-name">Juan Martínez</div>
+                                           <div class="user-role">Administrador Principal</div>
+                                       </div>
+                                   </div>
+                               </td>
+                               <td>juan.martinez@tecnocorp.com</td>
+                               <td>
+                                   <div class="perfil-badge total">ADMINISTRADOR TOTAL</div>
+                                   <div class="perfil-desc">Subir información, ver informes, dashboard y bajar data</div>
+                               </td>
+                               <td><span class="status-badge activo">Activo</span></td>
+                               <td>Hace 2 horas</td>
+                               <td class="action-cell">
+                                   <button class="action-btn edit" onclick="editarUsuario('user_1')" title="Editar">✏️</button>
+                                   <button class="action-btn delete" onclick="eliminarUsuario('user_1')" title="Eliminar">🗑️</button>
+                               </td>
+                           </tr>
+                           <tr>
+                               <td>
+                                   <div class="user-info">
+                                       <div class="user-avatar">AC</div>
+                                       <div>
+                                           <div class="user-name">Ana Castro</div>
+                                           <div class="user-role">Administradora de Datos</div>
+                                       </div>
+                                   </div>
+                               </td>
+                               <td>ana.castro@tecnocorp.com</td>
+                               <td>
+                                   <div class="perfil-badge medio">ADMINISTRADOR MEDIO</div>
+                                   <div class="perfil-desc">Subir información + ver informes y dashboard</div>
+                               </td>
+                               <td><span class="status-badge activo">Activo</span></td>
+                               <td>Hace 1 día</td>
+                               <td class="action-cell">
+                                   <button class="action-btn edit" onclick="editarUsuario('user_2')" title="Editar">✏️</button>
+                                   <button class="action-btn delete" onclick="eliminarUsuario('user_2')" title="Eliminar">🗑️</button>
+                               </td>
+                           </tr>
+                           <tr>
+                               <td>
+                                   <div class="user-info">
+                                       <div class="user-avatar">MR</div>
+                                       <div>
+                                           <div class="user-name">Miguel Rodríguez</div>
+                                           <div class="user-role">Operador de Carga</div>
+                                       </div>
+                                   </div>
+                               </td>
+                               <td>miguel.rodriguez@tecnocorp.com</td>
+                               <td>
+                                   <div class="perfil-badge basico">ADMINISTRADOR BÁSICO</div>
+                                   <div class="perfil-desc">Subir información</div>
+                               </td>
+                               <td><span class="status-badge activo">Activo</span></td>
+                               <td>Hace 3 horas</td>
+                               <td class="action-cell">
+                                   <button class="action-btn edit" onclick="editarUsuario('user_3')" title="Editar">✏️</button>
+                                   <button class="action-btn delete" onclick="eliminarUsuario('user_3')" title="Eliminar">🗑️</button>
+                               </td>
+                           </tr>
+                           <tr>
+                               <td>
+                                   <div class="user-info">
+                                       <div class="user-avatar">LS</div>
+                                       <div>
+                                           <div class="user-name">Laura Silva</div>
+                                           <div class="user-role">Analista Senior</div>
+                                       </div>
+                                   </div>
+                               </td>
+                               <td>laura.silva@tecnocorp.com</td>
+                               <td>
+                                   <div class="perfil-badge total">ADMINISTRADOR TOTAL</div>
+                                   <div class="perfil-desc">Subir información, ver informes, dashboard y bajar data</div>
+                               </td>
+                               <td><span class="status-badge activo">Activo</span></td>
+                               <td>Hace 30 min</td>
+                               <td class="action-cell">
+                                   <button class="action-btn edit" onclick="editarUsuario('user_4')" title="Editar">✏️</button>
+                                   <button class="action-btn delete" onclick="eliminarUsuario('user_4')" title="Eliminar">🗑️</button>
+                               </td>
+                           </tr>
+                           <tr>
+                               <td>
+                                   <div class="user-info">
+                                       <div class="user-avatar">CR</div>
+                                       <div>
+                                           <div class="user-name">Carlos Ruiz</div>
+                                           <div class="user-role">Supervisor</div>
+                                       </div>
+                                   </div>
+                               </td>
+                               <td>carlos.ruiz@tecnocorp.com</td>
+                               <td>
+                                   <div class="perfil-badge medio">ADMINISTRADOR MEDIO</div>
+                                   <div class="perfil-desc">Subir información + ver informes y dashboard</div>
+                               </td>
+                               <td><span class="status-badge inactivo">Inactivo</span></td>
+                               <td>Hace 1 semana</td>
+                               <td class="action-cell">
+                                   <button class="action-btn edit" onclick="editarUsuario('user_5')" title="Editar">✏️</button>
+                                   <button class="action-btn delete" onclick="eliminarUsuario('user_5')" title="Eliminar">🗑️</button>
+                               </td>
+                           </tr>
+                       </tbody>
+                   </table>
                </div>
            </div>
 
-           <div class="stats-grid">
-               <div class="stat-card">
-                   <div class="stat-header">
-                       <div class="stat-icon">👥</div>
-                       <div class="stat-trend up">
-                           <span>↗️</span>
-                           +8
-                       </div>
+           <!-- Vista Agregar Usuario -->
+           <div id="vistaAgregarUsuario" class="usuario-vista" style="display: none;">
+               <div class="dashboard-header">
+                   <div class="header-navigation">
+                       <button class="btn-back" onclick="mostrarVistaListaUsuarios()">
+                           ← Volver a la lista
+                       </button>
+                       <h2 class="dashboard-title">Agregar Nuevo Usuario Administrador</h2>
                    </div>
-                   <div class="stat-value">247</div>
-                   <div class="stat-label">Usuarios Totales</div>
                </div>
 
-               <div class="stat-card">
-                   <div class="stat-header">
-                       <div class="stat-icon">✅</div>
-                       <div class="stat-trend up">
-                           <span>↗️</span>
-                           +15%
+               <div class="form-container">
+                   <form class="user-form" onsubmit="guardarNuevoUsuario(event)">
+                       <div class="form-row">
+                           <div class="form-group">
+                               <label class="form-label">Nombres *</label>
+                               <input type="text" class="form-input" id="nuevosNombres" placeholder="Nombres del usuario" required>
+                           </div>
+                           <div class="form-group">
+                               <label class="form-label">Apellidos *</label>
+                               <input type="text" class="form-input" id="nuevosApellidos" placeholder="Apellidos del usuario" required>
+                           </div>
                        </div>
-                   </div>
-                   <div class="stat-value">189</div>
-                   <div class="stat-label">Usuarios Activos</div>
-               </div>
 
-               <div class="stat-card">
-                   <div class="stat-header">
-                       <div class="stat-icon">🔐</div>
-                       <div class="stat-trend up">
-                           <span>↗️</span>
-                           +3
+                       <div class="form-row">
+                           <div class="form-group">
+                               <label class="form-label">Email *</label>
+                               <input type="email" class="form-input" id="nuevoEmail" placeholder="email@tecnocorp.com" required>
+                           </div>
+                           <div class="form-group">
+                               <label class="form-label">Cargo</label>
+                               <input type="text" class="form-input" id="nuevoCargo" placeholder="Cargo del usuario">
+                           </div>
                        </div>
-                   </div>
-                   <div class="stat-value">12</div>
-                   <div class="stat-label">Administradores</div>
+
+                       <div class="form-row">
+                           <div class="form-group">
+                               <label class="form-label">Perfil de Administrador *</label>
+                               <select class="form-select" id="nuevoPerfil" onchange="mostrarDescripcionPerfil(this.value)" required>
+                                   <option value="">Seleccionar perfil</option>
+                                   <option value="basico">Administrador Básico</option>
+                                   <option value="medio">Administrador Medio</option>
+                                   <option value="total">Administrador Total</option>
+                               </select>
+                           </div>
+                           <div class="form-group">
+                               <label class="form-label">Estado</label>
+                               <select class="form-select" id="nuevoEstado">
+                                   <option value="activo">Activo</option>
+                                   <option value="inactivo">Inactivo</option>
+                               </select>
+                           </div>
+                       </div>
+
+                       <div class="perfil-info-box">
+                           <div id="perfilDescripcionCard" class="perfil-description-card" style="display: none;">
+                               <h4 id="perfilTitulo"></h4>
+                               <p id="perfilDescripcion"></p>
+                               <p class="description-text" id="perfilDetalle"></p>
+                           </div>
+                       </div>
+
+                       <div class="form-actions">
+                           <button type="button" class="btn-cancel" onclick="mostrarVistaListaUsuarios()">Cancelar</button>
+                           <button type="submit" class="btn-primary">Guardar Usuario</button>
+                       </div>
+                   </form>
                </div>
            </div>
 
-           <div class="chart-container">
-               <div class="chart-header">
-                   <h3 class="chart-title">Actividad de Usuarios</h3>
+           <!-- Vista Editar Usuario -->
+           <div id="vistaEditarUsuario" class="usuario-vista" style="display: none;">
+               <div class="dashboard-header">
+                   <div class="header-navigation">
+                       <button class="btn-back" onclick="mostrarVistaListaUsuarios()">
+                           ← Volver a la lista
+                       </button>
+                       <h2 class="dashboard-title">Editar Usuario Administrador</h2>
+                   </div>
                </div>
-               <div class="chart-placeholder">
-                   👥 Monitor de Actividad de Usuarios
+
+               <div class="form-container">
+                   <form class="user-form" onsubmit="guardarEditarUsuario(event)">
+                       <input type="hidden" id="editarUserId">
+                       
+                       <div class="form-row">
+                           <div class="form-group">
+                               <label class="form-label">Nombres *</label>
+                               <input type="text" class="form-input" id="editarNombres" placeholder="Nombres del usuario" required>
+                           </div>
+                           <div class="form-group">
+                               <label class="form-label">Apellidos *</label>
+                               <input type="text" class="form-input" id="editarApellidos" placeholder="Apellidos del usuario" required>
+                           </div>
+                       </div>
+
+                       <div class="form-row">
+                           <div class="form-group">
+                               <label class="form-label">Email *</label>
+                               <input type="email" class="form-input" id="editarEmail" placeholder="email@tecnocorp.com" required>
+                           </div>
+                           <div class="form-group">
+                               <label class="form-label">Cargo</label>
+                               <input type="text" class="form-input" id="editarCargo" placeholder="Cargo del usuario">
+                           </div>
+                       </div>
+
+                       <div class="form-row">
+                           <div class="form-group">
+                               <label class="form-label">Perfil de Administrador *</label>
+                               <select class="form-select" id="editarPerfil" onchange="mostrarDescripcionPerfilEditar(this.value)" required>
+                                   <option value="">Seleccionar perfil</option>
+                                   <option value="basico">Administrador Básico</option>
+                                   <option value="medio">Administrador Medio</option>
+                                   <option value="total">Administrador Total</option>
+                               </select>
+                           </div>
+                           <div class="form-group">
+                               <label class="form-label">Estado</label>
+                               <select class="form-select" id="editarEstado">
+                                   <option value="activo">Activo</option>
+                                   <option value="inactivo">Inactivo</option>
+                               </select>
+                           </div>
+                       </div>
+
+                       <div class="perfil-info-box">
+                           <div id="perfilDescripcionCardEditar" class="perfil-description-card" style="display: none;">
+                               <h4 id="perfilTituloEditar"></h4>
+                               <p id="perfilDescripcionEditar"></p>
+                               <p class="description-text" id="perfilDetalleEditar"></p>
+                           </div>
+                       </div>
+
+                       <div class="form-actions">
+                           <button type="button" class="btn-cancel" onclick="mostrarVistaListaUsuarios()">Cancelar</button>
+                           <button type="submit" class="btn-primary">Actualizar Usuario</button>
+                       </div>
+                   </form>
                </div>
            </div>
        `,
@@ -12059,6 +12341,372 @@ function showModal(content) {
 function closeTrainModelModal() {
     const modal = document.getElementById('trainModelModal');
     if (modal) modal.remove();
+}
+
+// === FUNCIONES PARA MANEJO DE USUARIOS ADMINISTRADORES ===
+
+// Datos de usuarios administradores
+let usuariosAdmin = [
+    {
+        id: 'user_1',
+        nombres: 'Juan',
+        apellidos: 'Martínez',
+        email: 'juan.martinez@tecnocorp.com',
+        cargo: 'Administrador Principal',
+        perfil: 'total',
+        estado: 'activo',
+        ultimoAcceso: 'Hace 2 horas'
+    },
+    {
+        id: 'user_2',
+        nombres: 'Ana',
+        apellidos: 'Castro',
+        email: 'ana.castro@tecnocorp.com',
+        cargo: 'Administradora de Datos',
+        perfil: 'medio',
+        estado: 'activo',
+        ultimoAcceso: 'Hace 1 día'
+    },
+    {
+        id: 'user_3',
+        nombres: 'Miguel',
+        apellidos: 'Rodríguez',
+        email: 'miguel.rodriguez@tecnocorp.com',
+        cargo: 'Operador de Carga',
+        perfil: 'basico',
+        estado: 'activo',
+        ultimoAcceso: 'Hace 3 horas'
+    },
+    {
+        id: 'user_4',
+        nombres: 'Laura',
+        apellidos: 'Silva',
+        email: 'laura.silva@tecnocorp.com',
+        cargo: 'Analista Senior',
+        perfil: 'total',
+        estado: 'activo',
+        ultimoAcceso: 'Hace 30 min'
+    },
+    {
+        id: 'user_5',
+        nombres: 'Carlos',
+        apellidos: 'Ruiz',
+        email: 'carlos.ruiz@tecnocorp.com',
+        cargo: 'Supervisor',
+        perfil: 'medio',
+        estado: 'inactivo',
+        ultimoAcceso: 'Hace 1 semana'
+    }
+];
+
+// Funciones de navegación entre vistas
+window.mostrarVistaListaUsuarios = function() {
+    document.getElementById('vistaListaUsuarios').style.display = 'block';
+    document.getElementById('vistaAgregarUsuario').style.display = 'none';
+    document.getElementById('vistaEditarUsuario').style.display = 'none';
+    
+    // Actualizar tabla
+    actualizarTablaUsuarios();
+}
+
+window.mostrarVistaAgregarUsuario = function() {
+    document.getElementById('vistaListaUsuarios').style.display = 'none';
+    document.getElementById('vistaAgregarUsuario').style.display = 'block';
+    document.getElementById('vistaEditarUsuario').style.display = 'none';
+    
+    // Limpiar formulario
+    limpiarFormularioNuevo();
+}
+
+window.mostrarVistaEditarUsuario = function(userId) {
+    document.getElementById('vistaListaUsuarios').style.display = 'none';
+    document.getElementById('vistaAgregarUsuario').style.display = 'none';
+    document.getElementById('vistaEditarUsuario').style.display = 'block';
+    
+    // Cargar datos del usuario
+    cargarDatosUsuario(userId);
+}
+
+// Función para mostrar descripción del perfil en formulario nuevo
+window.mostrarDescripcionPerfil = function(perfil) {
+    const card = document.getElementById('perfilDescripcionCard');
+    const titulo = document.getElementById('perfilTitulo');
+    const descripcion = document.getElementById('perfilDescripcion');
+    const detalle = document.getElementById('perfilDetalle');
+    
+    if (!perfil) {
+        card.style.display = 'none';
+        return;
+    }
+    
+    const perfiles = {
+        'basico': {
+            titulo: 'Administrador Básico',
+            descripcion: 'Perfil con permisos limitados para operaciones básicas.',
+            detalle: 'Puede subir información al sistema.'
+        },
+        'medio': {
+            titulo: 'Administrador Medio',
+            descripcion: 'Perfil con permisos ampliados para análisis.',
+            detalle: 'Puede subir información + ver informes y dashboard.'
+        },
+        'total': {
+            titulo: 'Administrador Total',
+            descripcion: 'Perfil con todos los permisos del sistema.',
+            detalle: 'Puede subir información, ver informes, dashboard y bajar data.'
+        }
+    };
+    
+    const info = perfiles[perfil];
+    titulo.textContent = info.titulo;
+    descripcion.textContent = info.descripcion;
+    detalle.textContent = info.detalle;
+    card.style.display = 'block';
+}
+
+// Función para mostrar descripción del perfil en formulario editar
+window.mostrarDescripcionPerfilEditar = function(perfil) {
+    const card = document.getElementById('perfilDescripcionCardEditar');
+    const titulo = document.getElementById('perfilTituloEditar');
+    const descripcion = document.getElementById('perfilDescripcionEditar');
+    const detalle = document.getElementById('perfilDetalleEditar');
+    
+    if (!perfil) {
+        card.style.display = 'none';
+        return;
+    }
+    
+    const perfiles = {
+        'basico': {
+            titulo: 'Administrador Básico',
+            descripcion: 'Perfil con permisos limitados para operaciones básicas.',
+            detalle: 'Puede subir información al sistema.'
+        },
+        'medio': {
+            titulo: 'Administrador Medio',
+            descripcion: 'Perfil con permisos ampliados para análisis.',
+            detalle: 'Puede subir información + ver informes y dashboard.'
+        },
+        'total': {
+            titulo: 'Administrador Total',
+            descripcion: 'Perfil con todos los permisos del sistema.',
+            detalle: 'Puede subir información, ver informes, dashboard y bajar data.'
+        }
+    };
+    
+    const info = perfiles[perfil];
+    titulo.textContent = info.titulo;
+    descripcion.textContent = info.descripcion;
+    detalle.textContent = info.detalle;
+    card.style.display = 'block';
+}
+
+// Función para guardar nuevo usuario
+window.guardarNuevoUsuario = function(event) {
+    event.preventDefault();
+    
+    const nombres = document.getElementById('nuevosNombres').value;
+    const apellidos = document.getElementById('nuevosApellidos').value;
+    const email = document.getElementById('nuevoEmail').value;
+    const cargo = document.getElementById('nuevoCargo').value;
+    const perfil = document.getElementById('nuevoPerfil').value;
+    const estado = document.getElementById('nuevoEstado').value;
+    
+    // Validar campos requeridos
+    if (!nombres || !apellidos || !email || !perfil) {
+        alert('Por favor complete todos los campos requeridos');
+        return;
+    }
+    
+    // Crear nuevo usuario
+    const nuevoUsuario = {
+        id: 'user_' + Date.now(),
+        nombres,
+        apellidos,
+        email,
+        cargo,
+        perfil,
+        estado,
+        ultimoAcceso: 'Recién creado'
+    };
+    
+    usuariosAdmin.push(nuevoUsuario);
+    
+    alert('Usuario creado exitosamente');
+    mostrarVistaListaUsuarios();
+}
+
+// Función para editar usuario
+window.editarUsuario = function(userId) {
+    mostrarVistaEditarUsuario(userId);
+}
+
+// Función para cargar datos del usuario en formulario de edición
+function cargarDatosUsuario(userId) {
+    const usuario = usuariosAdmin.find(u => u.id === userId);
+    
+    if (usuario) {
+        document.getElementById('editarUserId').value = userId;
+        document.getElementById('editarNombres').value = usuario.nombres;
+        document.getElementById('editarApellidos').value = usuario.apellidos;
+        document.getElementById('editarEmail').value = usuario.email;
+        document.getElementById('editarCargo').value = usuario.cargo;
+        document.getElementById('editarPerfil').value = usuario.perfil;
+        document.getElementById('editarEstado').value = usuario.estado;
+        
+        // Mostrar descripción del perfil
+        mostrarDescripcionPerfilEditar(usuario.perfil);
+    }
+}
+
+// Función para guardar edición de usuario
+window.guardarEditarUsuario = function(event) {
+    event.preventDefault();
+    
+    const userId = document.getElementById('editarUserId').value;
+    const nombres = document.getElementById('editarNombres').value;
+    const apellidos = document.getElementById('editarApellidos').value;
+    const email = document.getElementById('editarEmail').value;
+    const cargo = document.getElementById('editarCargo').value;
+    const perfil = document.getElementById('editarPerfil').value;
+    const estado = document.getElementById('editarEstado').value;
+    
+    // Validar campos requeridos
+    if (!nombres || !apellidos || !email || !perfil) {
+        alert('Por favor complete todos los campos requeridos');
+        return;
+    }
+    
+    // Actualizar usuario
+    const usuarioIndex = usuariosAdmin.findIndex(u => u.id === userId);
+    if (usuarioIndex !== -1) {
+        usuariosAdmin[usuarioIndex] = {
+            ...usuariosAdmin[usuarioIndex],
+            nombres,
+            apellidos,
+            email,
+            cargo,
+            perfil,
+            estado
+        };
+        
+        alert('Usuario actualizado exitosamente');
+        mostrarVistaListaUsuarios();
+    }
+}
+
+// Función para eliminar usuario
+window.eliminarUsuario = function(userId) {
+    if (confirm('¿Está seguro de que desea eliminar este usuario?')) {
+        usuariosAdmin = usuariosAdmin.filter(u => u.id !== userId);
+        actualizarTablaUsuarios();
+        alert('Usuario eliminado exitosamente');
+    }
+}
+
+// Función para buscar usuarios
+window.buscarUsuarios = function(texto) {
+    actualizarTablaUsuarios(texto);
+}
+
+// Función para filtrar por perfil
+window.filtrarPorPerfil = function(perfil) {
+    actualizarTablaUsuarios(null, perfil);
+}
+
+// Función para filtrar por estado
+window.filtrarPorEstado = function(estado) {
+    actualizarTablaUsuarios(null, null, estado);
+}
+
+// Función para actualizar tabla de usuarios
+function actualizarTablaUsuarios(busqueda = '', perfilFiltro = '', estadoFiltro = '') {
+    const tbody = document.getElementById('usuariosTableBody');
+    if (!tbody) return;
+    
+    let usuariosFiltrados = usuariosAdmin;
+    
+    // Filtrar por búsqueda
+    if (busqueda) {
+        usuariosFiltrados = usuariosFiltrados.filter(u => 
+            u.nombres.toLowerCase().includes(busqueda.toLowerCase()) ||
+            u.apellidos.toLowerCase().includes(busqueda.toLowerCase()) ||
+            u.email.toLowerCase().includes(busqueda.toLowerCase()) ||
+            u.cargo.toLowerCase().includes(busqueda.toLowerCase())
+        );
+    }
+    
+    // Filtrar por perfil
+    if (perfilFiltro) {
+        usuariosFiltrados = usuariosFiltrados.filter(u => u.perfil === perfilFiltro);
+    }
+    
+    // Filtrar por estado
+    if (estadoFiltro) {
+        usuariosFiltrados = usuariosFiltrados.filter(u => u.estado === estadoFiltro);
+    }
+    
+    // Regenerar filas de tabla
+    tbody.innerHTML = usuariosFiltrados.map(usuario => {
+        const perfilInfo = getPerfilInfo(usuario.perfil);
+        const iniciales = (usuario.nombres[0] + usuario.apellidos[0]).toUpperCase();
+        
+        return `
+            <tr>
+                <td>
+                    <div class="user-info">
+                        <div class="user-avatar">${iniciales}</div>
+                        <div>
+                            <div class="user-name">${usuario.nombres} ${usuario.apellidos}</div>
+                            <div class="user-role">${usuario.cargo}</div>
+                        </div>
+                    </div>
+                </td>
+                <td>${usuario.email}</td>
+                <td>
+                    <div class="perfil-badge ${usuario.perfil}">${perfilInfo.nombre}</div>
+                    <div class="perfil-desc">${perfilInfo.descripcion}</div>
+                </td>
+                <td><span class="status-badge ${usuario.estado}">${usuario.estado === 'activo' ? 'Activo' : 'Inactivo'}</span></td>
+                <td>${usuario.ultimoAcceso}</td>
+                <td class="action-cell">
+                    <button class="action-btn edit" onclick="editarUsuario('${usuario.id}')" title="Editar">✏️</button>
+                    <button class="action-btn delete" onclick="eliminarUsuario('${usuario.id}')" title="Eliminar">🗑️</button>
+                </td>
+            </tr>
+        `;
+    }).join('');
+}
+
+// Función helper para obtener información del perfil
+function getPerfilInfo(perfil) {
+    const perfiles = {
+        'basico': {
+            nombre: 'ADMINISTRADOR BÁSICO',
+            descripcion: 'Subir información'
+        },
+        'medio': {
+            nombre: 'ADMINISTRADOR MEDIO',
+            descripcion: 'Subir información + ver informes y dashboard'
+        },
+        'total': {
+            nombre: 'ADMINISTRADOR TOTAL',
+            descripcion: 'Subir información, ver informes, dashboard y bajar data'
+        }
+    };
+    
+    return perfiles[perfil] || { nombre: '', descripcion: '' };
+}
+
+// Función para limpiar formulario de nuevo usuario
+function limpiarFormularioNuevo() {
+    document.getElementById('nuevosNombres').value = '';
+    document.getElementById('nuevosApellidos').value = '';
+    document.getElementById('nuevoEmail').value = '';
+    document.getElementById('nuevoCargo').value = '';
+    document.getElementById('nuevoPerfil').value = '';
+    document.getElementById('nuevoEstado').value = 'activo';
+    document.getElementById('perfilDescripcionCard').style.display = 'none';
 }
 
 function closePredictionModal() {
