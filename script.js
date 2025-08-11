@@ -2378,9 +2378,8 @@ document.addEventListener('DOMContentLoaded', () => {
                <!-- Vista Entrenar Modelo -->
                <div id="vistaEntrenarModelo" class="ia-view">
                    <div class="page-header">
-                       <button class="btn-back" onclick="navegarIA('principal')">
-                           <i class="fas fa-arrow-left"></i>
-                           Volver
+                       <button class="nav-back-btn" data-action="dashboard" onclick="navegarIA('principal')">
+                           <span>← Volver</span>
                        </button>
                        <h2>🤖 Entrenar Nuevo Modelo</h2>
                        <p>Configura y entrena un modelo de machine learning personalizado</p>
@@ -2536,9 +2535,8 @@ document.addEventListener('DOMContentLoaded', () => {
                <!-- Vista Nueva Predicción -->
                <div id="vistaNuevaPrediccion" class="ia-view">
                    <div class="page-header">
-                       <button class="btn-back" onclick="navegarIA('principal')">
-                           <i class="fas fa-arrow-left"></i>
-                           Volver
+                       <button class="nav-back-btn" data-action="dashboard" onclick="navegarIA('principal')">
+                           <span>← Volver</span>
                        </button>
                        <h2>🔮 Nueva Predicción</h2>
                        <p>Genera predicciones usando modelos entrenados</p>
