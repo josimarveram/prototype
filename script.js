@@ -5863,7 +5863,7 @@ document.addEventListener('DOMContentLoaded', () => {
                                +2
                            </div>
                        </div>
-                       <div class="stat-value">8</div>
+                       <div class="stat-value">10</div>
                        <div class="stat-label">Total Administradores</div>
                    </div>
 
@@ -5875,7 +5875,7 @@ document.addEventListener('DOMContentLoaded', () => {
                                +1
                            </div>
                        </div>
-                       <div class="stat-value">6</div>
+                       <div class="stat-value">8</div>
                        <div class="stat-label">Activos</div>
                    </div>
 
@@ -5887,7 +5887,7 @@ document.addEventListener('DOMContentLoaded', () => {
                                +1
                            </div>
                        </div>
-                       <div class="stat-value">3</div>
+                       <div class="stat-value">4</div>
                        <div class="stat-label">Admin Total</div>
                    </div>
                </div>
@@ -6036,6 +6036,16 @@ document.addEventListener('DOMContentLoaded', () => {
                            </tr>
                        </tbody>
                    </table>
+               </div>
+               
+               <div class="activity-pagination" id="usuarios-pagination">
+                   <div class="pagination-info">
+                       <span id="usuariosPaginationInfo">Mostrando 1-5 de 10 usuarios</span>
+                   </div>
+                   <div class="pagination-controls">
+                       <button class="pagination-btn" id="usuariosPrevBtn" onclick="changeUsuariosPage(-1)">‹</button>
+                       <button class="pagination-btn" id="usuariosNextBtn" onclick="changeUsuariosPage(1)">›</button>
+                   </div>
                </div>
            </div>
 
@@ -12345,6 +12355,11 @@ function closeTrainModelModal() {
 
 // === FUNCIONES PARA MANEJO DE USUARIOS ADMINISTRADORES ===
 
+// Variables de paginado para usuarios
+let usuariosFiltrados = [];
+let currentUsuariosPage = 1;
+let usuariosItemsPerPage = 5;
+
 // Datos de usuarios administradores
 let usuariosAdmin = [
     {
@@ -12396,6 +12411,56 @@ let usuariosAdmin = [
         perfil: 'medio',
         estado: 'inactivo',
         ultimoAcceso: 'Hace 1 semana'
+    },
+    {
+        id: 'user_6',
+        nombres: 'María',
+        apellidos: 'González',
+        email: 'maria.gonzalez@tecnocorp.com',
+        cargo: 'Coordinadora de Datos',
+        perfil: 'basico',
+        estado: 'activo',
+        ultimoAcceso: 'Hace 2 días'
+    },
+    {
+        id: 'user_7',
+        nombres: 'Roberto',
+        apellidos: 'Fernández',
+        email: 'roberto.fernandez@tecnocorp.com',
+        cargo: 'Jefe de Operaciones',
+        perfil: 'total',
+        estado: 'activo',
+        ultimoAcceso: 'Hace 1 hora'
+    },
+    {
+        id: 'user_8',
+        nombres: 'Isabel',
+        apellidos: 'López',
+        email: 'isabel.lopez@tecnocorp.com',
+        cargo: 'Analista Junior',
+        perfil: 'medio',
+        estado: 'activo',
+        ultimoAcceso: 'Hace 4 horas'
+    },
+    {
+        id: 'user_9',
+        nombres: 'Fernando',
+        apellidos: 'Vargas',
+        email: 'fernando.vargas@tecnocorp.com',
+        cargo: 'Asistente de Carga',
+        perfil: 'basico',
+        estado: 'inactivo',
+        ultimoAcceso: 'Hace 3 días'
+    },
+    {
+        id: 'user_10',
+        nombres: 'Patricia',
+        apellidos: 'Herrera',
+        email: 'patricia.herrera@tecnocorp.com',
+        cargo: 'Directora de TI',
+        perfil: 'total',
+        estado: 'activo',
+        ultimoAcceso: 'Hace 15 min'
     }
 ];
 
@@ -12404,6 +12469,10 @@ window.mostrarVistaListaUsuarios = function() {
     document.getElementById('vistaListaUsuarios').style.display = 'block';
     document.getElementById('vistaAgregarUsuario').style.display = 'none';
     document.getElementById('vistaEditarUsuario').style.display = 'none';
+    
+    // Inicializar paginado
+    usuariosFiltrados = usuariosAdmin;
+    currentUsuariosPage = 1;
     
     // Actualizar tabla
     actualizarTablaUsuarios();
@@ -12606,16 +12675,19 @@ window.eliminarUsuario = function(userId) {
 
 // Función para buscar usuarios
 window.buscarUsuarios = function(texto) {
+    currentUsuariosPage = 1; // Resetear a primera página
     actualizarTablaUsuarios(texto);
 }
 
 // Función para filtrar por perfil
 window.filtrarPorPerfil = function(perfil) {
+    currentUsuariosPage = 1; // Resetear a primera página
     actualizarTablaUsuarios(null, perfil);
 }
 
 // Función para filtrar por estado
 window.filtrarPorEstado = function(estado) {
+    currentUsuariosPage = 1; // Resetear a primera página
     actualizarTablaUsuarios(null, null, estado);
 }
 
@@ -12624,7 +12696,8 @@ function actualizarTablaUsuarios(busqueda = '', perfilFiltro = '', estadoFiltro 
     const tbody = document.getElementById('usuariosTableBody');
     if (!tbody) return;
     
-    let usuariosFiltrados = usuariosAdmin;
+    // Filtrar usuarios
+    usuariosFiltrados = usuariosAdmin;
     
     // Filtrar por búsqueda
     if (busqueda) {
@@ -12646,8 +12719,21 @@ function actualizarTablaUsuarios(busqueda = '', perfilFiltro = '', estadoFiltro 
         usuariosFiltrados = usuariosFiltrados.filter(u => u.estado === estadoFiltro);
     }
     
+    // Resetear página si es necesario
+    const totalPages = Math.ceil(usuariosFiltrados.length / usuariosItemsPerPage);
+    if (currentUsuariosPage > totalPages && totalPages > 0) {
+        currentUsuariosPage = totalPages;
+    } else if (totalPages === 0) {
+        currentUsuariosPage = 1;
+    }
+    
+    // Aplicar paginado
+    const startIndex = (currentUsuariosPage - 1) * usuariosItemsPerPage;
+    const endIndex = startIndex + usuariosItemsPerPage;
+    const usuariosPaginados = usuariosFiltrados.slice(startIndex, endIndex);
+    
     // Regenerar filas de tabla
-    tbody.innerHTML = usuariosFiltrados.map(usuario => {
+    tbody.innerHTML = usuariosPaginados.map(usuario => {
         const perfilInfo = getPerfilInfo(usuario.perfil);
         const iniciales = (usuario.nombres[0] + usuario.apellidos[0]).toUpperCase();
         
@@ -12676,6 +12762,9 @@ function actualizarTablaUsuarios(busqueda = '', perfilFiltro = '', estadoFiltro 
             </tr>
         `;
     }).join('');
+    
+    // Actualizar paginado
+    updateUsuariosPagination();
 }
 
 // Función helper para obtener información del perfil
@@ -12707,6 +12796,45 @@ function limpiarFormularioNuevo() {
     document.getElementById('nuevoPerfil').value = '';
     document.getElementById('nuevoEstado').value = 'activo';
     document.getElementById('perfilDescripcionCard').style.display = 'none';
+}
+
+// === FUNCIONES DE PAGINADO PARA USUARIOS ===
+
+// Función para cambiar página de usuarios
+window.changeUsuariosPage = function(direction) {
+    const totalPages = Math.ceil(usuariosFiltrados.length / usuariosItemsPerPage);
+    const newPage = currentUsuariosPage + direction;
+    
+    if (newPage >= 1 && newPage <= totalPages) {
+        currentUsuariosPage = newPage;
+        actualizarTablaUsuarios();
+    }
+};
+
+// Función para actualizar información del paginado de usuarios
+function updateUsuariosPagination() {
+    const totalPages = Math.ceil(usuariosFiltrados.length / usuariosItemsPerPage);
+    const totalItems = usuariosFiltrados.length;
+    const startItem = totalItems > 0 ? (currentUsuariosPage - 1) * usuariosItemsPerPage + 1 : 0;
+    const endItem = Math.min(currentUsuariosPage * usuariosItemsPerPage, totalItems);
+    
+    const paginationInfo = document.getElementById('usuariosPaginationInfo');
+    const prevBtn = document.getElementById('usuariosPrevBtn');
+    const nextBtn = document.getElementById('usuariosNextBtn');
+    
+    if (paginationInfo) {
+        paginationInfo.textContent = `Mostrando ${startItem}-${endItem} de ${totalItems} usuarios`;
+    }
+    
+    if (prevBtn) {
+        prevBtn.disabled = currentUsuariosPage === 1;
+        prevBtn.title = currentUsuariosPage === 1 ? 'No hay página anterior' : 'Página anterior de usuarios';
+    }
+    
+    if (nextBtn) {
+        nextBtn.disabled = currentUsuariosPage === totalPages || totalPages === 0;
+        nextBtn.title = (currentUsuariosPage === totalPages || totalPages === 0) ? 'No hay más páginas' : 'Página siguiente de usuarios';
+    }
 }
 
 function closePredictionModal() {
