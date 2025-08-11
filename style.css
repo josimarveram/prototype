@@ -8966,3 +8966,335 @@ body {
         font-size: 12px;
     }
 }
+
+/* === ESTILOS PARA MÓDULO DE ROLES Y PERMISOS === */
+
+/* Contenedor de vistas de roles */
+.roles-vista {
+    width: 100%;
+    display: none;
+}
+
+.roles-vista.active {
+    display: block;
+}
+
+/* Información de rol en tabla */
+.role-info {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.role-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #6c5ce7 0%, #a29bfe 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+}
+
+.role-name {
+    font-weight: 600;
+    color: #333;
+    font-size: 14px;
+}
+
+.role-desc {
+    font-size: 12px;
+    color: #666;
+    margin-top: 2px;
+}
+
+/* Badges de tipo de rol */
+.tipo-badge {
+    padding: 4px 10px;
+    border-radius: 15px;
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.tipo-badge.administrativo {
+    background: #e8f5e8;
+    color: #2e7d32;
+    border: 1px solid #c8e6c9;
+}
+
+.tipo-badge.operativo {
+    background: #fff3e0;
+    color: #f57c00;
+    border: 1px solid #ffcc02;
+}
+
+.tipo-badge.consulta {
+    background: #e3f2fd;
+    color: #1976d2;
+    border: 1px solid #bbdefb;
+}
+
+/* Contador de usuarios */
+.users-count {
+    text-align: center;
+}
+
+.count-number {
+    font-weight: bold;
+    font-size: 16px;
+    color: #333;
+    display: block;
+}
+
+.count-label {
+    font-size: 10px;
+    color: #666;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* Resumen de permisos */
+.permisos-summary {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.permisos-count {
+    font-size: 12px;
+    font-weight: 600;
+    color: #333;
+}
+
+.permisos-bar {
+    width: 100%;
+    height: 6px;
+    background: #f0f0f0;
+    border-radius: 3px;
+    overflow: hidden;
+}
+
+.permisos-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #4caf50 0%, #81c784 100%);
+    transition: width 0.3s ease;
+}
+
+/* Botón de permisos */
+.action-btn.permisos {
+    background: #f3e5f5;
+    color: #7b1fa2;
+}
+
+.action-btn.permisos:hover {
+    background: #e1bee7;
+    transform: scale(1.1);
+}
+
+/* Formulario de roles */
+.role-form {
+    background: white;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+    border: 1px solid #e9ecef;
+}
+
+/* Sección de permisos */
+.permisos-section {
+    margin: 30px 0;
+    padding: 20px;
+    background: #f8f9fa;
+    border-radius: 8px;
+    border: 1px solid #e9ecef;
+}
+
+.permisos-section h3 {
+    margin: 0 0 20px 0;
+    color: #333;
+    font-size: 18px;
+}
+
+.permisos-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+}
+
+.permisos-categoria {
+    background: white;
+    padding: 15px;
+    border-radius: 8px;
+    border: 1px solid #dee2e6;
+}
+
+.categoria-title {
+    margin: 0 0 12px 0;
+    font-size: 14px;
+    font-weight: 600;
+    color: #495057;
+    border-bottom: 1px solid #e9ecef;
+    padding-bottom: 8px;
+}
+
+.permisos-lista {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.permiso-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    padding: 4px;
+    border-radius: 4px;
+    transition: background 0.2s ease;
+}
+
+.permiso-item:hover {
+    background: #f8f9fa;
+}
+
+.permiso-checkbox {
+    width: 16px;
+    height: 16px;
+    margin: 0;
+}
+
+.permiso-label {
+    font-size: 13px;
+    color: #333;
+}
+
+/* Matriz de permisos */
+.matriz-container {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+    border: 1px solid #e9ecef;
+    padding: 20px;
+}
+
+.matriz-controls {
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.matriz-table-container {
+    overflow-x: auto;
+    border: 1px solid #dee2e6;
+    border-radius: 8px;
+}
+
+.matriz-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+}
+
+.matriz-table th,
+.matriz-table td {
+    padding: 12px 8px;
+    text-align: center;
+    border-bottom: 1px solid #dee2e6;
+    border-right: 1px solid #dee2e6;
+}
+
+.matriz-table th {
+    background: #f8f9fa;
+    font-weight: 600;
+    color: #495057;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+.role-header {
+    text-align: left !important;
+    min-width: 200px;
+    position: sticky;
+    left: 0;
+    background: #f8f9fa !important;
+    z-index: 11;
+}
+
+.permiso-header {
+    min-width: 120px;
+    writing-mode: vertical-rl;
+    text-orientation: mixed;
+    height: 120px;
+}
+
+.role-cell {
+    text-align: left !important;
+    position: sticky;
+    left: 0;
+    background: white;
+    z-index: 5;
+    box-shadow: 1px 0 3px rgba(0,0,0,0.1);
+}
+
+.role-cell .role-info {
+    justify-content: flex-start;
+}
+
+.role-cell .role-icon {
+    width: 24px;
+    height: 24px;
+    font-size: 12px;
+}
+
+.permiso-cell {
+    background: #fafafa;
+}
+
+.permiso-granted {
+    color: #4caf50;
+    font-size: 16px;
+}
+
+.permiso-denied {
+    color: #f44336;
+    font-size: 16px;
+}
+
+/* Responsive para roles y permisos */
+@media (max-width: 768px) {
+    .permisos-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .matriz-table-container {
+        font-size: 11px;
+    }
+    
+    .matriz-table th,
+    .matriz-table td {
+        padding: 8px 4px;
+    }
+    
+    .permiso-header {
+        height: 80px;
+        font-size: 11px;
+    }
+    
+    .role-cell .role-info {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 4px;
+    }
+    
+    .role-name {
+        font-size: 12px;
+    }
+    
+    .role-desc {
+        font-size: 10px;
+    }
+}

@@ -6193,64 +6193,377 @@ document.addEventListener('DOMContentLoaded', () => {
        `,
 
        'roles-permisos': `
-           <div class="dashboard-header">
-               <h2 class="dashboard-title">Roles y Permisos</h2>
-               <div class="quick-actions">
-                   <button class="quick-action-btn">
-                       <span>🔐</span>
-                       Nuevo Rol
-                   </button>
-                   <button class="quick-action-btn secondary">
-                       <span>⚙️</span>
-                       Configurar
-                   </button>
+           <!-- Vista Lista de Roles y Permisos -->
+           <div id="vistaListaRoles" class="roles-vista active">
+               <div class="dashboard-header">
+                   <h2 class="dashboard-title">Roles y Permisos</h2>
+                   <div class="quick-actions">
+                       <button class="quick-action-btn" onclick="mostrarVistaAgregarRol()">
+                           <span>🔐</span>
+                           Nuevo Rol
+                       </button>
+                       <button class="quick-action-btn secondary" onclick="mostrarVistaMatrizPermisos()">
+                           <span>⚙️</span>
+                           Matriz de Permisos
+                       </button>
+                   </div>
+               </div>
+
+               <div class="stats-grid">
+                   <div class="stat-card">
+                       <div class="stat-header">
+                           <div class="stat-icon">🔐</div>
+                           <div class="stat-trend up">
+                               <span>↗️</span>
+                               +2
+                           </div>
+                       </div>
+                       <div class="stat-value">12</div>
+                       <div class="stat-label">Roles Definidos</div>
+                   </div>
+
+                   <div class="stat-card">
+                       <div class="stat-header">
+                           <div class="stat-icon">✅</div>
+                           <div class="stat-trend up">
+                               <span>↗️</span>
+                               +3
+                           </div>
+                       </div>
+                       <div class="stat-value">45</div>
+                       <div class="stat-label">Permisos Activos</div>
+                   </div>
+
+                   <div class="stat-card">
+                       <div class="stat-header">
+                           <div class="stat-icon">👥</div>
+                           <div class="stat-trend up">
+                               <span>↗️</span>
+                               +8%
+                           </div>
+                       </div>
+                       <div class="stat-value">98.2%</div>
+                       <div class="stat-label">Cumplimiento</div>
+                   </div>
+               </div>
+
+               <div class="table-controls">
+                   <div class="search-container">
+                       <input type="text" class="search-input" placeholder="Buscar roles..." onkeyup="buscarRoles(this.value)">
+                   </div>
+                   <div class="filter-controls">
+                       <select class="filter-select" onchange="filtrarPorTipoRol(this.value)">
+                           <option value="">Todos los tipos</option>
+                           <option value="administrativo">Administrativo</option>
+                           <option value="operativo">Operativo</option>
+                           <option value="consulta">Solo Consulta</option>
+                       </select>
+                       <select class="filter-select" onchange="filtrarPorEstadoRol(this.value)">
+                           <option value="">Todos los estados</option>
+                           <option value="activo">Activo</option>
+                           <option value="inactivo">Inactivo</option>
+                       </select>
+                   </div>
+               </div>
+
+               <div class="activity-table">
+                   <table>
+                       <thead>
+                           <tr>
+                               <th>Rol</th>
+                               <th>Tipo</th>
+                               <th>Usuarios Asignados</th>
+                               <th>Permisos</th>
+                               <th>Estado</th>
+                               <th>Última Modificación</th>
+                               <th>Acciones</th>
+                           </tr>
+                       </thead>
+                       <tbody id="rolesTableBody">
+                           <tr>
+                               <td>
+                                   <div class="role-info">
+                                       <div class="role-icon">👑</div>
+                                       <div>
+                                           <div class="role-name">Super Administrador</div>
+                                           <div class="role-desc">Control total del sistema</div>
+                                       </div>
+                                   </div>
+                               </td>
+                               <td><span class="tipo-badge administrativo">Administrativo</span></td>
+                               <td>
+                                   <div class="users-count">
+                                       <span class="count-number">3</span>
+                                       <span class="count-label">usuarios</span>
+                                   </div>
+                               </td>
+                               <td>
+                                   <div class="permisos-summary">
+                                       <span class="permisos-count">15/15</span>
+                                       <div class="permisos-bar">
+                                           <div class="permisos-fill" style="width: 100%"></div>
+                                       </div>
+                                   </div>
+                               </td>
+                               <td><span class="status-badge activo">Activo</span></td>
+                               <td>Hace 2 días</td>
+                               <td class="action-cell">
+                                   <button class="action-btn edit" onclick="editarRol('role_1')" title="Editar">✏️</button>
+                                   <button class="action-btn permisos" onclick="gestionarPermisos('role_1')" title="Permisos">🔐</button>
+                                   <button class="action-btn delete" onclick="eliminarRol('role_1')" title="Eliminar">🗑️</button>
+                               </td>
+                           </tr>
+                           <tr>
+                               <td>
+                                   <div class="role-info">
+                                       <div class="role-icon">👨‍💼</div>
+                                       <div>
+                                           <div class="role-name">Administrador de Datos</div>
+                                           <div class="role-desc">Gestión de datos y reportes</div>
+                                       </div>
+                                   </div>
+                               </td>
+                               <td><span class="tipo-badge administrativo">Administrativo</span></td>
+                               <td>
+                                   <div class="users-count">
+                                       <span class="count-number">5</span>
+                                       <span class="count-label">usuarios</span>
+                                   </div>
+                               </td>
+                               <td>
+                                   <div class="permisos-summary">
+                                       <span class="permisos-count">12/15</span>
+                                       <div class="permisos-bar">
+                                           <div class="permisos-fill" style="width: 80%"></div>
+                                       </div>
+                                   </div>
+                               </td>
+                               <td><span class="status-badge activo">Activo</span></td>
+                               <td>Hace 1 semana</td>
+                               <td class="action-cell">
+                                   <button class="action-btn edit" onclick="editarRol('role_2')" title="Editar">✏️</button>
+                                   <button class="action-btn permisos" onclick="gestionarPermisos('role_2')" title="Permisos">🔐</button>
+                                   <button class="action-btn delete" onclick="eliminarRol('role_2')" title="Eliminar">🗑️</button>
+                               </td>
+                           </tr>
+                           <tr>
+                               <td>
+                                   <div class="role-info">
+                                       <div class="role-icon">👷</div>
+                                       <div>
+                                           <div class="role-name">Operador</div>
+                                           <div class="role-desc">Operaciones básicas del sistema</div>
+                                       </div>
+                                   </div>
+                               </td>
+                               <td><span class="tipo-badge operativo">Operativo</span></td>
+                               <td>
+                                   <div class="users-count">
+                                       <span class="count-number">8</span>
+                                       <span class="count-label">usuarios</span>
+                                   </div>
+                               </td>
+                               <td>
+                                   <div class="permisos-summary">
+                                       <span class="permisos-count">6/15</span>
+                                       <div class="permisos-bar">
+                                           <div class="permisos-fill" style="width: 40%"></div>
+                                       </div>
+                                   </div>
+                               </td>
+                               <td><span class="status-badge activo">Activo</span></td>
+                               <td>Hace 3 días</td>
+                               <td class="action-cell">
+                                   <button class="action-btn edit" onclick="editarRol('role_3')" title="Editar">✏️</button>
+                                   <button class="action-btn permisos" onclick="gestionarPermisos('role_3')" title="Permisos">🔐</button>
+                                   <button class="action-btn delete" onclick="eliminarRol('role_3')" title="Eliminar">🗑️</button>
+                               </td>
+                           </tr>
+                           <tr>
+                               <td>
+                                   <div class="role-info">
+                                       <div class="role-icon">👁️</div>
+                                       <div>
+                                           <div class="role-name">Consultor</div>
+                                           <div class="role-desc">Solo lectura y consultas</div>
+                                       </div>
+                                   </div>
+                               </td>
+                               <td><span class="tipo-badge consulta">Solo Consulta</span></td>
+                               <td>
+                                   <div class="users-count">
+                                       <span class="count-number">12</span>
+                                       <span class="count-label">usuarios</span>
+                                   </div>
+                               </td>
+                               <td>
+                                   <div class="permisos-summary">
+                                       <span class="permisos-count">3/15</span>
+                                       <div class="permisos-bar">
+                                           <div class="permisos-fill" style="width: 20%"></div>
+                                       </div>
+                                   </div>
+                               </td>
+                               <td><span class="status-badge activo">Activo</span></td>
+                               <td>Hace 5 días</td>
+                               <td class="action-cell">
+                                   <button class="action-btn edit" onclick="editarRol('role_4')" title="Editar">✏️</button>
+                                   <button class="action-btn permisos" onclick="gestionarPermisos('role_4')" title="Permisos">🔐</button>
+                                   <button class="action-btn delete" onclick="eliminarRol('role_4')" title="Eliminar">🗑️</button>
+                               </td>
+                           </tr>
+                           <tr>
+                               <td>
+                                   <div class="role-info">
+                                       <div class="role-icon">📊</div>
+                                       <div>
+                                           <div class="role-name">Analista</div>
+                                           <div class="role-desc">Análisis y reportes avanzados</div>
+                                       </div>
+                                   </div>
+                               </td>
+                               <td><span class="tipo-badge operativo">Operativo</span></td>
+                               <td>
+                                   <div class="users-count">
+                                       <span class="count-number">4</span>
+                                       <span class="count-label">usuarios</span>
+                                   </div>
+                               </td>
+                               <td>
+                                   <div class="permisos-summary">
+                                       <span class="permisos-count">9/15</span>
+                                       <div class="permisos-bar">
+                                           <div class="permisos-fill" style="width: 60%"></div>
+                                       </div>
+                                   </div>
+                               </td>
+                               <td><span class="status-badge activo">Activo</span></td>
+                               <td>Hace 1 día</td>
+                               <td class="action-cell">
+                                   <button class="action-btn edit" onclick="editarRol('role_5')" title="Editar">✏️</button>
+                                   <button class="action-btn permisos" onclick="gestionarPermisos('role_5')" title="Permisos">🔐</button>
+                                   <button class="action-btn delete" onclick="eliminarRol('role_5')" title="Eliminar">🗑️</button>
+                               </td>
+                           </tr>
+                       </tbody>
+                   </table>
+               </div>
+
+               <div class="activity-pagination" id="roles-pagination">
+                   <div class="pagination-info">
+                       <span id="rolesPaginationInfo">Mostrando 1-5 de 12 roles</span>
+                   </div>
+                   <div class="pagination-controls">
+                       <button class="pagination-btn" id="rolesPrevBtn" onclick="changeRolesPage(-1)">‹</button>
+                       <button class="pagination-btn" id="rolesNextBtn" onclick="changeRolesPage(1)">›</button>
+                   </div>
                </div>
            </div>
 
-           <div class="stats-grid">
-               <div class="stat-card">
-                   <div class="stat-header">
-                       <div class="stat-icon">🔐</div>
-                       <div class="stat-trend up">
-                           <span>↗️</span>
-                           +2
-                       </div>
+           <!-- Vista Agregar/Editar Rol -->
+           <div id="vistaAgregarRol" class="roles-vista" style="display: none;">
+               <div class="dashboard-header">
+                   <div class="header-navigation">
+                       <button class="btn-back" onclick="mostrarVistaListaRoles()">
+                           ← Volver a la lista
+                       </button>
+                       <h2 class="dashboard-title" id="tituloFormularioRol">Agregar Nuevo Rol</h2>
                    </div>
-                   <div class="stat-value">18</div>
-                   <div class="stat-label">Roles Definidos</div>
                </div>
 
-               <div class="stat-card">
-                   <div class="stat-header">
-                       <div class="stat-icon">✅</div>
-                       <div class="stat-trend up">
-                           <span>↗️</span>
-                           +45
+               <div class="form-container">
+                   <form class="role-form" onsubmit="guardarRol(event)">
+                       <input type="hidden" id="rolId">
+                       
+                       <div class="form-row">
+                           <div class="form-group">
+                               <label class="form-label">Nombre del Rol *</label>
+                               <input type="text" class="form-input" id="rolNombre" placeholder="Ej: Supervisor de Ventas" required>
+                           </div>
+                           <div class="form-group">
+                               <label class="form-label">Tipo de Rol *</label>
+                               <select class="form-select" id="rolTipo" required>
+                                   <option value="">Seleccionar tipo</option>
+                                   <option value="administrativo">Administrativo</option>
+                                   <option value="operativo">Operativo</option>
+                                   <option value="consulta">Solo Consulta</option>
+                               </select>
+                           </div>
                        </div>
-                   </div>
-                   <div class="stat-value">156</div>
-                   <div class="stat-label">Permisos Configurados</div>
-               </div>
 
-               <div class="stat-card">
-                   <div class="stat-header">
-                       <div class="stat-icon">👥</div>
-                       <div class="stat-trend up">
-                           <span>↗️</span>
-                           +8%
+                       <div class="form-row">
+                           <div class="form-group">
+                               <label class="form-label">Descripción</label>
+                               <textarea class="form-input" id="rolDescripcion" placeholder="Descripción del rol y sus responsabilidades" rows="3"></textarea>
+                           </div>
+                           <div class="form-group">
+                               <label class="form-label">Estado</label>
+                               <select class="form-select" id="rolEstado">
+                                   <option value="activo">Activo</option>
+                                   <option value="inactivo">Inactivo</option>
+                               </select>
+                           </div>
                        </div>
-                   </div>
-                   <div class="stat-value">98.2%</div>
-                   <div class="stat-label">Cumplimiento</div>
+
+                       <div class="permisos-section">
+                           <h3>Configuración de Permisos</h3>
+                           <div class="permisos-grid" id="permisosGrid">
+                               <!-- Los permisos se cargarán dinámicamente -->
+                           </div>
+                       </div>
+
+                       <div class="form-actions">
+                           <button type="button" class="btn-cancel" onclick="mostrarVistaListaRoles()">Cancelar</button>
+                           <button type="submit" class="btn-primary" id="btnGuardarRol">Guardar Rol</button>
+                       </div>
+                   </form>
                </div>
            </div>
 
-           <div class="chart-container">
-               <div class="chart-header">
-                   <h3 class="chart-title">Matriz de Permisos</h3>
+           <!-- Vista Matriz de Permisos -->
+           <div id="vistaMatrizPermisos" class="roles-vista" style="display: none;">
+               <div class="dashboard-header">
+                   <div class="header-navigation">
+                       <button class="btn-back" onclick="mostrarVistaListaRoles()">
+                           ← Volver a la lista
+                       </button>
+                       <h2 class="dashboard-title">Matriz de Permisos</h2>
+                   </div>
                </div>
-               <div class="chart-placeholder<div class="chart-placeholder">
-                   🔐 Configuración de Roles y Permisos
+
+               <div class="matriz-container">
+                   <div class="matriz-controls">
+                       <div class="filter-controls">
+                           <select class="filter-select" onchange="filtrarMatrizPorTipo(this.value)">
+                               <option value="">Todos los tipos</option>
+                               <option value="administrativo">Administrativo</option>
+                               <option value="operativo">Operativo</option>
+                               <option value="consulta">Solo Consulta</option>
+                           </select>
+                       </div>
+                   </div>
+
+                   <div class="matriz-table-container">
+                       <table class="matriz-table">
+                           <thead>
+                               <tr>
+                                   <th class="role-header">Rol / Permiso</th>
+                                   <th class="permiso-header">Ver Dashboard</th>
+                                   <th class="permiso-header">Crear Datos</th>
+                                   <th class="permiso-header">Editar Datos</th>
+                                   <th class="permiso-header">Eliminar Datos</th>
+                                   <th class="permiso-header">Ver Reportes</th>
+                                   <th class="permiso-header">Crear Reportes</th>
+                                   <th class="permiso-header">Exportar Datos</th>
+                                   <th class="permiso-header">Gestionar Usuarios</th>
+                                   <th class="permiso-header">Configurar Sistema</th>
+                               </tr>
+                           </thead>
+                           <tbody id="matrizTableBody">
+                               <!-- La matriz se cargará dinámicamente -->
+                           </tbody>
+                       </table>
+                   </div>
                </div>
            </div>
        `,
@@ -13090,6 +13403,434 @@ function exportPrediction(id) {
 
 function sharePrediction(id) {
     alert(`Compartiendo predicción ${id}`);
+}
+
+// === FUNCIONES PARA MANEJO DE ROLES Y PERMISOS ===
+
+// Variables de paginado para roles
+let rolesFiltrados = [];
+let currentRolesPage = 1;
+let rolesItemsPerPage = 5;
+
+// Datos de roles
+let rolesData = [
+    {
+        id: 'role_1',
+        nombre: 'Super Administrador',
+        descripcion: 'Control total del sistema',
+        tipo: 'administrativo',
+        estado: 'activo',
+        usuariosAsignados: 3,
+        permisos: ['dashboard', 'crear', 'editar', 'eliminar', 'reportes', 'crear_reportes', 'exportar', 'usuarios', 'configurar'],
+        ultimaModificacion: 'Hace 2 días',
+        icono: '👑'
+    },
+    {
+        id: 'role_2',
+        nombre: 'Administrador de Datos',
+        descripcion: 'Gestión de datos y reportes',
+        tipo: 'administrativo',
+        estado: 'activo',
+        usuariosAsignados: 5,
+        permisos: ['dashboard', 'crear', 'editar', 'eliminar', 'reportes', 'crear_reportes', 'exportar'],
+        ultimaModificacion: 'Hace 1 semana',
+        icono: '👨‍💼'
+    },
+    {
+        id: 'role_3',
+        nombre: 'Operador',
+        descripcion: 'Operaciones básicas del sistema',
+        tipo: 'operativo',
+        estado: 'activo',
+        usuariosAsignados: 8,
+        permisos: ['dashboard', 'crear', 'editar', 'reportes'],
+        ultimaModificacion: 'Hace 3 días',
+        icono: '👷'
+    },
+    {
+        id: 'role_4',
+        nombre: 'Consultor',
+        descripcion: 'Solo lectura y consultas',
+        tipo: 'consulta',
+        estado: 'activo',
+        usuariosAsignados: 12,
+        permisos: ['dashboard', 'reportes'],
+        ultimaModificacion: 'Hace 5 días',
+        icono: '👁️'
+    },
+    {
+        id: 'role_5',
+        nombre: 'Analista',
+        descripcion: 'Análisis y reportes avanzados',
+        tipo: 'operativo',
+        estado: 'activo',
+        usuariosAsignados: 4,
+        permisos: ['dashboard', 'crear', 'editar', 'reportes', 'crear_reportes', 'exportar'],
+        ultimaModificacion: 'Hace 1 día',
+        icono: '📊'
+    }
+];
+
+// Permisos disponibles en el sistema
+let permisosDisponibles = [
+    { id: 'dashboard', nombre: 'Ver Dashboard', categoria: 'Visualización' },
+    { id: 'crear', nombre: 'Crear Datos', categoria: 'Gestión de Datos' },
+    { id: 'editar', nombre: 'Editar Datos', categoria: 'Gestión de Datos' },
+    { id: 'eliminar', nombre: 'Eliminar Datos', categoria: 'Gestión de Datos' },
+    { id: 'reportes', nombre: 'Ver Reportes', categoria: 'Reportes' },
+    { id: 'crear_reportes', nombre: 'Crear Reportes', categoria: 'Reportes' },
+    { id: 'exportar', nombre: 'Exportar Datos', categoria: 'Exportación' },
+    { id: 'usuarios', nombre: 'Gestionar Usuarios', categoria: 'Administración' },
+    { id: 'configurar', nombre: 'Configurar Sistema', categoria: 'Administración' }
+];
+
+// Funciones de navegación entre vistas
+window.mostrarVistaListaRoles = function() {
+    document.getElementById('vistaListaRoles').style.display = 'block';
+    document.getElementById('vistaAgregarRol').style.display = 'none';
+    document.getElementById('vistaMatrizPermisos').style.display = 'none';
+    
+    // Inicializar paginado
+    rolesFiltrados = rolesData;
+    currentRolesPage = 1;
+    
+    // Actualizar tabla
+    actualizarTablaRoles();
+}
+
+window.mostrarVistaAgregarRol = function() {
+    document.getElementById('vistaListaRoles').style.display = 'none';
+    document.getElementById('vistaAgregarRol').style.display = 'block';
+    document.getElementById('vistaMatrizPermisos').style.display = 'none';
+    
+    // Configurar para nuevo rol
+    document.getElementById('tituloFormularioRol').textContent = 'Agregar Nuevo Rol';
+    document.getElementById('btnGuardarRol').textContent = 'Guardar Rol';
+    limpiarFormularioRol();
+    cargarPermisosGrid();
+}
+
+window.mostrarVistaMatrizPermisos = function() {
+    document.getElementById('vistaListaRoles').style.display = 'none';
+    document.getElementById('vistaAgregarRol').style.display = 'none';
+    document.getElementById('vistaMatrizPermisos').style.display = 'block';
+    
+    cargarMatrizPermisos();
+}
+
+// Función para editar rol
+window.editarRol = function(rolId) {
+    const rol = rolesData.find(r => r.id === rolId);
+    if (!rol) return;
+    
+    document.getElementById('vistaListaRoles').style.display = 'none';
+    document.getElementById('vistaAgregarRol').style.display = 'block';
+    document.getElementById('vistaMatrizPermisos').style.display = 'none';
+    
+    // Configurar para editar
+    document.getElementById('tituloFormularioRol').textContent = 'Editar Rol';
+    document.getElementById('btnGuardarRol').textContent = 'Actualizar Rol';
+    
+    // Cargar datos del rol
+    document.getElementById('rolId').value = rol.id;
+    document.getElementById('rolNombre').value = rol.nombre;
+    document.getElementById('rolTipo').value = rol.tipo;
+    document.getElementById('rolDescripcion').value = rol.descripcion;
+    document.getElementById('rolEstado').value = rol.estado;
+    
+    cargarPermisosGrid(rol.permisos);
+}
+
+// Función para gestionar permisos de un rol específico
+window.gestionarPermisos = function(rolId) {
+    editarRol(rolId);
+}
+
+// Función para eliminar rol
+window.eliminarRol = function(rolId) {
+    if (confirm('¿Está seguro de que desea eliminar este rol?')) {
+        rolesData = rolesData.filter(r => r.id !== rolId);
+        actualizarTablaRoles();
+        alert('Rol eliminado exitosamente');
+    }
+}
+
+// Función para guardar rol (nuevo o editado)
+window.guardarRol = function(event) {
+    event.preventDefault();
+    
+    const rolId = document.getElementById('rolId').value;
+    const nombre = document.getElementById('rolNombre').value;
+    const tipo = document.getElementById('rolTipo').value;
+    const descripcion = document.getElementById('rolDescripcion').value;
+    const estado = document.getElementById('rolEstado').value;
+    
+    // Obtener permisos seleccionados
+    const permisosSeleccionados = [];
+    document.querySelectorAll('.permiso-checkbox:checked').forEach(checkbox => {
+        permisosSeleccionados.push(checkbox.value);
+    });
+    
+    if (!nombre || !tipo) {
+        alert('Por favor complete todos los campos requeridos');
+        return;
+    }
+    
+    if (rolId) {
+        // Editar rol existente
+        const rolIndex = rolesData.findIndex(r => r.id === rolId);
+        if (rolIndex !== -1) {
+            rolesData[rolIndex] = {
+                ...rolesData[rolIndex],
+                nombre,
+                tipo,
+                descripcion,
+                estado,
+                permisos: permisosSeleccionados,
+                ultimaModificacion: 'Ahora'
+            };
+            alert('Rol actualizado exitosamente');
+        }
+    } else {
+        // Crear nuevo rol
+        const nuevoRol = {
+            id: 'role_' + Date.now(),
+            nombre,
+            descripcion,
+            tipo,
+            estado,
+            usuariosAsignados: 0,
+            permisos: permisosSeleccionados,
+            ultimaModificacion: 'Ahora',
+            icono: '🔐'
+        };
+        rolesData.push(nuevoRol);
+        alert('Rol creado exitosamente');
+    }
+    
+    mostrarVistaListaRoles();
+}
+
+// Funciones de búsqueda y filtrado
+window.buscarRoles = function(texto) {
+    currentRolesPage = 1;
+    actualizarTablaRoles(texto);
+}
+
+window.filtrarPorTipoRol = function(tipo) {
+    currentRolesPage = 1;
+    actualizarTablaRoles(null, tipo);
+}
+
+window.filtrarPorEstadoRol = function(estado) {
+    currentRolesPage = 1;
+    actualizarTablaRoles(null, null, estado);
+}
+
+// Función para actualizar tabla de roles
+function actualizarTablaRoles(busqueda = '', tipoFiltro = '', estadoFiltro = '') {
+    const tbody = document.getElementById('rolesTableBody');
+    if (!tbody) return;
+    
+    // Filtrar roles
+    rolesFiltrados = rolesData;
+    
+    // Filtrar por búsqueda
+    if (busqueda) {
+        rolesFiltrados = rolesFiltrados.filter(r => 
+            r.nombre.toLowerCase().includes(busqueda.toLowerCase()) ||
+            r.descripcion.toLowerCase().includes(busqueda.toLowerCase())
+        );
+    }
+    
+    // Filtrar por tipo
+    if (tipoFiltro) {
+        rolesFiltrados = rolesFiltrados.filter(r => r.tipo === tipoFiltro);
+    }
+    
+    // Filtrar por estado
+    if (estadoFiltro) {
+        rolesFiltrados = rolesFiltrados.filter(r => r.estado === estadoFiltro);
+    }
+    
+    // Resetear página si es necesario
+    const totalPages = Math.ceil(rolesFiltrados.length / rolesItemsPerPage);
+    if (currentRolesPage > totalPages && totalPages > 0) {
+        currentRolesPage = totalPages;
+    } else if (totalPages === 0) {
+        currentRolesPage = 1;
+    }
+    
+    // Aplicar paginado
+    const startIndex = (currentRolesPage - 1) * rolesItemsPerPage;
+    const endIndex = startIndex + rolesItemsPerPage;
+    const rolesPaginados = rolesFiltrados.slice(startIndex, endIndex);
+    
+    // Regenerar filas de tabla
+    tbody.innerHTML = rolesPaginados.map(rol => {
+        const permisosPorcentaje = (rol.permisos.length / permisosDisponibles.length) * 100;
+        const tipoBadgeClass = getTipoBadgeClass(rol.tipo);
+        
+        return `
+            <tr>
+                <td>
+                    <div class="role-info">
+                        <div class="role-icon">${rol.icono}</div>
+                        <div>
+                            <div class="role-name">${rol.nombre}</div>
+                            <div class="role-desc">${rol.descripcion}</div>
+                        </div>
+                    </div>
+                </td>
+                <td><span class="tipo-badge ${tipoBadgeClass}">${getTipoLabel(rol.tipo)}</span></td>
+                <td>
+                    <div class="users-count">
+                        <span class="count-number">${rol.usuariosAsignados}</span>
+                        <span class="count-label">usuarios</span>
+                    </div>
+                </td>
+                <td>
+                    <div class="permisos-summary">
+                        <span class="permisos-count">${rol.permisos.length}/${permisosDisponibles.length}</span>
+                        <div class="permisos-bar">
+                            <div class="permisos-fill" style="width: ${permisosPorcentaje}%"></div>
+                        </div>
+                    </div>
+                </td>
+                <td><span class="status-badge ${rol.estado}">${rol.estado === 'activo' ? 'Activo' : 'Inactivo'}</span></td>
+                <td>${rol.ultimaModificacion}</td>
+                <td class="action-cell">
+                    <button class="action-btn edit" onclick="editarRol('${rol.id}')" title="Editar">✏️</button>
+                    <button class="action-btn permisos" onclick="gestionarPermisos('${rol.id}')" title="Permisos">🔐</button>
+                    <button class="action-btn delete" onclick="eliminarRol('${rol.id}')" title="Eliminar">🗑️</button>
+                </td>
+            </tr>
+        `;
+    }).join('');
+    
+    // Actualizar paginado
+    updateRolesPagination();
+}
+
+// Funciones helper
+function getTipoBadgeClass(tipo) {
+    const classes = {
+        'administrativo': 'administrativo',
+        'operativo': 'operativo',
+        'consulta': 'consulta'
+    };
+    return classes[tipo] || '';
+}
+
+function getTipoLabel(tipo) {
+    const labels = {
+        'administrativo': 'Administrativo',
+        'operativo': 'Operativo',
+        'consulta': 'Solo Consulta'
+    };
+    return labels[tipo] || tipo;
+}
+
+// Función para cargar grid de permisos
+function cargarPermisosGrid(permisosActivos = []) {
+    const grid = document.getElementById('permisosGrid');
+    if (!grid) return;
+    
+    const categorias = [...new Set(permisosDisponibles.map(p => p.categoria))];
+    
+    let html = '';
+    categorias.forEach(categoria => {
+        const permisosCategoria = permisosDisponibles.filter(p => p.categoria === categoria);
+        
+        html += `
+            <div class="permisos-categoria">
+                <h4 class="categoria-title">${categoria}</h4>
+                <div class="permisos-lista">
+                    ${permisosCategoria.map(permiso => `
+                        <label class="permiso-item">
+                            <input type="checkbox" class="permiso-checkbox" value="${permiso.id}" ${permisosActivos.includes(permiso.id) ? 'checked' : ''}>
+                            <span class="checkmark"></span>
+                            <span class="permiso-label">${permiso.nombre}</span>
+                        </label>
+                    `).join('')}
+                </div>
+            </div>
+        `;
+    });
+    
+    grid.innerHTML = html;
+}
+
+// Función para cargar matriz de permisos
+function cargarMatrizPermisos() {
+    const tbody = document.getElementById('matrizTableBody');
+    if (!tbody) return;
+    
+    tbody.innerHTML = rolesData.map(rol => {
+        return `
+            <tr>
+                <td class="role-cell">
+                    <div class="role-info">
+                        <span class="role-icon">${rol.icono}</span>
+                        <span class="role-name">${rol.nombre}</span>
+                    </div>
+                </td>
+                ${permisosDisponibles.map(permiso => `
+                    <td class="permiso-cell">
+                        ${rol.permisos.includes(permiso.id) ? 
+                            '<span class="permiso-granted">✅</span>' : 
+                            '<span class="permiso-denied">❌</span>'
+                        }
+                    </td>
+                `).join('')}
+            </tr>
+        `;
+    }).join('');
+}
+
+// Función para limpiar formulario de rol
+function limpiarFormularioRol() {
+    document.getElementById('rolId').value = '';
+    document.getElementById('rolNombre').value = '';
+    document.getElementById('rolTipo').value = '';
+    document.getElementById('rolDescripcion').value = '';
+    document.getElementById('rolEstado').value = 'activo';
+}
+
+// Funciones de paginado para roles
+window.changeRolesPage = function(direction) {
+    const totalPages = Math.ceil(rolesFiltrados.length / rolesItemsPerPage);
+    const newPage = currentRolesPage + direction;
+    
+    if (newPage >= 1 && newPage <= totalPages) {
+        currentRolesPage = newPage;
+        actualizarTablaRoles();
+    }
+};
+
+function updateRolesPagination() {
+    const totalPages = Math.ceil(rolesFiltrados.length / rolesItemsPerPage);
+    const totalItems = rolesFiltrados.length;
+    const startItem = totalItems > 0 ? (currentRolesPage - 1) * rolesItemsPerPage + 1 : 0;
+    const endItem = Math.min(currentRolesPage * rolesItemsPerPage, totalItems);
+    
+    const paginationInfo = document.getElementById('rolesPaginationInfo');
+    const prevBtn = document.getElementById('rolesPrevBtn');
+    const nextBtn = document.getElementById('rolesNextBtn');
+    
+    if (paginationInfo) {
+        paginationInfo.textContent = `Mostrando ${startItem}-${endItem} de ${totalItems} roles`;
+    }
+    
+    if (prevBtn) {
+        prevBtn.disabled = currentRolesPage === 1;
+        prevBtn.title = currentRolesPage === 1 ? 'No hay página anterior' : 'Página anterior de roles';
+    }
+    
+    if (nextBtn) {
+        nextBtn.disabled = currentRolesPage === totalPages || totalPages === 0;
+        nextBtn.title = (currentRolesPage === totalPages || totalPages === 0) ? 'No hay más páginas' : 'Página siguiente de roles';
+    }
 }
 
 // Configurar event listeners para navegación del sidebar
